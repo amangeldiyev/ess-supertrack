@@ -1,7 +1,7 @@
-@extends('layouts.forms.master')
+@extends('layouts.master')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-4">
         <form>
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -178,7 +178,7 @@
             if(e.keyCode == 112) {
                 e.preventDefault()
 
-                window.open('/form', 'new', 'width=1050,height=200')
+                window.open('/requests/create', 'new', 'width=1050,height=200')
             } else if(e.keyCode == 27) {
                 window.close()
             }

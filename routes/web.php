@@ -11,13 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
+Route::view('/table', 'table');
+Route::view('/form', 'form');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::view('/table', 'table');
-Route::view('/form', 'form');
+Route::resource('requests', 'RequestController');
+Route::resource('companies', 'CompanyController');
+Route::resource('passengers', 'PassengerController');
+Route::resource('drivers', 'DriverController');
+Route::resource('vehicles', 'VehicleController');
