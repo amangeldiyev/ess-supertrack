@@ -52,7 +52,7 @@ class RequestController extends Controller
      */
     public function show(TaxiRequest $taxiRequest)
     {
-        //
+        return view('request.show', compact('texiRequest'));
     }
 
     /**

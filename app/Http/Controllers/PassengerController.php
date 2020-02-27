@@ -52,7 +52,7 @@ class PassengerController extends Controller
      */
     public function show(Passenger $passenger)
     {
-        //
+        return view('passenger.show', compact('passenger'));
     }
 
     /**
