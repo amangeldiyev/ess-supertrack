@@ -12,8 +12,6 @@
 */
 
 Route::view('/', 'welcome');
-Route::view('/table', 'table');
-Route::view('/form', 'form');
 
 Auth::routes();
 
