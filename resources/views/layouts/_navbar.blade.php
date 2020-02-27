@@ -6,9 +6,6 @@
         <a href="{{ route('requests.index') }}" class="list-group-item">
             <i class="fa fa-home"></i>
         </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-plus-square"></i>
-        </a>
         <a href="{{ route('companies.index') }}" class="list-group-item">
             <i class="fa fa-building"></i>
         </a>
