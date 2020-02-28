@@ -2,17 +2,18 @@
 
 @section('content')
     <div class="container mt-4">
-        <form>
+        <form action="/requests" method="POST">
+            @csrf
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="inputEmail4">#</label>
-                    <input type="email" class="form-control" id="inputEmail4">
+                    <label>#</label>
+                    <input name="number" type="text" class="form-control">
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-group">
-                        <label for="inputEmail4">Date</label>
+                        <label>Date</label>
                         <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                            <input name="date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
                             <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -20,36 +21,39 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputPassword4">Trip Status</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Pending</option>
-                        <option>...</option>
+                    <label>Trip Status</label>
+                    <select name="status" class="form-control">
+                        <option value="0" selected>Pending</option>
+                        <option value="1">Confirmed</option>
+                        <option value="2">Assigned</option>
+                        <option value="3">Pick Up</option>
+                        <option value="4">Drop Off</option>
                     </select>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="inputEmail4">Start Date</label>
+                    <label>Start Date</label>
                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <input name="start_date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2"/>
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputPassword4">End Date</label>
+                    <label>End Date</label>
                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <input name="end_date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputPassword4">Trip Type</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Business</option>
+                    <label>Trip Type</label>
+                    <select name="type" id="inputState" class="form-control">
+                        <option value="0" selected>Business</option>
                         <option>...</option>
                     </select>
                 </div>
@@ -60,15 +64,15 @@
                     <div class="row">
                         <div class="col-sm-10">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                    value="option1" checked>
+                                <input class="form-check-input" type="radio" name="passenger_type" id="gridRadios1"
+                                    value="0" checked>
                                 <label class="form-check-label" for="gridRadios1">
                                     Client
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                                    value="option2">
+                                <input class="form-check-input" type="radio" name="passenger_type" id="gridRadios2"
+                                    value="1">
                                 <label class="form-check-label" for="gridRadios2">
                                     Visitor
                                 </label>
@@ -78,15 +82,15 @@
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <input class="form-check-input" name="driver_in_time" type="checkbox" id="gridCheck" checked value="1">
                         <label class="form-check-label" for="gridCheck">
-                            Driver should return
+                            Driver should be in time
                         </label>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputPassword4">Places QTY</label>
-                    <input type="password" class="form-control" id="inputPassword4">
+                    <label>Places QTY</label>
+                    <input name="qty" type="number" class="form-control">
                 </div>
             </div>
 
@@ -94,72 +98,73 @@
 
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="inputState">Company</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <label>Company</label>
+                    <select name="company_id" class="form-control">
+                        @foreach ($companies as $company)
+                        <option value="{{$company->id}}">{{$company->name}}</option>
+                        @endforeach
                     </select>
-                    {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="resize: none"></textarea> --}}
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputState">Passenger name</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                    {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="resize: none"></textarea> --}}
+                    <label>Passenger name</label>
+                    <input name="passenger" class="form-control" list="passengers" autocomplete="off">
+                    <datalist id="passengers">
+                        @foreach ($passengers as $passenger)
+                        <option value="{{$passenger->name}}">{{$passenger->badge_number}}</option>
+                        @endforeach
+                    </datalist>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputPassword4">Phone</label>
-                    {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="resize: none"></textarea> --}}
-                    <input type="email" class="form-control" id="inputEmail4">
+                    <label>Phone</label>
+                    <input name="phone" type="text" class="form-control">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputPassword4">Pick Up Location</label>
-                    <input type="email" class="form-control" id="inputEmail4">
-                    {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="resize: none"></textarea> --}}
+                    <label>Pick Up Location</label>
+                    <input name="pick_up_location" type="text" class="form-control">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputPassword4">Drop Off Location</label>
-                    <input type="email" class="form-control" id="inputEmail4">
-                    {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="resize: none"></textarea> --}}
+                    <label>Drop Off Location</label>
+                    <input name="drop_off_location" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="inputState">Drivers</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <label>Drivers</label>
+                    <select name="driver_id" class="form-control">
+                        @foreach ($drivers as $driver)
+                        <option value="{{$driver->id}}">{{$driver->name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputState">Vehicle Number</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <label>Vehicle Number</label>
+                    <select name="vehicle_id" class="form-control">
+                        @foreach ($vehicles as $vehicle)
+                        <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputState">Vehicle Type</label>
-                    <input type="password" class="form-control" id="inputPassword4">
+                    <label>Vehicle Type</label>
+                    <input name="vehicle_type" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4">Comment</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="resize: none"></textarea>
+                    <label>Comment</label>
+                    <textarea name="comment" class="form-control" rows="4" style="resize: none"></textarea>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputState">Ordered By</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                    <label>Ordered By</label>
+                    <select name="ordered_by" class="form-control">
+                        @foreach ($passengers as $passenger)
+                        <option value="{{$passenger->id}}">{{$passenger->name}}</option>
+                        @endforeach
                     </select>
                     <br>
-                    <button type="submit" class="btn btn-primary">Save and Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
 
@@ -186,15 +191,18 @@
 
         $(function () {
             $('#datetimepicker1').datetimepicker({
-                daysOfWeekDisabled: []
-            });
+                daysOfWeekDisabled: [],
+                format: 'DD/MM/YYYY HH:mm'
+            })
             $('#datetimepicker2').datetimepicker({
-                daysOfWeekDisabled: []
-            });
+                daysOfWeekDisabled: [],
+                format: 'DD/MM/YYYY HH:mm'
+            })
             $('#datetimepicker3').datetimepicker({
-                daysOfWeekDisabled: []
-            });
-        });
+                daysOfWeekDisabled: [],
+                format: 'DD/MM/YYYY HH:mm'
+            })
+        })
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />

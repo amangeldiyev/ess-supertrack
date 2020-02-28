@@ -396,7 +396,7 @@
             if (e.keyCode == 112) {
                 e.preventDefault()
 
-                window.open('/drivers/create', 'new', 'width=550,height=200')
+                window.open('/drivers/create', 'new', 'width=550,height=300')
             } else if (e.keyCode == 27) {
                 window.close()
             }

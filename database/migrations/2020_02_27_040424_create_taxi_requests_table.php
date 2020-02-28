@@ -23,9 +23,9 @@ class CreateTaxiRequestsTable extends Migration
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('passenger_type')->default(0);
             $table->tinyInteger('qty');
-            $table->tinyInteger('driver_in_time')->default(1);
+            $table->tinyInteger('driver_in_time')->default(0);
             $table->unsignedInteger('company_id');
-            $table->unsignedInteger('passenger_id');
+            $table->string('passenger')->nullable();
             $table->string('phone')->nullable();
             $table->text('pick_up_location');
             $table->text('drop_off_location');

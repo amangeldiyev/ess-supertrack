@@ -396,7 +396,7 @@
             if (e.keyCode == 112) {
                 e.preventDefault()
 
-                window.open('/passengers/create', 'new', 'width=550,height=200')
+                window.open('/passengers/create', 'new', 'width=550,height=500')
             } else if (e.keyCode == 27) {
                 window.close()
             }

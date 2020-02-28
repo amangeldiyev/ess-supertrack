@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+use App\Driver;
+use App\Passenger;
 use App\TaxiRequest;
+use App\Vehicle;
 use Illuminate\Http\Request;
 
 class RequestController extends Controller
@@ -24,7 +28,12 @@ class RequestController extends Controller
      */
     public function create()
     {
-        return view('request.create');
+        $companies = Company::all();
+        $passengers = Passenger::all();
+        $drivers = Driver::all();
+        $vehicles = Vehicle::all();
+
+        return view('request.create', compact('companies', 'passengers', 'drivers', 'vehicles'));
     }
 
     /**
@@ -36,12 +45,30 @@ class RequestController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            
+            'number' => 'required',
+            'date' => 'required|date_format:d/m/Y H:i',
+            'start_date' => 'required|date_format:d/m/Y H:i',
+            'end_date' => 'required|date_format:d/m/Y H:i',
+            'status' => 'required|numeric|between:0,5',
+            'type' => 'required|numeric|between:0,1',
+            'passenger_type' => 'required|numeric|between:0,1',
+            'qty' => 'required|numeric|between:1,50',
+            'driver_in_time' => 'boolean|nullable',
+            'company_id' => 'required|exists:companies,id',
+            'passenger' => 'required|string|max:255',
+            'phone' => 'string|nullable|max:255',
+            'pick_up_location' => 'required|string',
+            'drop_off_location' => 'required|string',
+            'driver_id' => 'nullable|exists:drivers,id',
+            'vehicle_id' => 'nullable|exists:vehicles,id|',
+            'vehicle_type' => 'string|nullable',
+            'comment' => 'string|nullable',
+            'ordered_by' => 'required|exists:passengers,id',
         ]);
 
         $taxiRequest = TaxiRequest::create($validatedData);
 
-        return redirect()->route('companies.show', compact('taxiRequest'));
+        return redirect()->route('requests.show', ['request' => $taxiRequest]);
     }
 
     /**
@@ -52,7 +79,7 @@ class RequestController extends Controller
      */
     public function show(TaxiRequest $taxiRequest)
     {
-        return view('request.show', compact('texiRequest'));
+        return view('request.show', compact('taxiRequest'));
     }
 
     /**

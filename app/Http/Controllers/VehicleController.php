@@ -36,7 +36,9 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            
+            'name' => 'required|max:255',
+            'type' => 'required|max:255',
+            'company_id' => 'required|exists:companies,id'
         ]);
     
         $vehicle = Vehicle::create($validatedData);

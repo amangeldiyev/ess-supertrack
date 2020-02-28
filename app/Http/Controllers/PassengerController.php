@@ -36,12 +36,16 @@ class PassengerController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            
+            'name' => 'required|max:255',
+            'badge_number' => 'required|unique:passengers|numeric|max:99999999',
+            'phone' => 'string|max:15',
+            'email' => 'string|email|max:255',
+            'company_id' => 'required|exists:companies,id'
         ]);
 
         $passenger = Passenger::create($validatedData);
 
-        return redirect()->route('passenger.show', compact('passenger'));
+        return redirect()->route('passengers.show', compact('passenger'));
     }
 
     /**
