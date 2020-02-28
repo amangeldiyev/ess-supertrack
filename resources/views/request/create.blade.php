@@ -2,12 +2,20 @@
 
 @section('content')
     <div class="container mt-4">
-        <form action="/requests" method="POST">
+        @if (isset($taxiRequest))
+            <h1>Editing {{$taxiRequest->number}}</h1>
+        @endif
+        <form action="{{isset($taxiRequest) ? route('taxi-requests.update', ['taxi_request'=>$taxiRequest]) : route('taxi-requests.store') }}" method="POST">
+            
+            @if (isset($taxiRequest))
+                @method('PUT')
+            @endif
+            
             @csrf
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label>#</label>
-                    <input name="number" type="text" class="form-control">
+                    <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : ''}}" type="text" class="form-control">
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-group">
@@ -23,11 +31,11 @@
                 <div class="form-group col-md-4">
                     <label>Trip Status</label>
                     <select name="status" class="form-control">
-                        <option value="0" selected>Pending</option>
-                        <option value="1">Confirmed</option>
-                        <option value="2">Assigned</option>
-                        <option value="3">Pick Up</option>
-                        <option value="4">Drop Off</option>
+                        <option value="0" {{isset($taxiRequest) && $taxiRequest->status == 0 ?  "selected" : ""}}>Pending</option>
+                        <option value="1" {{isset($taxiRequest) && $taxiRequest->status == 1 ?  "selected" : ""}}>Confirmed</option>
+                        <option value="2" {{isset($taxiRequest) && $taxiRequest->status == 2 ?  "selected" : ""}}>Assigned</option>
+                        <option value="3" {{isset($taxiRequest) && $taxiRequest->status == 3 ?  "selected" : ""}}>Pick Up</option>
+                        <option value="4" {{isset($taxiRequest) && $taxiRequest->status == 4 ?  "selected" : ""}}>Drop Off</option>
                     </select>
                 </div>
             </div>
@@ -53,8 +61,7 @@
                 <div class="form-group col-md-4">
                     <label>Trip Type</label>
                     <select name="type" id="inputState" class="form-control">
-                        <option value="0" selected>Business</option>
-                        <option>...</option>
+                        <option value="0" {{isset($taxiRequest) && $taxiRequest->type == 0 ?  "selected" : ""}}>Business</option>
                     </select>
                 </div>
             </div>
@@ -65,14 +72,14 @@
                         <div class="col-sm-10">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="passenger_type" id="gridRadios1"
-                                    value="0" checked>
+                                    value="0" {{isset($taxiRequest) && $taxiRequest->passenger_type == 0 ?  "checked" : ""}}>
                                 <label class="form-check-label" for="gridRadios1">
                                     Client
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="passenger_type" id="gridRadios2"
-                                    value="1">
+                                    value="1" {{isset($taxiRequest) && $taxiRequest->passenger_type == 1 ?  "checked" : ""}}>
                                 <label class="form-check-label" for="gridRadios2">
                                     Visitor
                                 </label>
@@ -82,7 +89,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-check">
-                        <input class="form-check-input" name="driver_in_time" type="checkbox" id="gridCheck" checked value="1">
+                        <input class="form-check-input" name="driver_in_time" type="checkbox" id="gridCheck" value="1" {{isset($taxiRequest) && $taxiRequest->driver_in_time == 1 ?  "checked" : ""}}>
                         <label class="form-check-label" for="gridCheck">
                             Driver should be in time
                         </label>
@@ -90,7 +97,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Places QTY</label>
-                    <input name="qty" type="number" class="form-control">
+                    <input name="qty" type="number" class="form-control" value="{{isset($taxiRequest) ?  $taxiRequest->qty : ''}}">
                 </div>
             </div>
 
@@ -100,31 +107,31 @@
                 <div class="form-group col-md-3">
                     <label>Company</label>
                     <select name="company_id" class="form-control">
-                        @foreach ($companies as $company)
-                        <option value="{{$company->id}}">{{$company->name}}</option>
+                        @foreach (\App\Company::all() as $company)
+                        <option value="{{$company->id}}" {{isset($taxiRequest) && $taxiRequest->company_id == $company->id ?  "selected" : ""}}>{{$company->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Passenger name</label>
-                    <input name="passenger" class="form-control" list="passengers" autocomplete="off">
+                    <input name="passenger" value="{{isset($taxiRequest) ?  $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off">
                     <datalist id="passengers">
-                        @foreach ($passengers as $passenger)
+                        @foreach ($passengers = \App\Passenger::all() as $passenger)
                         <option value="{{$passenger->name}}">{{$passenger->badge_number}}</option>
                         @endforeach
                     </datalist>
                 </div>
                 <div class="form-group col-md-2">
                     <label>Phone</label>
-                    <input name="phone" type="text" class="form-control">
+                    <input name="phone" value="{{isset($taxiRequest) ?  $taxiRequest->phone : ''}}" type="text" class="form-control">
                 </div>
                 <div class="form-group col-md-2">
                     <label>Pick Up Location</label>
-                    <input name="pick_up_location" type="text" class="form-control">
+                    <input name="pick_up_location" value="{{isset($taxiRequest) ?  $taxiRequest->pick_up_location : ''}}" type="text" class="form-control">
                 </div>
                 <div class="form-group col-md-2">
                     <label>Drop Off Location</label>
-                    <input name="drop_off_location" type="text" class="form-control">
+                    <input name="drop_off_location" value="{{isset($taxiRequest) ?  $taxiRequest->drop_off_location : ''}}" type="text" class="form-control">
                 </div>
             </div>
 
@@ -132,44 +139,41 @@
                 <div class="form-group col-md-3">
                     <label>Drivers</label>
                     <select name="driver_id" class="form-control">
-                        @foreach ($drivers as $driver)
-                        <option value="{{$driver->id}}">{{$driver->name}}</option>
+                        @foreach (\App\Driver::all() as $driver)
+                        <option value="{{$driver->id}}" {{isset($taxiRequest) && $taxiRequest->driver_id == $driver->id ?  "selected" : ""}}>{{$driver->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Vehicle Number</label>
                     <select name="vehicle_id" class="form-control">
-                        @foreach ($vehicles as $vehicle)
-                        <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
+                        @foreach (\App\Vehicle::all() as $vehicle)
+                        <option value="{{$vehicle->id}}" {{isset($taxiRequest) && $taxiRequest->vehicle_id == $vehicle->id ?  "selected" : ""}}>{{$vehicle->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Vehicle Type</label>
-                    <input name="vehicle_type" type="text" class="form-control">
+                    <input name="vehicle_type" value="{{isset($taxiRequest) ?  $taxiRequest->vehicle_type : ''}}" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>Comment</label>
-                    <textarea name="comment" class="form-control" rows="4" style="resize: none"></textarea>
+                    <textarea name="comment" class="form-control" rows="4" style="resize: none">{{isset($taxiRequest) ?  $taxiRequest->comment : ''}}</textarea>
                 </div>
                 <div class="form-group col-md-4">
                     <label>Ordered By</label>
                     <select name="ordered_by" class="form-control">
                         @foreach ($passengers as $passenger)
-                        <option value="{{$passenger->id}}">{{$passenger->name}}</option>
+                        <option value="{{$passenger->id}}" {{isset($taxiRequest) && $taxiRequest->ordered_by == $passenger->id ?  "selected" : ""}}>{{$passenger->name}}</option>
                         @endforeach
                     </select>
                     <br>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
-            </div>
-
-            
-            
+            </div> 
         </form>
     </div>
 @endsection
@@ -180,11 +184,7 @@
 
             e = e || window.event;
 
-            if(e.keyCode == 112) {
-                e.preventDefault()
-
-                window.open('/requests/create', 'new', 'width=1050,height=200')
-            } else if(e.keyCode == 27) {
+            if(e.keyCode == 27) {
                 window.close()
             }
         }
@@ -192,15 +192,18 @@
         $(function () {
             $('#datetimepicker1').datetimepicker({
                 daysOfWeekDisabled: [],
-                format: 'DD/MM/YYYY HH:mm'
+                format: 'DD/MM/YYYY',
+                defaultDate: "{{isset($taxiRequest) ? $taxiRequest->date : ''}}",
             })
             $('#datetimepicker2').datetimepicker({
                 daysOfWeekDisabled: [],
-                format: 'DD/MM/YYYY HH:mm'
+                format: 'DD/MM/YYYY HH:mm',
+                defaultDate: "{{isset($taxiRequest) ? $taxiRequest->start_date : ''}}",
             })
             $('#datetimepicker3').datetimepicker({
                 daysOfWeekDisabled: [],
-                format: 'DD/MM/YYYY HH:mm'
+                format: 'DD/MM/YYYY HH:mm',
+                defaultDate: "{{isset($taxiRequest) ? $taxiRequest->end_date : ''}}",
             })
         })
     </script>

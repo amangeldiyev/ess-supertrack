@@ -3,7 +3,7 @@
         <a href="#" class="list-group-item">
             <i class="fa fa-key"></i>
         </a>
-        <a href="{{ route('requests.index') }}" class="list-group-item">
+        <a href="{{ route('taxi-requests.index') }}" class="list-group-item">
             <i class="fa fa-home"></i>
         </a>
         <a href="{{ route('companies.index') }}" class="list-group-item">

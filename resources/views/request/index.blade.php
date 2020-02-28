@@ -398,7 +398,7 @@
             if (e.keyCode == 112) {
                 e.preventDefault()
 
-                window.open('/requests/create', 'new', 'width=1050,height=700')
+                window.open('/taxi-requests/create', 'new', 'width=1050,height=700')
             } else if (e.keyCode == 27) {
                 window.close()
             }
