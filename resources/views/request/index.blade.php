@@ -9,368 +9,39 @@
     <table class="table table-sm table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Veh Type</th>
+                <th scope="col">Vehicle</th>
+                <th scope="col">Status</th>
+                <th scope="col">Driver</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">On Location</th>
+                <th scope="col">Client Name</th>
+                <th scope="col">Passenger</th>
+                <th scope="col">Passenger Phone</th>
+                <th scope="col">On Board</th>
+                <th scope="col">Dropped Time</th>
+                <th scope="col">Trip Type</th>
+                <th scope="col">Remaining Time</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-                <td>Handle</td>
-            </tr>
+            @foreach ($taxiRequests as $request)
+                <tr class="{{$request->status ? '' : 'table-danger'}}">
+                    <td>{{$request->vehicle->type}}</td>
+                    <td>{{$request->vehicle->name}}</td>
+                    <td>{{\App\TaxiRequest::STATUSES[$request->status]}}</td>
+                    <td>{{$request->driver->name}}</td>
+                    <td>{{$request->start_time}}</td>
+                    <td>{{$request->on_location_time}}</td>
+                    <td>{{$request->client->name}}</td>
+                    <td>{{$request->passenger}}</td>
+                    <td>{{$request->phone}}</td>
+                    <td>{{$request->pick_up_time}}</td>
+                    <td>{{$request->drop_off_time}}</td>
+                    <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
+                    <td>{{$request->time_remaining}}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

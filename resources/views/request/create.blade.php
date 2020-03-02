@@ -89,7 +89,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-check">
-                        <input class="form-check-input" name="driver_in_time" type="checkbox" id="gridCheck" value="1" {{isset($taxiRequest) && $taxiRequest->driver_in_time == 1 ?  "checked" : ""}}>
+                        <input class="form-check-input" name="driver_in_time" type="checkbox" id="gridCheck" value="1" {{!isset($taxiRequest) || $taxiRequest->driver_in_time != 0 ?  "checked" : ""}}>
                         <label class="form-check-label" for="gridCheck">
                             Driver should be in time
                         </label>

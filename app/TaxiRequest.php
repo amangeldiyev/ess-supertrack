@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaxiRequest extends Model
 {
+    public const STATUSES = [
+        0 => 'Pending',
+        1 => 'Confirmed',
+        2 => 'Assigned',
+        3 => 'Pick Up',
+        4 => 'Drop Off'
+    ];
+
+    public const TYPES = [
+        0 => 'Business',
+        1 => 'Other'
+    ];
+
     protected $fillable = [
         'number',
         'date',
@@ -38,9 +51,9 @@ class TaxiRequest extends Model
         return $this->belongsTo(Driver::class);
     }
 
-    public function ordered_by()
+    public function client()
     {
-        return $this->belongsTo(Passenger::class, 'id', 'ordered_by');
+        return $this->belongsTo(Passenger::class, 'ordered_by', 'id');
     }
 
     public function vehicle()

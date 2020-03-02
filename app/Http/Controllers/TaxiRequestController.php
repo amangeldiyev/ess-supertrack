@@ -14,7 +14,9 @@ class TaxiRequestController extends Controller
      */
     public function index()
     {
-        return view('request.index');
+        $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+
+        return view('concept.taxi-request.index', compact('taxiRequests'));
     }
 
     /**
@@ -24,13 +26,13 @@ class TaxiRequestController extends Controller
      */
     public function create()
     {
-        return view('request.create');
+        return view('concept.taxi-request.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\TaxiRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(TaxiRequestStore $request)
@@ -50,7 +52,7 @@ class TaxiRequestController extends Controller
      */
     public function show(TaxiRequest $taxiRequest)
     {
-        return view('request.show', compact('taxiRequest'));
+        return view('concept.taxi-request.show', compact('taxiRequest'));
     }
 
     /**
@@ -61,7 +63,7 @@ class TaxiRequestController extends Controller
      */
     public function edit(TaxiRequest $taxiRequest)
     {
-        return view('request.create', compact('taxiRequest'));
+        return view('concept.taxi-request.create', compact('taxiRequest'));
     }
 
     /**
@@ -88,6 +90,8 @@ class TaxiRequestController extends Controller
      */
     public function destroy(TaxiRequest $taxiRequest)
     {
-        //
+        $taxiRequest->delete();
+
+        return redirect()->route('taxi-requests.index');
     }
 }
