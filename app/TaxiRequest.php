@@ -65,7 +65,7 @@ class TaxiRequest extends Model
     }
 
     public function getRemainingTimeAttribute() {
-        $minutes = \Carbon\Carbon::now()->diffInMinutes($this->start_date, false);
+        $minutes = Carbon::now()->diffInMinutes($this->start_date, false);
 
         if($minutes > 0) {
             return floor($minutes/60).':'.($minutes%60);
