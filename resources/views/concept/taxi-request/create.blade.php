@@ -1,4 +1,4 @@
-@extends('concept.layouts.master')
+@extends('concept.layouts.master', ['currentRoute' => 'taxi-requests'])
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('/vendor/datepicker/tempusdominus-bootstrap-4.css') }}" />

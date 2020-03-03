@@ -14,7 +14,9 @@ class PassengerController extends Controller
      */
     public function index()
     {
-        return view('passenger.index');
+        $passengers = Passenger::with('company')->get();
+
+        return view('concept.passenger.index', compact('passengers'));
     }
 
     /**
@@ -24,7 +26,7 @@ class PassengerController extends Controller
      */
     public function create()
     {
-        return view('passenger.create');
+        return view('concept.passenger.create');
     }
 
     /**
@@ -43,9 +45,9 @@ class PassengerController extends Controller
             'company_id' => 'required|exists:companies,id'
         ]);
 
-        $passenger = Passenger::create($validatedData);
+        Passenger::create($validatedData);
 
-        return redirect()->route('passengers.show', compact('passenger'));
+        return redirect()->route('passengers.index');
     }
 
     /**
@@ -67,7 +69,7 @@ class PassengerController extends Controller
      */
     public function edit(Passenger $passenger)
     {
-        //
+        return view('concept.passenger.create', compact('passenger'));
     }
 
     /**
@@ -79,7 +81,17 @@ class PassengerController extends Controller
      */
     public function update(Request $request, Passenger $passenger)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'badge_number' => 'required|unique:passengers,badge_number,'.$passenger->id.'|numeric|max:99999999',
+            'phone' => 'string|max:15',
+            'email' => 'string|email|max:255',
+            'company_id' => 'required|exists:companies,id'
+        ]);
+
+        $passenger->update($validatedData);
+
+        return redirect()->route('passengers.index');
     }
 
     /**
@@ -90,6 +102,8 @@ class PassengerController extends Controller
      */
     public function destroy(Passenger $passenger)
     {
-        //
+        $passenger->delete();
+
+        return redirect()->route('passengers.index');
     }
 }

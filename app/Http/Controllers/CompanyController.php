@@ -14,7 +14,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('company.index');
+        $companies = Company::all();
+
+        return view('concept.company.index', compact('companies'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('company.create');
+        return view('concept.company.create');
     }
 
     /**
@@ -39,9 +41,9 @@ class CompanyController extends Controller
             'name' => 'required|unique:companies|max:255'
         ]);
 
-        $company = Company::create($validatedData);
+        Company::create($validatedData);
 
-        return redirect()->route('companies.show', compact('company'));
+        return redirect()->route('companies.index');
     }
 
     /**
@@ -63,7 +65,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('company.create', compact('company'));
+        return view('concept.company.create', compact('company'));
     }
 
     /**
@@ -73,9 +75,15 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|unique:companies|max:255'
+        ]);
+
+        $company->update($validatedData);
+
+        return redirect()->route('companies.index');
     }
 
     /**
@@ -84,8 +92,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+
+        return redirect()->route('companies.index');
     }
 }

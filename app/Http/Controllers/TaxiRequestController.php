@@ -41,7 +41,7 @@ class TaxiRequestController extends Controller
 
         $taxiRequest = TaxiRequest::create($validatedData);
 
-        return redirect()->route('taxi-requests.show', ['taxi_request' => $taxiRequest]);
+        return redirect()->route('taxi-requests.index', ['taxi_request' => $taxiRequest]);
     }
 
     /**
@@ -79,7 +79,7 @@ class TaxiRequestController extends Controller
 
         $taxiRequest->update(array_merge($validatedData, ['driver_in_time' => $validatedData['driver_in_time'] ?? 0]));
 
-        return redirect()->route('taxi-requests.show', ['taxi_request' => $taxiRequest]);
+        return redirect()->route('taxi-requests.index');
     }
 
     /**

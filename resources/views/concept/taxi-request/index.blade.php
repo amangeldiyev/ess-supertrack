@@ -1,4 +1,4 @@
-@extends('concept.layouts.master')
+@extends('concept.layouts.master', ['currentRoute' => 'taxi-requests'])
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('/vendor/datatables/css/dataTables.bootstrap4.css') }}">
@@ -14,7 +14,12 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="page-header">
-                <h2 class="pageheader-title">Taxi Requests</h2>
+                <h2 class="pageheader-title">
+                    Taxi Requests
+                    <a href="{{ route('taxi-requests.create') }}" class="btn btn-xs btn-outline-success">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </h2>
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -47,13 +52,14 @@
                                     <th>Driver</th>
                                     <th>Start Time</th>
                                     <th>On Location</th>
-                                    <th>Client Name</th>
+                                    <th>Client</th>
                                     <th>Passenger</th>
-                                    <th>Passenger Phone</th>
+                                    <th>Phone</th>
                                     <th>On Board</th>
                                     <th>Dropped Time</th>
                                     <th>Trip Type</th>
                                     <th>Remaining Time</th>
+                                    <th style="min-width:60px"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +69,7 @@
                                         <td>{{$request->vehicle->name}}</td>
                                         <td>{{\App\TaxiRequest::STATUSES[$request->status]}}</td>
                                         <td>{{$request->driver->name}}</td>
-                                        <td>{{$request->start_date}}</td>
+                                        <td>{{\Carbon\Carbon::parse($request->start_date)->format('H:i')}}</td>
                                         <td>{{$request->on_location_time}}</td>
                                         <td>{{$request->client->name}}</td>
                                         <td>{{$request->passenger}}</td>
@@ -72,6 +78,16 @@
                                         <td>{{$request->drop_off_time}}</td>
                                         <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
                                         <td>{{$request->time_remaining}}</td>
+                                        <td>
+                                            <a href="{{ route('taxi-requests.edit', ['taxi_request' => $request->id]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                            <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                            <form id="delete-form-{{$request->id}}" action="{{ route('taxi-requests.destroy', ['taxi_request' => $request->id]) }}" method="POST" style="display: none;">
+                                                @method("DELETE")
+                                                @csrf
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

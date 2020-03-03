@@ -59,79 +59,29 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ \Str::startsWith(request()->route()->getName(), 'taxi-requests') ? 'active' : '' }}" href="#" data-toggle="collapse" aria-expanded="{{ \Str::startsWith(request()->route()->getName(), 'taxi-requests') ? 'true' : 'false' }}" data-target="#submenu-2" aria-controls="submenu-2">
+                        <a class="nav-link {{ $currentRoute == 'taxi-requests' ? 'active' : '' }}" href="{{ route('taxi-requests.index') }}">
                             <i class="fa fa-fw fa-rocket"></i>Taxi Requests
                         </a>
-                        <div id="submenu-2" class="collapse submenu {{ \Str::startsWith(request()->route()->getName(), 'taxi-requests') ? 'show' : '' }}" style="">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('taxi-requests.index') }}">List</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('taxi-requests.create') }}">Add</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3">
+                        <a class="nav-link {{ $currentRoute == 'companies' ? 'active' : '' }}" href="{{ route('companies.index') }}">
                             <i class="fas fa-fw fa-chart-pie"></i>Companies
                         </a>
-                        <div id="submenu-3" class="collapse submenu" style="">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chart-c3.html">List</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chart-chartist.html">Add</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4">
+                    <li class="nav-item">
+                        <a class="nav-link {{ $currentRoute == 'passengers' ? 'active' : '' }}" href="{{ route('passengers.index') }}">
                             <i class="fab fa-fw fa-wpforms"></i>Passengers
                         </a>
-                        <div id="submenu-4" class="collapse submenu" style="">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="form-elements.html">List</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="form-validation.html">Add</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5">
+                        <a class="nav-link {{ $currentRoute == 'drivers' ? 'active' : '' }}" href="{{ route('drivers.index') }}">
                             <i class="fas fa-fw fa-table"></i>Drivers
                         </a>
-                        <div id="submenu-5" class="collapse submenu" style="">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="general-table.html">List</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="data-tables.html">Add</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-6" aria-controls="submenu-6">
+                        <a class="nav-link {{ $currentRoute == 'vehicles' ? 'active' : '' }}" href="{{ route('vehicles.index') }}">
                             <i class="fas fa-fw fa-file"></i>Vehicles
                         </a>
-                        <div id="submenu-6" class="collapse submenu" style="">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="invoice.html">List</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="blank-page.html">Add</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="nav-divider">
                         Features

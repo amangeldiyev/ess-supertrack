@@ -14,7 +14,9 @@ class DriverController extends Controller
      */
     public function index()
     {
-        return view('driver.index');
+        $drivers = Driver::with('company')->get();
+
+        return view('concept.driver.index', compact('drivers'));
     }
 
     /**
@@ -24,7 +26,7 @@ class DriverController extends Controller
      */
     public function create()
     {
-        return view('driver.create');
+        return view('concept.driver.create');
     }
 
     /**
@@ -40,9 +42,9 @@ class DriverController extends Controller
             'company_id' => 'required|exists:companies,id'
         ]);
 
-        $driver = Driver::create($validatedData);
+        Driver::create($validatedData);
 
-        return redirect()->route('drivers.show', compact('driver'));
+        return redirect()->route('drivers.index');
     }
 
     /**
@@ -64,7 +66,7 @@ class DriverController extends Controller
      */
     public function edit(Driver $driver)
     {
-        //
+        return view('concept.driver.create', compact('driver'));
     }
 
     /**
@@ -76,7 +78,14 @@ class DriverController extends Controller
      */
     public function update(Request $request, Driver $driver)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|unique:companies|max:255',
+            'company_id' => 'required|exists:companies,id'
+        ]);
+
+        $driver->update($validatedData);
+
+        return redirect()->route('drivers.index');
     }
 
     /**
@@ -87,6 +96,8 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
-        //
+        $driver->delete();
+
+        return redirect()->route('drivers.index');
     }
 }

@@ -1,4 +1,4 @@
-@extends('concept.layouts.master', ['currentRoute' => 'companies'])
+@extends('concept.layouts.master', ['currentRoute' => 'vehicles'])
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('/vendor/datatables/css/dataTables.bootstrap4.css') }}">
@@ -15,8 +15,8 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="page-header">
                 <h2 class="pageheader-title">
-                    Companies
-                    <a href="{{ route('companies.create') }}" class="btn btn-xs btn-outline-success">
+                    Vehicles
+                    <a href="{{ route('vehicles.create') }}" class="btn btn-xs btn-outline-success">
                         <i class="fas fa-plus"></i>
                     </a>
                 </h2>
@@ -24,7 +24,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Companies</li>
+                            <li class="breadcrumb-item active" aria-current="page">Vehicles</li>
                         </ol>
                     </nav>
                 </div>
@@ -47,21 +47,25 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Company</th>
                                     <th>Created At</th>
                                     <th style="min-width:60px"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($companies as $company)
+                                @foreach ($vehicles as $vehicle)
                                     <tr>
-                                        <td>{{$company->name}}</td>
-                                        <td>{{$company->created_at}}</td>
+                                        <td>{{$vehicle->name}}</td>
+                                        <td>{{$vehicle->type}}</td>
+                                        <td>{{$vehicle->company->name}}</td>
+                                        <td>{{$vehicle->created_at}}</td>
                                         <td>
-                                            <a href="{{ route('companies.edit', ['company' => $company->id]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$company->id}}').submit();" type="button" class="btn btn-xs btn-danger">
+                                            <a href="{{ route('vehicles.edit', ['vehicle' => $vehicle]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                            <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$vehicle->id}}').submit();" type="button" class="btn btn-xs btn-danger">
                                                 <i class="far fa-trash-alt"></i>
                                             </a>
-                                            <form id="delete-form-{{$company->id}}" action="{{ route('companies.destroy', ['company' => $company->id]) }}" method="POST" style="display: none;">
+                                            <form id="delete-form-{{$vehicle->id}}" action="{{ route('vehicles.destroy', ['vehicle' => $vehicle]) }}" method="POST" style="display: none;">
                                                 @method("DELETE")
                                                 @csrf
                                             </form>

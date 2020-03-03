@@ -14,7 +14,9 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        return view('vehicle.index');
+        $vehicles = Vehicle::with('company')->get();
+
+        return view('concept.vehicle.index', compact('vehicles'));
     }
 
     /**
@@ -24,7 +26,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('vehicle.create');
+        return view('concept.vehicle.create');
     }
 
     /**
@@ -41,9 +43,9 @@ class VehicleController extends Controller
             'company_id' => 'required|exists:companies,id'
         ]);
     
-        $vehicle = Vehicle::create($validatedData);
+        Vehicle::create($validatedData);
 
-        return redirect()->route('vehicles.show', compact('vehicle'));
+        return redirect()->route('vehicles.index');
     }
 
     /**
@@ -65,7 +67,7 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        //
+        return view('concept.vehicle.create', compact('vehicle'));
     }
 
     /**
@@ -77,7 +79,15 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'type' => 'required|max:255',
+            'company_id' => 'required|exists:companies,id'
+        ]);
+    
+        $vehicle->update($validatedData);
+
+        return redirect()->route('vehicles.index');
     }
 
     /**
@@ -88,6 +98,8 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle)
     {
-        //
+        $vehicle->delete();
+
+        return redirect()->route('vehicles.index');
     }
 }
