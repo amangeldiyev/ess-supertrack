@@ -20,10 +20,6 @@
                     <a href="{{ route('taxi-requests.create') }}" class="btn btn-xs btn-outline-success">
                         <i class="fas fa-plus"></i>
                     </a>
-                    <!-- Toggle modal -->
-                    <button type="button" class="btn btn-xs btn-outline-success" onclick="toggleModal(0)">
-                        Modal
-                    </button>
                 </h2>
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
