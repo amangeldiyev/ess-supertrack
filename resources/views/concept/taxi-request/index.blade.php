@@ -80,7 +80,7 @@
                                         <td>{{$request->pick_up_time}}</td>
                                         <td>{{$request->drop_off_time}}</td>
                                         <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
-                                        <td>{{$request->time_remaining}}</td>
+                                        <td>{{$request->remaining_time}}</td>
                                         <td>
                                             <a onclick="event.stopPropagation()" href="{{ route('taxi-requests.edit', ['taxi_request' => $request->id]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
                                             <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger">

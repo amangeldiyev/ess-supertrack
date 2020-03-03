@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class TaxiRequest extends Model
@@ -41,6 +42,8 @@ class TaxiRequest extends Model
         'ordered_by',
     ];
 
+    protected $appends = ['remaining_time'];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -59,5 +62,15 @@ class TaxiRequest extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
+    }
+
+    public function getRemainingTimeAttribute() {
+        $minutes = \Carbon\Carbon::now()->diffInMinutes($this->start_date, false);
+
+        if($minutes > 0) {
+            return floor($minutes/60).':'.($minutes%60);
+        }
+
+        return '00:00';
     }
 }
