@@ -19,6 +19,10 @@
                     <a href="{{ route('taxi-requests.create') }}" class="btn btn-xs btn-outline-success">
                         <i class="fas fa-plus"></i>
                     </a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-xs btn-outline-success" data-toggle="modal" data-target="#form-modal">
+                        Modal
+                    </button>
                 </h2>
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
@@ -43,7 +47,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered second" style="width:100%">
+                        <table id="example" class="table table-sm table-striped table-bordered second" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Veh Type</th>
@@ -99,6 +103,23 @@
         <!-- ============================================================== -->
         <!-- end data table  -->
         <!-- ============================================================== -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width:70%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">New Taxi Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @include('concept.taxi-request._form')
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
