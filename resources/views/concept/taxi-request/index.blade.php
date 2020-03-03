@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/vendor/datatables/css/buttons.bootstrap4.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/vendor/datatables/css/select.bootstrap4.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/vendor/datatables/css/fixedHeader.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/datatable.css') }}">
 @endpush
 
 @section('content')
@@ -19,8 +20,8 @@
                     <a href="{{ route('taxi-requests.create') }}" class="btn btn-xs btn-outline-success">
                         <i class="fas fa-plus"></i>
                     </a>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-xs btn-outline-success" data-toggle="modal" data-target="#form-modal">
+                    <!-- Toggle modal -->
+                    <button type="button" class="btn btn-xs btn-outline-success" onclick="toggleModal(0)">
                         Modal
                     </button>
                 </h2>
@@ -50,6 +51,7 @@
                         <table id="example" class="table table-sm table-striped table-bordered second" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Veh Type</th>
                                     <th>Vehicle</th>
                                     <th>Status</th>
@@ -68,7 +70,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($taxiRequests as $request)
-                                    <tr class="{{$request->status ? '' : 'table-danger'}}">
+                                    <tr onclick="toggleModal({{$request->id}})" class="{{$request->status ? '' : 'table-danger'}}">
+                                        <td>{{$request->id}}</td>
                                         <td>{{$request->vehicle->type}}</td>
                                         <td>{{$request->vehicle->name}}</td>
                                         <td>{{\App\TaxiRequest::STATUSES[$request->status]}}</td>
@@ -83,7 +86,7 @@
                                         <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
                                         <td>{{$request->time_remaining}}</td>
                                         <td>
-                                            <a href="{{ route('taxi-requests.edit', ['taxi_request' => $request->id]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                            <a onclick="event.stopPropagation()" href="{{ route('taxi-requests.edit', ['taxi_request' => $request->id]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
                                             <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger">
                                                 <i class="far fa-trash-alt"></i>
                                             </a>
@@ -121,6 +124,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('scripts')
@@ -138,4 +142,5 @@
     <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="{{ asset('/js/modal-form.js') }}"></script>
 @endpush

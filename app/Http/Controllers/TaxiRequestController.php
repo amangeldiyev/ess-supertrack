@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaxiRequestStore;
 use App\TaxiRequest;
+use Illuminate\Http\Request;
 
 class TaxiRequestController extends Controller
 {
@@ -24,8 +25,12 @@ class TaxiRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if($request->expectsJson()) {
+            return view('concept.taxi-request._form')->render();
+        }
+
         return view('concept.taxi-request.create');
     }
 
@@ -61,8 +66,12 @@ class TaxiRequestController extends Controller
      * @param  \App\TaxiRequest  $taxiRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(TaxiRequest $taxiRequest)
+    public function edit(Request $request, TaxiRequest $taxiRequest)
     {
+        if($request->expectsJson()) {
+            return view('concept.taxi-request._form', compact('taxiRequest'))->render();
+        }
+
         return view('concept.taxi-request.create', compact('taxiRequest'));
     }
 

@@ -60,8 +60,4 @@ class TaxiRequest extends Model
     {
         return $this->belongsTo(Vehicle::class);
     }
-
-    public function getStartTimeAttribute() {
-        
-    }
 }
