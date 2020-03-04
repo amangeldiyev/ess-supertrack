@@ -17,6 +17,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/passengers/search', 'PassengerController@search');
+
 Route::resource('taxi-requests', 'TaxiRequestController');
 Route::resource('companies', 'CompanyController');
 Route::resource('passengers', 'PassengerController');

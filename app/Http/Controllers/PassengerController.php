@@ -106,4 +106,28 @@ class PassengerController extends Controller
 
         return redirect()->route('passengers.index');
     }
+
+    public function search(Request $request)
+    {
+        $q = strtolower($request->search);
+        
+        $passengers = Passenger::whereRaw('LOWER(name) like ?', ["%{$q}%"])
+            ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
+            ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
+            ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"])
+            ->get();
+
+        if($request->expectsJson()) {
+            $data = '';
+
+            foreach ($passengers as $passenger) {
+                $data .= '<option value="'.$passenger->name.'">'.$passenger->badge_number.' - '.$passenger->phone.' - '.$passenger->email.'</option>';
+            }
+            return response()->json([
+                'passengers' => $data
+            ]);
+        }
+
+        return;
+    }
 }
