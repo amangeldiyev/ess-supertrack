@@ -60,7 +60,7 @@
     <script src="{{ asset('/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="{{ asset('/vendor/slimscroll/jquery.slimscroll.js') }}"></script>
-    <script src="{{ asset('/vendor/multi-select/js/jquery.multi-select.js') }}"></script>
+    {{-- <script src="{{ asset('/vendor/multi-select/js/jquery.multi-select.js') }}"></script> --}}
     <script src="{{ asset('/js/main-js.js') }}"></script>
 
     @stack('scripts')
