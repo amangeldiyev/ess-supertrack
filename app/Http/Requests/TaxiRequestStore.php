@@ -42,7 +42,7 @@ class TaxiRequestStore extends FormRequest
             'pick_up_time' => 'nullable|date_format:d/m/Y H:i',
             'drop_off_time' => 'nullable|date_format:d/m/Y H:i',
             'driver_id' => 'nullable|exists:drivers,id',
-            'vehicle_id' => 'nullable|exists:vehicles,id|',
+            'vehicle_id' => 'nullable|exists:vehicles,id',
             'vehicle_type' => 'string|nullable',
             'comment' => 'string|nullable',
             'ordered_by' => 'required|exists:passengers,id',
