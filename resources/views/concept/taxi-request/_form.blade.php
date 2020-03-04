@@ -4,9 +4,9 @@
 
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="section-block" id="basicform">
+        {{-- <div class="section-block" id="basicform">
             <h3 class="section-title">Taxi Request Form</h3>
-        </div>
+        </div> --}}
         <div class="card">
             <div class="card-body">
                 <form action="{{isset($taxiRequest) ? route('taxi-requests.update', ['taxi_request'=>$taxiRequest]) : route('taxi-requests.store') }}" method="POST">
@@ -67,6 +67,33 @@
                             <select name="type" id="inputState" class="form-control">
                                 <option value="0" {{isset($taxiRequest) && $taxiRequest->type == 0 ?  "selected" : ""}}>Business</option>
                             </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>On Location</label>
+                            <div class="input-group date form-datetime" id="datetimepicker4" data-default="{{isset($taxiRequest) ? $taxiRequest->on_location_time : ''}}" data-target-input="nearest">
+                                <input name="on_location_time" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+                                <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Pick Up Time</label>
+                            <div class="input-group date form-datetime" id="datetimepicker5" data-default="{{isset($taxiRequest) ? $taxiRequest->pick_up_time : ''}}" data-target-input="nearest">
+                                <input name="pick_up_time" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker5"/>
+                                <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Drop Off Time</label>
+                            <div class="input-group date form-datetime" id="datetimepicker6" data-default="{{isset($taxiRequest) ? $taxiRequest->drop_off_time : ''}}" data-target-input="nearest">
+                                <input name="drop_off_time" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker6"/>
+                                <div class="input-group-append" data-target="#datetimepicker6" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
             
