@@ -179,17 +179,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Vehicle Type</label>
-                            <input name="vehicle_type" value="{{isset($taxiRequest) ? $taxiRequest->vehicle_type : ''}}" type="text" class="form-control">
-                        </div>
-                    </div>
-            
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Comment</label>
-                            <textarea name="comment" class="form-control" rows="4" style="resize: none">{{isset($taxiRequest) ? $taxiRequest->comment : ''}}</textarea>
-                        </div>
                         <div class="form-group col-md-4">
                             <label>Ordered By</label>
                             <select name="ordered_by" class="form-control">
@@ -198,6 +187,13 @@
                                 @endforeach
                             </select>
                             <br>
+                        </div>
+                    </div>
+            
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Comment</label>
+                            <textarea name="comment" class="form-control" rows="4" style="resize: none">{{isset($taxiRequest) ? $taxiRequest->comment : ''}}</textarea>
                         </div>
                     </div> 
                     <button type="submit" class="btn btn-primary">Save</button>

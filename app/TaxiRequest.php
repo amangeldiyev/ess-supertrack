@@ -70,10 +70,22 @@ class TaxiRequest extends Model
     public function getRemainingTimeAttribute() {
         $minutes = Carbon::now()->diffInMinutes($this->start_date, false);
 
-        if($minutes > 0) {
-            return floor($minutes/60).':'.($minutes%60);
+        if($minutes <= 0) {
+            return '00:00';
         }
 
-        return '00:00';
+        $hours = floor($minutes/60);
+        $minutes = ($minutes%60);
+
+        if($hours < 10) {
+            $hours = '0'.$hours;
+        }
+
+        if($minutes < 10) {
+            $minutes = '0'.$minutes;
+        }
+
+        return $hours.':'.$minutes;
+
     }
 }
