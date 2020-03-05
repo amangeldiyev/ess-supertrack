@@ -9,7 +9,7 @@
         </div> --}}
         <div class="card">
             <div class="card-body">
-                <form action="{{isset($taxiRequest) ? route('taxi-requests.update', ['taxi_request'=>$taxiRequest]) : route('taxi-requests.store') }}" method="POST">
+                <form onsubmit="submitForm(event, {{isset($taxiRequest) ? $taxiRequest->id : 0}})" action="{{isset($taxiRequest) ? route('taxi-requests.update', ['taxi_request'=>$taxiRequest]) : route('taxi-requests.store') }}" method="POST">
         
                     @if (isset($taxiRequest))
                         @method('PUT')
@@ -164,6 +164,7 @@
                         <div class="form-group col-md-3">
                             <label>Drivers</label>
                             <select name="driver_id" class="form-control">
+                                <option value="">Select Driver</option>
                                 @foreach (\App\Driver::all() as $driver)
                                 <option value="{{$driver->id}}" {{isset($taxiRequest) && $taxiRequest->driver_id == $driver->id ? "selected" : ""}}>{{$driver->name}}</option>
                                 @endforeach
@@ -172,6 +173,7 @@
                         <div class="form-group col-md-3">
                             <label>Vehicle Number</label>
                             <select name="vehicle_id" class="form-control">
+                                <option value="">Select Vehicle</option>
                                 @foreach (\App\Vehicle::all() as $vehicle)
                                 <option value="{{$vehicle->id}}" {{isset($taxiRequest) && $taxiRequest->vehicle_id == $vehicle->id ? "selected" : ""}}>{{$vehicle->name}}</option>
                                 @endforeach

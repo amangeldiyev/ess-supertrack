@@ -8,6 +8,7 @@ jQuery(document).ready(function($) {
         $(document).ready(function() {
             var table = $('table.second').DataTable({
                 lengthChange: false,
+                ordering: false,
                 buttons: [
                     {
                         extend: 'pdfHtml5',

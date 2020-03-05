@@ -46,6 +46,12 @@ class TaxiRequestController extends Controller
 
         $taxiRequest = TaxiRequest::create($validatedData);
 
+        if($request->expectsJson()) {
+            $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        }
+
         return redirect()->route('taxi-requests.index', ['taxi_request' => $taxiRequest]);
     }
 
@@ -87,6 +93,12 @@ class TaxiRequestController extends Controller
         $validatedData = $request->validated();
 
         $taxiRequest->update(array_merge($validatedData, ['driver_in_time' => $validatedData['driver_in_time'] ?? 0]));
+
+        if($request->expectsJson()) {
+            $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        }
 
         return redirect()->route('taxi-requests.index');
     }
