@@ -12,6 +12,6 @@ $factory->define(Passenger::class, function (Faker $faker) {
         'badge_number' => $faker->randomNumber(8),
         'phone' => $faker->phoneNumber,
         'email' => $faker->email,
-        'company_id' => factory(Company::class)->create()->id
+        'company_id' => factory(Company::class)
     ];
 });

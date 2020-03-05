@@ -10,6 +10,6 @@ $factory->define(Vehicle::class, function (Faker $faker) {
     return [
         'name' => $faker->randomNumber(6),
         'type' => $faker->word(),
-        'company_id' => factory(Company::class)->create()->id
+        'company_id' => factory(Company::class)
     ];
 });

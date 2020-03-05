@@ -9,6 +9,6 @@ use Faker\Generator as Faker;
 $factory->define(Driver::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'company_id' => factory(Company::class)->create()->id
+        'company_id' => factory(Company::class)
     ];
 });
