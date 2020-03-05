@@ -63,7 +63,7 @@ jQuery(document).ready(function($) {
     }
     if ($("#datetimepicker4").length) {
         $('#datetimepicker4').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm',
+            format: 'HH:mm',
             icons: {
                 time: "far fa-clock",
                 date: "fa fa-calendar-alt",
@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
     }
     if ($("#datetimepicker5").length) {
         $('#datetimepicker5').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm',
+            format: 'HH:mm',
             icons: {
                 time: "far fa-clock",
                 date: "fa fa-calendar-alt",
@@ -101,7 +101,7 @@ jQuery(document).ready(function($) {
     }
     if ($("#datetimepicker6").length) {
         $('#datetimepicker6').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm',
+            format: 'HH:mm',
             icons: {
                 time: "far fa-clock",
                 date: "fa fa-calendar-alt",

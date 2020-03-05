@@ -72,7 +72,7 @@ function toggleModal(id) {
         }
         if ($("#datetimepicker4").length) {
             $('#datetimepicker4').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm',
+                format: 'HH:mm',
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -80,7 +80,6 @@ function toggleModal(id) {
                     down: "fa fa-arrow-down",
                     today: 'fas fa-history',
                 },
-                defaultDate: $('#datetimepicker4').data('default'),
                 buttons: {
                     showToday: true,
                     showClear: false,
@@ -91,7 +90,7 @@ function toggleModal(id) {
         }
         if ($("#datetimepicker5").length) {
             $('#datetimepicker5').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm',
+                format: 'HH:mm',
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -99,7 +98,6 @@ function toggleModal(id) {
                     down: "fa fa-arrow-down",
                     today: 'fas fa-history',
                 },
-                defaultDate: $('#datetimepicker5').data('default'),
                 buttons: {
                     showToday: true,
                     showClear: false,
@@ -110,7 +108,7 @@ function toggleModal(id) {
         }
         if ($("#datetimepicker6").length) {
             $('#datetimepicker6').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm',
+                format: 'HH:mm',
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -118,7 +116,6 @@ function toggleModal(id) {
                     down: "fa fa-arrow-down",
                     today: 'fas fa-history',
                 },
-                defaultDate: $('#datetimepicker6').data('default'),
                 buttons: {
                     showToday: true,
                     showClear: false,

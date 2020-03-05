@@ -61,7 +61,7 @@
                                     <th>Dropped Time</th>
                                     <th>Trip Type</th>
                                     <th>Remaining Time</th>
-                                    <th style="min-width:60px"></th>
+                                    <th style="min-width:65px"></th>
                                 </tr>
                             </thead>
                             <tbody>
