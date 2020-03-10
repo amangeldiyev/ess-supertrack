@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Driver;
-use App\Policies\DriverPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,5 +24,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define('access-model', function ($user, $company_id) {
+            return ($user->company_id === 0 || $user->company_id === $company_id);
+        });
     }
 }

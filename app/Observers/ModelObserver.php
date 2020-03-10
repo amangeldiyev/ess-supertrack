@@ -14,7 +14,7 @@ class ModelObserver
      */
     public function creating(Model $model)
     {
-        if(!$model->company_id) {
+        if(!$model->company_id || auth()->user()->company_id !== 0) {
             $model->company_id = auth()->user()->company_id;
         }
     }
@@ -27,7 +27,7 @@ class ModelObserver
      */
     public function updating(Model $model)
     {
-        if(!$model->company_id) {
+        if(!$model->company_id || auth()->user()->company_id !== 0) {
             $model->company_id = auth()->user()->company_id;
         }
     }

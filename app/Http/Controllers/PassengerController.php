@@ -46,12 +46,6 @@ class PassengerController extends Controller
             'company_id' => 'nullable|exists:companies,id'
         ]);
 
-        $user_company_id = auth()->user()->company_id;
-
-        if($user_company_id != 0) {
-            $validatedData['company_id'] = $user_company_id;
-        }
-
         Passenger::create($validatedData);
 
         return redirect()->route('passengers.index');
@@ -76,7 +70,7 @@ class PassengerController extends Controller
      */
     public function edit(Passenger $passenger)
     {
-        Gate::authorize('update', $passenger);
+        Gate::authorize('access-model', $passenger->company_id);
         
         return view('concept.passenger.create', compact('passenger'));
     }
@@ -90,7 +84,7 @@ class PassengerController extends Controller
      */
     public function update(Request $request, Passenger $passenger)
     {
-        Gate::authorize('update', $passenger);
+        Gate::authorize('access-model', $passenger->company_id);
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -113,7 +107,7 @@ class PassengerController extends Controller
      */
     public function destroy(Passenger $passenger)
     {
-        Gate::authorize('forceDelete', $passenger);
+        Gate::authorize('access-model', $passenger->company_id);
 
         $passenger->delete();
 

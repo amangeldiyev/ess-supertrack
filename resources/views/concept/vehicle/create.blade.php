@@ -51,14 +51,16 @@
                                 @endforeach
                             </datalist>
                         </div>
-                        <div class="form-group">
-                            <label>Company</label>
-                            <select class="form-control" name="company_id">
-                                @foreach (\App\Company::all() as $company)
-                                <option value="{{$company->id}}" {{isset($vehicle) && $company->company_id == $company->id ? 'selected' : ''}}>{{$company->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (auth()->user()->company_id === 0)
+                            <div class="form-group">
+                                <label>Company</label>
+                                <select class="form-control" name="company_id">
+                                    @foreach (\App\Company::all() as $company)
+                                    <option value="{{$company->id}}" {{isset($vehicle) && $company->company_id == $company->id ? 'selected' : ''}}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                             
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>

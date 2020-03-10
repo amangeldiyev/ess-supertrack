@@ -67,7 +67,7 @@ class DriverController extends Controller
      */
     public function edit(Driver $driver)
     {
-        Gate::authorize('update', $driver);
+        Gate::authorize('access-model', $driver->company_id);
         
         return view('concept.driver.create', compact('driver'));
     }
@@ -81,7 +81,7 @@ class DriverController extends Controller
      */
     public function update(Request $request, Driver $driver)
     {
-        Gate::authorize('update', $driver);
+        Gate::authorize('access-model', $driver->company_id);
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -101,7 +101,7 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
-        Gate::authorize('forceDelete', $driver);
+        Gate::authorize('access-model', $driver->company_id);
         
         $driver->delete();
 

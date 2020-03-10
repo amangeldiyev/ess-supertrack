@@ -75,7 +75,7 @@ class TaxiRequestController extends Controller
      */
     public function edit(Request $request, TaxiRequest $taxiRequest)
     {
-        Gate::authorize('update', $taxiRequest);
+        Gate::authorize('access-model', $taxiRequest->company_id);
 
         if($request->expectsJson()) {
             return view('concept.taxi-request._form', compact('taxiRequest'))->render();
@@ -93,7 +93,7 @@ class TaxiRequestController extends Controller
      */
     public function update(TaxiRequestStore $request, TaxiRequest $taxiRequest)
     {
-        Gate::authorize('update', $taxiRequest);
+        Gate::authorize('access-model', $taxiRequest->company_id);
 
         $validatedData = $request->validated();
 
@@ -116,7 +116,7 @@ class TaxiRequestController extends Controller
      */
     public function destroy(TaxiRequest $taxiRequest)
     {
-        Gate::authorize('forceDelete', $taxiRequest);
+        Gate::authorize('access-model', $taxiRequest->company_id);
 
         $taxiRequest->delete();
 

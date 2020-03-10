@@ -43,12 +43,6 @@ class VehicleController extends Controller
             'type' => 'required|max:255',
             'company_id' => 'nullable|exists:companies,id'
         ]);
-
-        $user_company_id = auth()->user()->company_id;
-
-        if($user_company_id != 0) {
-            $validatedData['company_id'] = $user_company_id;
-        }
     
         Vehicle::create($validatedData);
 
@@ -74,7 +68,7 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        Gate::authorize('update', $vehicle);
+        Gate::authorize('access-model', $vehicle->company_id);
         
         return view('concept.vehicle.create', compact('vehicle'));
     }
@@ -88,7 +82,7 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
-        Gate::authorize('update', $vehicle);
+        Gate::authorize('access-model', $vehicle->company_id);
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -109,7 +103,7 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle)
     {
-        Gate::authorize('forceDelete', $vehicle);
+        Gate::authorize('access-model', $vehicle->company_id);
 
         $vehicle->delete();
 
