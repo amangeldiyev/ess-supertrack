@@ -33,7 +33,7 @@ class TaxiRequestStore extends FormRequest
             'passenger_type' => 'required|numeric|between:0,1',
             'qty' => 'required|numeric|between:1,50',
             'driver_in_time' => 'boolean|nullable',
-            'company_id' => 'required|exists:companies,id',
+            'company_id' => 'nullable|exists:companies,id',
             'passenger' => 'required|string|max:255',
             'phone' => 'string|nullable|max:255',
             'pick_up_location' => 'required|string',

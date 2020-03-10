@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Passenger;
+use Gate;
 use Illuminate\Http\Request;
 
 class PassengerController extends Controller
@@ -14,7 +15,7 @@ class PassengerController extends Controller
      */
     public function index()
     {
-        $passengers = Passenger::with('company')->get();
+        $passengers = Passenger::filterByCompany()->with('company')->get();
 
         return view('concept.passenger.index', compact('passengers'));
     }
@@ -42,8 +43,14 @@ class PassengerController extends Controller
             'badge_number' => 'required|unique:passengers|numeric|max:99999999',
             'phone' => 'string|max:15',
             'email' => 'string|email|max:255',
-            'company_id' => 'required|exists:companies,id'
+            'company_id' => 'nullable|exists:companies,id'
         ]);
+
+        $user_company_id = auth()->user()->company_id;
+
+        if($user_company_id != 0) {
+            $validatedData['company_id'] = $user_company_id;
+        }
 
         Passenger::create($validatedData);
 
@@ -69,6 +76,8 @@ class PassengerController extends Controller
      */
     public function edit(Passenger $passenger)
     {
+        Gate::authorize('update', $passenger);
+        
         return view('concept.passenger.create', compact('passenger'));
     }
 
@@ -81,6 +90,8 @@ class PassengerController extends Controller
      */
     public function update(Request $request, Passenger $passenger)
     {
+        Gate::authorize('update', $passenger);
+
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'badge_number' => 'required|unique:passengers,badge_number,'.$passenger->id.'|numeric|max:99999999',
@@ -102,6 +113,8 @@ class PassengerController extends Controller
      */
     public function destroy(Passenger $passenger)
     {
+        Gate::authorize('forceDelete', $passenger);
+
         $passenger->delete();
 
         return redirect()->route('passengers.index');
@@ -111,7 +124,7 @@ class PassengerController extends Controller
     {
         $q = strtolower($request->search);
         
-        $passengers = Passenger::whereRaw('LOWER(name) like ?', ["%{$q}%"])
+        $passengers = Passenger::filterByCompany()->whereRaw('LOWER(name) like ?', ["%{$q}%"])
             ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
             ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
             ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"])

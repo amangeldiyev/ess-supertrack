@@ -19,12 +19,10 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/passengers/search', 'PassengerController@search')->middleware('auth');
 
-Route::get('/passengers/search', 'PassengerController@search');
-
-Route::resource('taxi-requests', 'TaxiRequestController');
-Route::resource('companies', 'CompanyController');
-Route::resource('passengers', 'PassengerController');
-Route::resource('drivers', 'DriverController');
-Route::resource('vehicles', 'VehicleController');
+Route::resource('taxi-requests', 'TaxiRequestController')->middleware('auth');
+Route::resource('companies', 'CompanyController')->middleware('admin');
+Route::resource('passengers', 'PassengerController')->middleware('auth');
+Route::resource('drivers', 'DriverController')->middleware('auth');
+Route::resource('vehicles', 'VehicleController')->middleware('auth');

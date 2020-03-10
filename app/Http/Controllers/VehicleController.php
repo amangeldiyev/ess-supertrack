@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Vehicle;
+use Gate;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -14,7 +15,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::with('company')->get();
+        $vehicles = Vehicle::filterByCompany()->with('company')->get();
 
         return view('concept.vehicle.index', compact('vehicles'));
     }
@@ -40,8 +41,14 @@ class VehicleController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'type' => 'required|max:255',
-            'company_id' => 'required|exists:companies,id'
+            'company_id' => 'nullable|exists:companies,id'
         ]);
+
+        $user_company_id = auth()->user()->company_id;
+
+        if($user_company_id != 0) {
+            $validatedData['company_id'] = $user_company_id;
+        }
     
         Vehicle::create($validatedData);
 
@@ -67,6 +74,8 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
+        Gate::authorize('update', $vehicle);
+        
         return view('concept.vehicle.create', compact('vehicle'));
     }
 
@@ -79,6 +88,8 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
+        Gate::authorize('update', $vehicle);
+
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'type' => 'required|max:255',
@@ -98,6 +109,8 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle)
     {
+        Gate::authorize('forceDelete', $vehicle);
+
         $vehicle->delete();
 
         return redirect()->route('vehicles.index');

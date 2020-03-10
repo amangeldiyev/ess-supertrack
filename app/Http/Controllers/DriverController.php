@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Driver;
+use Gate;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -14,7 +15,7 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $drivers = Driver::with('company')->get();
+        $drivers = Driver::filterByCompany()->with('company')->get();
 
         return view('concept.driver.index', compact('drivers'));
     }
@@ -39,7 +40,7 @@ class DriverController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'company_id' => 'required|exists:companies,id'
+            'company_id' => 'nullable|exists:companies,id'
         ]);
 
         Driver::create($validatedData);
@@ -66,6 +67,8 @@ class DriverController extends Controller
      */
     public function edit(Driver $driver)
     {
+        Gate::authorize('update', $driver);
+        
         return view('concept.driver.create', compact('driver'));
     }
 
@@ -78,9 +81,11 @@ class DriverController extends Controller
      */
     public function update(Request $request, Driver $driver)
     {
+        Gate::authorize('update', $driver);
+
         $validatedData = $request->validate([
-            'name' => 'required|unique:companies|max:255',
-            'company_id' => 'required|exists:companies,id'
+            'name' => 'required|max:255',
+            'company_id' => 'nullable|exists:companies,id'
         ]);
 
         $driver->update($validatedData);
@@ -96,6 +101,8 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
+        Gate::authorize('forceDelete', $driver);
+        
         $driver->delete();
 
         return redirect()->route('drivers.index');

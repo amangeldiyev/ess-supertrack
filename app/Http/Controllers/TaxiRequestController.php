@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaxiRequestStore;
 use App\TaxiRequest;
+use Gate;
 use Illuminate\Http\Request;
 
 class TaxiRequestController extends Controller
@@ -15,7 +16,7 @@ class TaxiRequestController extends Controller
      */
     public function index()
     {
-        $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+        $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
 
         return view('concept.taxi-request.index', compact('taxiRequests'));
     }
@@ -74,6 +75,8 @@ class TaxiRequestController extends Controller
      */
     public function edit(Request $request, TaxiRequest $taxiRequest)
     {
+        Gate::authorize('update', $taxiRequest);
+
         if($request->expectsJson()) {
             return view('concept.taxi-request._form', compact('taxiRequest'))->render();
         }
@@ -90,6 +93,8 @@ class TaxiRequestController extends Controller
      */
     public function update(TaxiRequestStore $request, TaxiRequest $taxiRequest)
     {
+        Gate::authorize('update', $taxiRequest);
+
         $validatedData = $request->validated();
 
         $taxiRequest->update(array_merge($validatedData, ['driver_in_time' => $validatedData['driver_in_time'] ?? 0]));
@@ -111,6 +116,8 @@ class TaxiRequestController extends Controller
      */
     public function destroy(TaxiRequest $taxiRequest)
     {
+        Gate::authorize('forceDelete', $taxiRequest);
+
         $taxiRequest->delete();
 
         return redirect()->route('taxi-requests.index');

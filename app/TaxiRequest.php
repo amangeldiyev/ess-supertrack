@@ -2,11 +2,15 @@
 
 namespace App;
 
+use App\Traits\FilterByCompanyScope;
+use App\Traits\ObservantTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class TaxiRequest extends Model
 {
+    use ObservantTrait, FilterByCompanyScope;
+
     public const STATUSES = [
         0 => 'Pending',
         1 => 'Confirmed',
@@ -46,6 +50,33 @@ class TaxiRequest extends Model
     ];
 
     protected $appends = ['remaining_time'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function($model){
+
+            if($model->status == 1) {
+                // Notify passenger about request confirmation
+            }
+
+            if($model->status == 2) {
+                // Notify passenger about vehicle and driver assignment for request
+            }
+        });
+
+        self::updated(function($model){
+
+            if($model->getOriginal('status') != 1 && $model->status == 1) {
+                // Notify passenger about request confirmation
+            }
+
+            if($model->getOriginal('status') != 2 && $model->status == 2) {
+                // Notify passenger about vehicle and driver assignment for request
+            }
+        });
+    }
 
     public function company()
     {

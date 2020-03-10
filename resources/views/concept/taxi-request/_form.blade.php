@@ -130,42 +130,44 @@
             
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label>Company</label>
-                            <select name="company_id" class="form-control">
-                                @foreach (\App\Company::all() as $company)
-                                <option value="{{$company->id}}" {{isset($taxiRequest) && $taxiRequest->company_id == $company->id ? "selected" : ""}}>{{$company->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
                             <label>Passenger name</label>
                             <input name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off">
                             <datalist id="passengers">
-                                @foreach ($passengers = \App\Passenger::all() as $passenger)
+                                @foreach ($passengers = \App\Passenger::filterByCompany()->get() as $passenger)
                                 <option value="{{$passenger->name}}">{{$passenger->badge_number}} - {{$passenger->phone}} - {{$passenger->email}}</option>
                                 @endforeach
                             </datalist>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label>Phone</label>
                             <input name="phone" value="{{isset($taxiRequest) ? $taxiRequest->phone : ''}}" type="text" class="form-control">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label>Pick Up Location</label>
                             <input name="pick_up_location" value="{{isset($taxiRequest) ? $taxiRequest->pick_up_location : ''}}" type="text" class="form-control">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label>Drop Off Location</label>
                             <input name="drop_off_location" value="{{isset($taxiRequest) ? $taxiRequest->drop_off_location : ''}}" type="text" class="form-control">
                         </div>
                     </div>
             
                     <div class="form-row">
+                        @if (auth()->user()->company_id === 0)
+                            <div class="form-group col-md-3">
+                                <label>Company</label>
+                                <select name="company_id" class="form-control">
+                                    @foreach (\App\Company::all() as $company)
+                                    <option value="{{$company->id}}" {{isset($taxiRequest) && $taxiRequest->company_id == $company->id ? "selected" : ""}}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                         <div class="form-group col-md-3">
                             <label>Drivers</label>
                             <select name="driver_id" class="form-control">
                                 <option value="">Select Driver</option>
-                                @foreach (\App\Driver::all() as $driver)
+                                @foreach (\App\Driver::filterByCompany()->get() as $driver)
                                 <option value="{{$driver->id}}" {{isset($taxiRequest) && $taxiRequest->driver_id == $driver->id ? "selected" : ""}}>{{$driver->name}}</option>
                                 @endforeach
                             </select>
@@ -174,12 +176,12 @@
                             <label>Vehicle Number</label>
                             <select name="vehicle_id" class="form-control">
                                 <option value="">Select Vehicle</option>
-                                @foreach (\App\Vehicle::all() as $vehicle)
+                                @foreach (\App\Vehicle::filterByCompany()->get() as $vehicle)
                                 <option value="{{$vehicle->id}}" {{isset($taxiRequest) && $taxiRequest->vehicle_id == $vehicle->id ? "selected" : ""}}>{{$vehicle->name}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Ordered By</label>
                             <select name="ordered_by" class="form-control">
                                 @foreach ($passengers as $passenger)
