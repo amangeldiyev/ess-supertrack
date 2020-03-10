@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    ESS Supertrack
                 </div>
 
                 <div class="links">
@@ -96,21 +96,5 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            document.onkeydown = function(e) {
-        
-                e = e || window.event;
-        
-                console.log(e.keyCode)
-                if(e.keyCode == 112) {
-                    e.preventDefault()
-        
-                    window.open('/form', 'new', 'width=1050,height=700')
-                } else if(e.keyCode == 27) {
-                    window.close()
-                }
-            }
-        </script>
     </body>
 </html>

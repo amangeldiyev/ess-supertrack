@@ -128,13 +128,12 @@ class PassengerController extends Controller
             $data = '';
 
             foreach ($passengers as $passenger) {
-                $data .= '<option value="'.$passenger->name.'">'.$passenger->badge_number.' - '.$passenger->phone.' - '.$passenger->email.'</option>';
+                $data .= `<option value="$passenger->name">$passenger->badge_number - $passenger->phone - $passenger->email</option>`;
             }
             return response()->json([
                 'passengers' => $data
             ]);
         }
 
-        return;
     }
 }

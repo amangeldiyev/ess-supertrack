@@ -134,7 +134,7 @@ function submitForm(e, id) {
     e.preventDefault()
 
     $.ajax({
-        url: id ? `/taxi-requests/${id}` : "/taxi-requests",
+        url: id ? "/taxi-requests/" + id : "/taxi-requests",
         method: id ? "PUT" : "POST",
         data: $(e.target).serialize(),
     }).done(function(response) {
