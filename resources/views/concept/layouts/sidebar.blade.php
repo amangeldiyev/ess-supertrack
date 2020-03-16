@@ -11,76 +11,40 @@
                         Menu
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Dashboard <span class="badge badge-success">6</span></a>
-                        <div id="submenu-1" class="collapse submenu" style="">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="index.html" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
-                                    <div id="submenu-1-2" class="collapse submenu" style="">
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../index.html">E Commerce Dashboard</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../ecommerce-product.html">Product List</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../ecommerce-product-single.html">Product Single</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../ecommerce-product-checkout.html">Product Checkout</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../dashboard-finance.html">Finance</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../dashboard-sales.html">Sales</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1">Infulencer</a>
-                                    <div id="submenu-1-1" class="collapse submenu" style="">
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../dashboard-influencer.html">Influencer</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../influencer-finder.html">Influencer Finder</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../influencer-profile.html">Influencer Profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <a class="nav-link {{ $currentRoute == 'home' ? 'active' : '' }}" href="{{ route('home') }}">
+                            <i class="fa fa-fw fa-user-circle"></i>Dashboard
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $currentRoute == 'taxi-requests' ? 'active' : '' }}" href="{{ route('taxi-requests.index') }}">
                             <i class="fa fa-fw fa-rocket"></i>Taxi Requests
                         </a>
                     </li>
+                    @can('access-model', 0)
                     <li class="nav-item">
-                        <a class="nav-link {{ $currentRoute == 'companies' ? 'active' : '' }}" href="{{ route('companies.index') }}">
-                            <i class="fas fa-fw fa-chart-pie"></i>Companies
+                        <a class="nav-link {{ $currentRoute == 'users' ? 'active' : '' }}" href="{{ route('users.index') }}">
+                            <i class="fas fa-fw fa-users"></i>Users
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ $currentRoute == 'companies' ? 'active' : '' }}" href="{{ route('companies.index') }}">
+                            <i class="fas fa-boxes"></i>Companies
+                        </a>
+                    </li>
+                    @endcan
+                    <li class="nav-item">
                         <a class="nav-link {{ $currentRoute == 'passengers' ? 'active' : '' }}" href="{{ route('passengers.index') }}">
-                            <i class="fab fa-fw fa-wpforms"></i>Passengers
+                            <i class="far fa-address-card"></i>Passengers
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $currentRoute == 'drivers' ? 'active' : '' }}" href="{{ route('drivers.index') }}">
-                            <i class="fas fa-fw fa-table"></i>Drivers
+                            <i class="fas fa-address-card"></i>Drivers
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $currentRoute == 'vehicles' ? 'active' : '' }}" href="{{ route('vehicles.index') }}">
-                            <i class="fas fa-fw fa-file"></i>Vehicles
+                            <i class="fas fa-truck"></i>Vehicles
                         </a>
                     </li>
                     <li class="nav-divider">
