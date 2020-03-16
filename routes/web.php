@@ -13,7 +13,7 @@
 
 Route::view('/', 'welcome');
 
-Route::view('/home', 'concept.home')->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes([
     'register' => false,
