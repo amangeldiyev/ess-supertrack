@@ -19,7 +19,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>#</label>
-                            <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : ''}}" type="text" class="form-control">
+                            <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : time()}}" type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <div class="form-group">
