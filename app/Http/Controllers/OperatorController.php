@@ -93,7 +93,7 @@ class OperatorController extends Controller
             'company_id' => ['required']
         ]);
 
-        if($validatedData['password']) {
+        if ($validatedData['password']) {
             $validatedData['password'] = Hash::make($validatedData['password']);
         } else {
             unset($validatedData['password']);

@@ -28,7 +28,7 @@ class TaxiRequestController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             return view('concept.taxi-request._form')->render();
         }
 
@@ -47,7 +47,7 @@ class TaxiRequestController extends Controller
 
         $taxiRequest = TaxiRequest::create($validatedData);
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
             return view('concept.taxi-request._table', compact('taxiRequests'))->render();
@@ -77,7 +77,7 @@ class TaxiRequestController extends Controller
     {
         Gate::authorize('access-model', $taxiRequest->company_id);
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             return view('concept.taxi-request._form', compact('taxiRequest'))->render();
         }
 
@@ -99,7 +99,7 @@ class TaxiRequestController extends Controller
 
         $taxiRequest->update(array_merge($validatedData, ['driver_in_time' => $validatedData['driver_in_time'] ?? 0]));
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
             return view('concept.taxi-request._table', compact('taxiRequests'))->render();

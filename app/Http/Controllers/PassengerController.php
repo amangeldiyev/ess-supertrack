@@ -124,7 +124,7 @@ class PassengerController extends Controller
             ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"])
             ->get();
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             $data = '';
 
             foreach ($passengers as $passenger) {
@@ -134,6 +134,5 @@ class PassengerController extends Controller
                 'passengers' => $data
             ]);
         }
-
     }
 }
