@@ -40,7 +40,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="max-width:70%;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
