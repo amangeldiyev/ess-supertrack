@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\TaxiRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaxiRequestStore extends FormRequest
@@ -28,7 +29,7 @@ class TaxiRequestStore extends FormRequest
             'date' => 'required|date_format:d/m/Y',
             'start_date' => 'required|date_format:d/m/Y H:i',
             'end_date' => 'required|date_format:d/m/Y H:i',
-            'status' => 'required|numeric|between:0,5',
+            'status' => 'required|numeric|in:'.implode(',', array_keys(TaxiRequest::STATUSES)),
             'type' => 'required|numeric|between:0,1',
             'passenger_type' => 'required|numeric|between:0,1',
             'qty' => 'required|numeric|between:1,50',

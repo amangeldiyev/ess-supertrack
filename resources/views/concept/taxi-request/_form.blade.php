@@ -44,7 +44,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>#</label>
-                            <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : time()}}" type="text" class="form-control" disabled>
+                            <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : time()}}" type="text" class="form-control" readonly>
                         </div>
                         <div class="form-group col-md-4">
                             <div class="form-group">
@@ -60,11 +60,9 @@
                         <div class="form-group col-md-4">
                             <label>Trip Status</label>
                             <select name="status" class="form-control">
-                                <option value="0" {{isset($taxiRequest) && $taxiRequest->status == 0 ? "selected" : ""}}>Pending</option>
-                                <option value="1" {{isset($taxiRequest) && $taxiRequest->status == 1 ? "selected" : ""}}>Confirmed</option>
-                                <option value="2" {{isset($taxiRequest) && $taxiRequest->status == 2 ? "selected" : ""}}>Assigned</option>
-                                <option value="3" {{isset($taxiRequest) && $taxiRequest->status == 3 ? "selected" : ""}}>Pick Up</option>
-                                <option value="4" {{isset($taxiRequest) && $taxiRequest->status == 4 ? "selected" : ""}}>Drop Off</option>
+                                @foreach (\App\TaxiRequest::STATUSES as $key => $status)
+                                    <option value="{{$key}}" {{isset($taxiRequest) && $taxiRequest->status == $key ? "selected" : ""}}>{{$status}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

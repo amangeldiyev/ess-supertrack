@@ -15,8 +15,9 @@ class TaxiRequest extends Model
         0 => 'Pending',
         1 => 'Confirmed',
         2 => 'Assigned',
-        3 => 'Pick Up',
-        4 => 'Drop Off'
+        3 => 'Cancelled',
+        4 => 'Pick Up',
+        5 => 'Drop Off'
     ];
 
     public const TYPES = [
@@ -55,24 +56,22 @@ class TaxiRequest extends Model
     {
         parent::boot();
 
-        self::created(function($model){
-
-            if($model->status == 1) {
+        self::created(function ($model) {
+            if ($model->status == 1) {
                 // Notify passenger about request confirmation
             }
 
-            if($model->status == 2) {
+            if ($model->status == 2) {
                 // Notify passenger about vehicle and driver assignment for request
             }
         });
 
-        self::updated(function($model){
-
-            if($model->getOriginal('status') != 1 && $model->status == 1) {
+        self::updated(function ($model) {
+            if ($model->getOriginal('status') != 1 && $model->status == 1) {
                 // Notify passenger about request confirmation
             }
 
-            if($model->getOriginal('status') != 2 && $model->status == 2) {
+            if ($model->getOriginal('status') != 2 && $model->status == 2) {
                 // Notify passenger about vehicle and driver assignment for request
             }
         });
@@ -98,25 +97,25 @@ class TaxiRequest extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function getRemainingTimeAttribute() {
+    public function getRemainingTimeAttribute()
+    {
         $minutes = Carbon::now()->diffInMinutes($this->start_date, false);
 
-        if($minutes <= 0) {
+        if ($minutes <= 0) {
             return '00:00';
         }
 
         $hours = floor($minutes/60);
         $minutes = ($minutes%60);
 
-        if($hours < 10) {
+        if ($hours < 10) {
             $hours = '0'.$hours;
         }
 
-        if($minutes < 10) {
+        if ($minutes < 10) {
             $minutes = '0'.$minutes;
         }
 
         return $hours.':'.$minutes;
-
     }
 }

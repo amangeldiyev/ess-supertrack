@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         @foreach ($taxiRequests as $request)
-                            <tr onclick="toggleModal({{$request->id}})" class="{{$request->status ? '' : 'table-danger'}}">
+                            <tr class="{{$request->status ? '' : 'table-danger'}}">
                                 <td>{{$request->id}}</td>
                                 <td>{{$request->vehicle ? $request->vehicle->type : ''}}</td>
                                 <td>{{$request->vehicle ? $request->vehicle->name : ''}}</td>
@@ -44,7 +44,8 @@
                                 <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
                                 <td>{{$request->remaining_time}}</td>
                                 <td>
-                                    <a href="#" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="#" onclick="toggleModal({{$request->id}})" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="#" type="button" class="btn btn-xs btn-success"><i class="fas fa-check"></i></a>
                                     <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
