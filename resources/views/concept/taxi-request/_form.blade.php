@@ -16,6 +16,31 @@
                     @endif
                     
                     @csrf
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label>Passenger name</label>
+                            <input id="passenger" name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off">
+                            <datalist id="passengers">
+                                @foreach ($passengers = \App\Passenger::filterByCompany()->get() as $passenger)
+                                <option value="{{$passenger->name}}">{{$passenger->badge_number}} - {{$passenger->phone}} - {{$passenger->email}}</option>
+                                @endforeach
+                            </datalist>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Phone</label>
+                            <input name="phone" value="{{isset($taxiRequest) ? $taxiRequest->phone : ''}}" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Pick Up Location</label>
+                            <input name="pick_up_location" value="{{isset($taxiRequest) ? $taxiRequest->pick_up_location : ''}}" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Drop Off Location</label>
+                            <input name="drop_off_location" value="{{isset($taxiRequest) ? $taxiRequest->drop_off_location : ''}}" type="text" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>#</label>
@@ -127,30 +152,6 @@
                     </div>
             
                     <hr />
-            
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label>Passenger name</label>
-                            <input name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off">
-                            <datalist id="passengers">
-                                @foreach ($passengers = \App\Passenger::filterByCompany()->get() as $passenger)
-                                <option value="{{$passenger->name}}">{{$passenger->badge_number}} - {{$passenger->phone}} - {{$passenger->email}}</option>
-                                @endforeach
-                            </datalist>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Phone</label>
-                            <input name="phone" value="{{isset($taxiRequest) ? $taxiRequest->phone : ''}}" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Pick Up Location</label>
-                            <input name="pick_up_location" value="{{isset($taxiRequest) ? $taxiRequest->pick_up_location : ''}}" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Drop Off Location</label>
-                            <input name="drop_off_location" value="{{isset($taxiRequest) ? $taxiRequest->drop_off_location : ''}}" type="text" class="form-control">
-                        </div>
-                    </div>
             
                     <div class="form-row">
                         @if (auth()->user()->company_id === 0)

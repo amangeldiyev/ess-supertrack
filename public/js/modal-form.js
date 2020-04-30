@@ -125,6 +125,8 @@ function toggleModal(id) {
     
         }
 
+        document.getElementById("passenger").focus();
+
     }).fail(function(e) {
         console.log(e)
     })
