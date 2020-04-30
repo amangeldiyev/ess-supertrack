@@ -13,6 +13,7 @@ function toggleModal(id) {
         if ($("#datetimepicker1").length) {
             $('#datetimepicker1').datetimepicker({
                 format: 'DD/MM/YYYY',
+                allowInputToggle: true,
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -33,6 +34,9 @@ function toggleModal(id) {
         if ($("#datetimepicker2").length) {
             $('#datetimepicker2').datetimepicker({
                 format: 'DD/MM/YYYY HH:mm',
+                viewMode: 'times',
+                stepping: 5,
+                allowInputToggle: true,
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -53,6 +57,9 @@ function toggleModal(id) {
         if ($("#datetimepicker3").length) {
             $('#datetimepicker3').datetimepicker({
                 format: 'DD/MM/YYYY HH:mm',
+                viewMode: 'times',
+                stepping: 5,
+                allowInputToggle: true,
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -73,6 +80,7 @@ function toggleModal(id) {
         if ($("#datetimepicker4").length) {
             $('#datetimepicker4').datetimepicker({
                 format: 'HH:mm',
+                allowInputToggle: true,
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -91,6 +99,7 @@ function toggleModal(id) {
         if ($("#datetimepicker5").length) {
             $('#datetimepicker5').datetimepicker({
                 format: 'HH:mm',
+                allowInputToggle: true,
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",
@@ -109,6 +118,7 @@ function toggleModal(id) {
         if ($("#datetimepicker6").length) {
             $('#datetimepicker6').datetimepicker({
                 format: 'HH:mm',
+                allowInputToggle: true,
                 icons: {
                     time: "far fa-clock",
                     date: "fa fa-calendar-alt",

@@ -44,7 +44,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>#</label>
-                            <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : time()}}" type="text" class="form-control">
+                            <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : time()}}" type="text" class="form-control" disabled>
                         </div>
                         <div class="form-group col-md-4">
                             <div class="form-group">
@@ -209,5 +209,5 @@
 @push('scripts')
     <script src="{{ asset('/vendor/datepicker/moment.js') }}"></script>
     <script src="{{ asset('/vendor/datepicker/tempusdominus-bootstrap-4.js') }}"></script>
-    <script src="{{ asset('/vendor/datepicker/datepicker.js') }}"></script>
+    {{-- <script src="{{ asset('/vendor/datepicker/datepicker.js') }}"></script> --}}
 @endpush
