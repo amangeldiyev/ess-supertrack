@@ -146,7 +146,7 @@ function submitForm(e, id) {
     e.preventDefault()
 
     $.ajax({
-        url: id ? "/taxi-requests/" + id : "/taxi-requests",
+        url: $(e.target).attr('action'),
         method: id ? "PUT" : "POST",
         data: $(e.target).serialize(),
     }).done(function(response) {
@@ -182,7 +182,7 @@ function submitForm(e, id) {
 
 function setStatus(id, status) {
     $.ajax({
-        url: "/taxi-requests/status/" + id + "/" + status,
+        url: "/taxi-requests/" + id + "/status/" + status,
         method: "GET",
     }).done(function(response) {
         $('#table-wrapper').html(response)
@@ -207,6 +207,38 @@ function setStatus(id, status) {
                     .appendTo('#example_wrapper .col-md-6:eq(0)');
             });
         }
+    }).fail(function(e) {
+        console.log(e)
+    })
+}
+
+function setDriver(id) {
+    $('#form-modal .modal-title').text('Set Driver');
+    $('#form-modal .modal-body').html('<div class="mx-auto" style="width: 200px;"><span class="dashboard-spinner spinner-xxl"></span></div>');
+    $('#form-modal').modal('toggle');
+
+    $.ajax({
+        url: "/taxi-requests/"+ id + "/setDriver",
+    }).done(function(response) {
+        
+        $('#form-modal .modal-body').html(response)
+
+    }).fail(function(e) {
+        console.log(e)
+    })
+}
+
+function setVehicle(id) {
+    $('#form-modal .modal-title').text('Set Vehicle');
+    $('#form-modal .modal-body').html('<div class="mx-auto" style="width: 200px;"><span class="dashboard-spinner spinner-xxl"></span></div>');
+    $('#form-modal').modal('toggle');
+
+    $.ajax({
+        url: "/taxi-requests/"+ id + "/setVehicle",
+    }).done(function(response) {
+        
+        $('#form-modal .modal-body').html(response)
+
     }).fail(function(e) {
         console.log(e)
     })

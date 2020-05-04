@@ -31,9 +31,9 @@
                             <tr class="{{$request->status ? '' : 'table-danger'}}">
                                 <td>{{$request->id}}</td>
                                 <td>{{$request->vehicle ? $request->vehicle->type : ''}}</td>
-                                <td>{{$request->vehicle ? $request->vehicle->name : ''}}</td>
+                                <td class="text-center">{!! $request->vehicle ? $request->vehicle->name : '<a href="#" onclick="setVehicle('.$request->id.')" type="button" class="btn btn-xs btn-info"><i class="fas fa-truck"></i></a>' !!}</td>
                                 <td>{{\App\TaxiRequest::STATUSES[$request->status]}}</td>
-                                <td>{{$request->driver ? $request->driver->name : ''}}</td>
+                                <td class="text-center">{!! $request->driver ? $request->driver->name : '<a href="#" onclick="setDriver('.$request->id.')" type="button" class="btn btn-xs btn-info"><i class="fas fa-address-card"></i></a>' !!}</td>
                                 <td>{{\Carbon\Carbon::parse($request->start_date)->format('H:i')}}</td>
                                 <td>{{$request->on_location_time}}</td>
                                 <td>{{$request->client->name}}</td>
@@ -43,11 +43,11 @@
                                 <td>{{$request->drop_off_time}}</td>
                                 <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
                                 <td>{{$request->remaining_time}}</td>
-                                <td>
-                                    <a href="#" onclick="toggleModal({{$request->id}})" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="#" onclick="setStatus({{$request->id}}, 1)" type="button" class="btn btn-xs btn-success"><i class="fas fa-check"></i></a>
-                                    <a href="#" onclick="setStatus({{$request->id}}, 3)" type="button" class="btn btn-xs btn-secondary"><i class="fas fa-window-close"></i></a>
-                                    <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger">
+                                <td class="text-center">
+                                    <a href="#" onclick="toggleModal({{$request->id}})" type="button" class="btn btn-xs btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" onclick="setStatus({{$request->id}}, 1)" type="button" class="btn btn-xs btn-success" title="Confirm"><i class="fas fa-check"></i></a>
+                                    <a href="#" onclick="setStatus({{$request->id}}, 3)" type="button" class="btn btn-xs btn-brand" title="Cancel"><i class="fas fa-times"></i></a>
+                                    <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger" title="Delete">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                     <form id="delete-form-{{$request->id}}" action="{{ route('taxi-requests.destroy', ['taxi_request' => $request->id]) }}" method="POST" style="display: none;">

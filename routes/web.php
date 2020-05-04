@@ -22,7 +22,9 @@ Auth::routes([
 ]);
 
 Route::get('/passengers/search', 'PassengerController@search')->middleware('auth');
-Route::get('/taxi-requests/status/{taxiRequest}/{status}', 'TaxiRequestController@setStatus')->middleware('auth');
+Route::get('/taxi-requests/{taxiRequest}/status/{status}', 'TaxiRequestController@setStatus')->middleware('auth');
+Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setDriver', 'TaxiRequestController@setDriver')->name('taxi-requests.setDriver')->middleware('auth');
+Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setVehicle', 'TaxiRequestController@setVehicle')->name('taxi-requests.setVehicle')->middleware('auth');
 
 Route::resource('taxi-requests', 'TaxiRequestController')->middleware('auth');
 Route::resource('users', 'OperatorController')->middleware('auth', 'admin');

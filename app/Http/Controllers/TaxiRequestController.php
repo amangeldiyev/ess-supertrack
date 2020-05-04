@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Driver;
 use App\Http\Requests\TaxiRequestStore;
 use App\TaxiRequest;
+use App\Vehicle;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -48,7 +50,7 @@ class TaxiRequestController extends Controller
         $taxiRequest = TaxiRequest::create($validatedData);
 
         if ($request->expectsJson()) {
-            $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
             return view('concept.taxi-request._table', compact('taxiRequests'))->render();
         }
@@ -100,7 +102,7 @@ class TaxiRequestController extends Controller
         $taxiRequest->update(array_merge($validatedData, ['driver_in_time' => $validatedData['driver_in_time'] ?? 0]));
 
         if ($request->expectsJson()) {
-            $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
             return view('concept.taxi-request._table', compact('taxiRequests'))->render();
         }
@@ -121,9 +123,69 @@ class TaxiRequestController extends Controller
 
         $taxiRequest->setStatus($status);
 
-        $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+        $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
         return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+    }
+
+    /**
+     * Set driver to taxi-request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\TaxiRequest  $taxiRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function setDriver(Request $request, TaxiRequest $taxiRequest)
+    {
+
+        Gate::authorize('access-model', $taxiRequest->company_id);
+
+        if ($request->isMethod('PUT')) {
+
+            $validatedData = $request->validate([
+                'driver_id' => 'required|exists:drivers,id',
+            ]);
+
+            $taxiRequest->update($validatedData);
+            
+            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        }
+
+        $drivers = Driver::filterByCompany($taxiRequest->company_id)->get();
+            
+        return view('concept.taxi-request._drivers', compact('drivers', 'taxiRequest'))->render();
+    }
+
+    /**
+     * Set vehicle to taxi-request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\TaxiRequest  $taxiRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function setVehicle(Request $request, TaxiRequest $taxiRequest)
+    {
+
+        Gate::authorize('access-model', $taxiRequest->company_id);
+
+        if ($request->isMethod('PUT')) {
+
+            $validatedData = $request->validate([
+                'vehicle_id' => 'required|exists:vehicles,id',
+            ]);
+
+            $taxiRequest->update($validatedData);
+            
+            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        }
+
+        $vehicles = Vehicle::filterByCompany($taxiRequest->company_id)->get();
+            
+        return view('concept.taxi-request._vehicles', compact('vehicles', 'taxiRequest'))->render();
     }
 
     /**
