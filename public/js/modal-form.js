@@ -180,6 +180,38 @@ function submitForm(e, id) {
     })
 }
 
+function setStatus(id, status) {
+    $.ajax({
+        url: "/taxi-requests/status/" + id + "/" + status,
+        method: "GET",
+    }).done(function(response) {
+        $('#table-wrapper').html(response)
+
+        if ($("table.second").length) {
+
+            $(document).ready(function() {
+                var table = $('table.second').DataTable({
+                    lengthChange: false,
+                    ordering: false,
+                    buttons: [
+                        {
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'A4'
+                        },
+                        'copy', 'excel', 'print', 'colvis'
+                    ]
+                });
+    
+                table.buttons().container()
+                    .appendTo('#example_wrapper .col-md-6:eq(0)');
+            });
+        }
+    }).fail(function(e) {
+        console.log(e)
+    })
+}
+
 document.onkeydown = function (e) {
 
     e = e || window.event;

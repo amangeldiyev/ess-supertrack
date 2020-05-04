@@ -45,7 +45,8 @@
                                 <td>{{$request->remaining_time}}</td>
                                 <td>
                                     <a href="#" onclick="toggleModal({{$request->id}})" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="#" type="button" class="btn btn-xs btn-success"><i class="fas fa-check"></i></a>
+                                    <a href="#" onclick="setStatus({{$request->id}}, 1)" type="button" class="btn btn-xs btn-success"><i class="fas fa-check"></i></a>
+                                    <a href="#" onclick="setStatus({{$request->id}}, 3)" type="button" class="btn btn-xs btn-secondary"><i class="fas fa-window-close"></i></a>
                                     <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger">
                                         <i class="far fa-trash-alt"></i>
                                     </a>

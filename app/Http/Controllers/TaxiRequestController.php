@@ -109,6 +109,24 @@ class TaxiRequestController extends Controller
     }
 
     /**
+     * Set status to taxi-request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\TaxiRequest  $taxiRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function setStatus(Request $request, TaxiRequest $taxiRequest, $status)
+    {
+        Gate::authorize('access-model', $taxiRequest->company_id);
+
+        $taxiRequest->setStatus($status);
+
+        $taxiRequests = TaxiRequest::latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+        return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\TaxiRequest  $taxiRequest

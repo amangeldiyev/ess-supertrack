@@ -118,4 +118,11 @@ class TaxiRequest extends Model
 
         return $hours.':'.$minutes;
     }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        $this->save();
+    }
 }

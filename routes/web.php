@@ -22,6 +22,7 @@ Auth::routes([
 ]);
 
 Route::get('/passengers/search', 'PassengerController@search')->middleware('auth');
+Route::get('/taxi-requests/status/{taxiRequest}/{status}', 'TaxiRequestController@setStatus')->middleware('auth');
 
 Route::resource('taxi-requests', 'TaxiRequestController')->middleware('auth');
 Route::resource('users', 'OperatorController')->middleware('auth', 'admin');
