@@ -28,6 +28,6 @@ class TaxiRequestConfirmNotification
     public function handle(TaxiRequestConfirmed $event)
     {
         $smsSender = new KcellSms();
-        $smsSender->send('Your taxi request has been confirmed', $event->taxiRequest->client->phone);
+        $smsSender->send('Your taxi request has been confirmed(' . $event->taxiRequest->start_date . ')', $event->taxiRequest->client->phone);
     }
 }
