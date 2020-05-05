@@ -17,13 +17,8 @@ class KcellSms implements SmsSender
      */
     public function send($message, $phone)
     {
-        $client = new Client();
-        
         try {
-            \Log::info(config('services.sms.login'));
-            \Log::info(config('services.sms.password'));
-            \Log::info(config('services.sms.sender'));
-            
+            $client = new Client();
             $client->request('POST', 'https://msg.kcell.kz/api/v3/messages', [
                 'auth' => [config('services.sms.login'), config('services.sms.password')],
                 'json' => [
