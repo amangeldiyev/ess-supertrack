@@ -20,7 +20,7 @@ class KcellSms implements SmsSender
         $client = new Client();
         
         try {
-            $client->request('POST', 'https://amsg.kcell.kz/api/v3/messages', [
+            $client->request('POST', 'https://msg.kcell.kz/api/v3/messages', [
                 'auth' => [config('services.sms.login'), config('services.sms.password')],
                 'json' => [
                     "client_message_id" => time(),
