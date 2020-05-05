@@ -27,7 +27,10 @@ class TaxiRequestAssignedNotification
      */
     public function handle(TaxiRequestAssigned $event)
     {
+        $text = $event->taxiRequest->sms_text($event->taxiRequest->company->assign_sms_template);
+        $phone = $event->taxiRequest->client->phone;
+
         $smsSender = new KcellSms();
-        $smsSender->send('Your taxi request has been assigned(' . $event->taxiRequest->start_date . ')', $event->taxiRequest->client->phone);
+        $smsSender->send($text, $phone);
     }
 }

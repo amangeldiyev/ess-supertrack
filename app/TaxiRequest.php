@@ -6,6 +6,7 @@ use App\Traits\FilterByCompanyScope;
 use App\Traits\ObservantTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TaxiRequest extends Model
 {
@@ -99,5 +100,13 @@ class TaxiRequest extends Model
         $this->status = $status;
 
         $this->save();
+    }
+
+    public function sms_text($text)
+    {
+        return Str::of($text)->replace('[start_date]', $this->start_date)
+            ->replace('[driver]', $this->driver->name)
+            ->replace('[vehicle]', $this->vehicle->name)
+            ->replace('[type]', $this->vehicle->type);
     }
 }

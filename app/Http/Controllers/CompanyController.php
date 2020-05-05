@@ -38,7 +38,9 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:companies|max:255'
+            'name' => 'required|unique:companies|max:255',
+            'confirm_sms_template' => 'nullable|string',
+            'assign_sms_template' => 'nullable|string',
         ]);
 
         Company::create($validatedData);
@@ -78,7 +80,9 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:companies|max:255'
+            'name' => 'required|max:255|unique:companies,name,'.$company->id,
+            'confirm_sms_template' => 'nullable|string',
+            'assign_sms_template' => 'nullable|string',
         ]);
 
         $company->update($validatedData);

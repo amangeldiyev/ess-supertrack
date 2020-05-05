@@ -2,13 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\TaxiRequestConfirmed;
 use App\Services\KcellSms;
-use App\TaxiRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class TaxiRequestConfirmNotification
+class TaxiRequestNotification
 {
     /**
      * Create the event listener.
@@ -23,15 +21,12 @@ class TaxiRequestConfirmNotification
     /**
      * Handle the event.
      *
-     * @param  TaxiRequestConfirmed  $event
+     * @param  object  $event
      * @return void
      */
-    public function handle(TaxiRequestConfirmed $event)
+    public function handle($event)
     {
-        $text = $event->taxiRequest->sms_text($event->taxiRequest->company->confirm_sms_template);
-        $phone = $event->taxiRequest->client->phone;
-
         $smsSender = new KcellSms();
-        $smsSender->log($text, $phone);
+        $smsSender->send('Your taxi request has been assigned(' . $event->taxiRequest->start_date . ')', $event->taxiRequest->client->phone);
     }
 }
