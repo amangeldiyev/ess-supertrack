@@ -103,7 +103,7 @@ class PassengerController extends Controller
         $passenger->update(array_merge(
             $validatedData,
             ['sms_notification' => $validatedData['sms_notification'] ?? 0],
-            ['email_notification' => $validatedData['email_notification'] ?? 0],
+            ['email_notification' => $validatedData['email_notification'] ?? 0]
         ));
 
         return redirect()->route('passengers.index');
