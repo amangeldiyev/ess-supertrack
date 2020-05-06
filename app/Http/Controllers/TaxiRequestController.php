@@ -7,6 +7,7 @@ use App\Events\TaxiRequestStatusChanged;
 use App\Http\Requests\TaxiRequestStore;
 use App\TaxiRequest;
 use App\Vehicle;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -205,7 +206,10 @@ class TaxiRequestController extends Controller
                 ));
             }
 
-            $taxiRequest->setStatus(4);
+            $taxiRequest->update([
+                'status' => 4,
+                'on_location_time' => Carbon::now()
+            ]);
             
             $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
