@@ -142,6 +142,8 @@ class TaxiRequestController extends Controller
 
         Gate::authorize('access-model', $taxiRequest->company_id);
 
+        $text = $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template);
+
         if ($request->isMethod('PUT')) {
 
             $validatedData = $request->validate([
@@ -152,7 +154,7 @@ class TaxiRequestController extends Controller
             if(Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
                 event(new TaxiRequestStatusChanged(
                     $taxiRequest,
-                    $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template),
+                    $text,
                     Arr::exists($validatedData, 'sms_notification'),
                     Arr::exists($validatedData, 'email_notification')
                 ));
@@ -167,9 +169,10 @@ class TaxiRequestController extends Controller
 
         $client = $taxiRequest->client;
 
+
         $route = route('taxi-requests.confirm', ['taxiRequest'=>$taxiRequest]);
             
-        return view('concept.taxi-request._confirm', compact('client', 'taxiRequest', 'route'))->render();
+        return view('concept.taxi-request._notify', compact('client', 'text', 'taxiRequest', 'route'))->render();
     }
 
     /**
@@ -184,6 +187,8 @@ class TaxiRequestController extends Controller
 
         Gate::authorize('access-model', $taxiRequest->company_id);
 
+        $text = $taxiRequest->sms_text($taxiRequest->company->assign_sms_template);
+
         if ($request->isMethod('PUT')) {
 
             $validatedData = $request->validate([
@@ -191,10 +196,10 @@ class TaxiRequestController extends Controller
                 'email_notification' => 'boolean|nullable',
             ]);
 
-            if(Arr::exists($validatedData, 'sms_confirmnotification') || Arr::exists($validatedData, 'email_notification')) {
+            if(Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
                 event(new TaxiRequestStatusChanged(
                     $taxiRequest,
-                    $taxiRequest->sms_text($taxiRequest->company->assign_sms_template),
+                    $text,
                     Arr::exists($validatedData, 'sms_notification'),
                     Arr::exists($validatedData, 'email_notification')
                 ));
@@ -209,9 +214,10 @@ class TaxiRequestController extends Controller
 
         $client = $taxiRequest->client;
 
+
         $route = route('taxi-requests.onLocation', ['taxiRequest'=>$taxiRequest]);
-            
-        return view('concept.taxi-request._confirm', compact('client', 'taxiRequest', 'route'))->render();
+
+        return view('concept.taxi-request._notify', compact('client', 'text', 'taxiRequest', 'route'))->render();
     }
 
     /**
