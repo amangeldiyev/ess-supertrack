@@ -43,11 +43,11 @@
                             <input name="name" type="text" value="{{isset($company) ? $company->name : ''}}" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Request Confirm SMS Template</label>
+                            <label>Request Confirm Message Template</label>
                             <textarea name="confirm_sms_template" cols="20" rows="3" class="form-control">{{isset($company) ? $company->confirm_sms_template : ''}}</textarea>
                         </div>
                         <div class="form-group">
-                            <label>Request Assign SMS Template</label>
+                            <label>On Location Message Template</label>
                             <textarea name="assign_sms_template" cols="20" rows="3" class="form-control">{{isset($company) ? $company->assign_sms_template : ''}}</textarea>
                         </div>
                             
