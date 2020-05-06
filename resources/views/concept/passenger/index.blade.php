@@ -48,8 +48,11 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Badge</th>
+                                    <th>Company</th>
                                     <th>Phone</th>
                                     <th>Email</th>
+                                    <th>Language</th>
+                                    <th>Notification method</th>
                                     <th>Created At</th>
                                     <th style="min-width:60px"></th>
                                 </tr>
@@ -59,8 +62,11 @@
                                     <tr>
                                         <td>{{$passenger->name}}</td>
                                         <td>{{$passenger->badge_number}}</td>
+                                        <td>{{$passenger->company->name}}</td>
                                         <td>{{$passenger->phone}}</td>
                                         <td>{{$passenger->email}}</td>
+                                        <td>{{$passenger->lang}}</td>
+                                        <td>{{$passenger->notification_method}}</td>
                                         <td>{{$passenger->created_at}}</td>
                                         <td>
                                             <a href="{{ route('passengers.edit', ['passenger' => $passenger->id]) }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>

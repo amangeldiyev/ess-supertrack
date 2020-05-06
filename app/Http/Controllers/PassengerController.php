@@ -43,6 +43,8 @@ class PassengerController extends Controller
             'badge_number' => 'required|unique:passengers|numeric|max:99999999',
             'phone' => 'string|max:15',
             'email' => 'string|email|max:255',
+            'lang' => 'required|integer|between:0,2',
+            'notification_method' => 'required|integer|between:0,1',
             'company_id' => 'nullable|exists:companies,id'
         ]);
 
@@ -91,6 +93,8 @@ class PassengerController extends Controller
             'badge_number' => 'required|unique:passengers,badge_number,'.$passenger->id.'|numeric|max:99999999',
             'phone' => 'string|max:15',
             'email' => 'string|email|max:255',
+            'lang' => 'required|integer|between:0,2',
+            'notification_method' => 'required|integer|between:0,1',
             'company_id' => 'required|exists:companies,id'
         ]);
 

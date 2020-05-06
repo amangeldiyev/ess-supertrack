@@ -3,10 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\TaxiRequestConfirmed;
+use App\Mail\TaxiRequestConfirmed as MailTaxiRequestConfirmed;
 use App\Services\KcellSms;
 use App\TaxiRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
 class TaxiRequestConfirmNotification
 {
@@ -29,9 +31,16 @@ class TaxiRequestConfirmNotification
     public function handle(TaxiRequestConfirmed $event)
     {
         $text = $event->taxiRequest->sms_text($event->taxiRequest->company->confirm_sms_template);
-        $phone = $event->taxiRequest->client->phone;
+        $client = $event->taxiRequest->client;
 
-        $smsSender = new KcellSms();
-        $smsSender->send($text, $phone);
+        switch ($client->notification_method) {
+            case 'Email':
+                Mail::to($client->email)->send(new MailTaxiRequestConfirmed($text));
+                break;
+            case 'SMS':
+                $smsSender = new KcellSms();
+                $smsSender->log($text, $client->phone);
+                break;
+        }
     }
 }

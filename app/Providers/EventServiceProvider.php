@@ -25,9 +25,9 @@ class EventServiceProvider extends ServiceProvider
         TaxiRequestConfirmed::class => [
             TaxiRequestConfirmNotification::class,
         ],
-        TaxiRequestAssigned::class => [
-            TaxiRequestAssignedNotification::class,
-        ],
+        // TaxiRequestAssigned::class => [
+        //     TaxiRequestAssignedNotification::class,
+        // ],
     ];
 
     /**

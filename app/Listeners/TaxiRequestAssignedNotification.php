@@ -31,6 +31,6 @@ class TaxiRequestAssignedNotification
         $phone = $event->taxiRequest->client->phone;
 
         $smsSender = new KcellSms();
-        $smsSender->send($text, $phone);
+        $smsSender->log($text, $phone);
     }
 }

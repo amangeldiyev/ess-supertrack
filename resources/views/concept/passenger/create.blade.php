@@ -54,6 +54,21 @@
                             <label>Email</label>
                             <input name="email" type="email" value="{{isset($passenger) ? $passenger->email : ''}}" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Language</label>
+                            <select class="form-control" name="lang">
+                                <option value="0" {{isset($passenger) && $passenger->lang == 'English' ? 'selected' : ''}}>English</option>
+                                <option value="1" {{isset($passenger) && $passenger->lang == 'Kazakh' ? 'selected' : ''}}>Kazakh</option>
+                                <option value="2" {{isset($passenger) && $passenger->lang == 'Russian' ? 'selected' : ''}}>Russian</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Notification method</label>
+                            <select class="form-control" name="notification_method">
+                                <option value="0" {{isset($passenger) && $passenger->notification_method == 'Email' ? 'selected' : ''}}>Email</option>
+                                <option value="1" {{isset($passenger) && $passenger->notification_method == 'SMS' ? 'selected' : ''}}>SMS</option>
+                            </select>
+                        </div>
                         @if (auth()->user()->company_id === 0)
                             <div class="form-group">
                                 <label>Company</label>
