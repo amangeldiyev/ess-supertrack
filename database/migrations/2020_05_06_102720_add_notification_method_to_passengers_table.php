@@ -14,7 +14,8 @@ class AddNotificationMethodToPassengersTable extends Migration
     public function up()
     {
         Schema::table('passengers', function (Blueprint $table) {
-            $table->tinyInteger('notification_method')->default(0)->after('company_id');
+            $table->tinyInteger('sms_notification')->default(0)->after('company_id');
+            $table->tinyInteger('email_notification')->default(0)->after('company_id');
             $table->tinyInteger('lang')->default(0)->after('company_id');
         });
     }
@@ -27,7 +28,8 @@ class AddNotificationMethodToPassengersTable extends Migration
     public function down()
     {
         Schema::table('passengers', function (Blueprint $table) {
-            $table->dropColumn('notification_method');
+            $table->dropColumn('sms_notification');
+            $table->dropColumn('email_notification');
             $table->dropColumn('lang');
         });
     }

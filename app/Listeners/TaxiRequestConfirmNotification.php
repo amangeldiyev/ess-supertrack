@@ -33,14 +33,13 @@ class TaxiRequestConfirmNotification
         $text = $event->taxiRequest->sms_text($event->taxiRequest->company->confirm_sms_template);
         $client = $event->taxiRequest->client;
 
-        switch ($client->notification_method) {
-            case 'Email':
-                Mail::to($client->email)->send(new MailTaxiRequestConfirmed($text));
-                break;
-            case 'SMS':
-                $smsSender = new KcellSms();
-                $smsSender->log($text, $client->phone);
-                break;
+        if ($client->sms_notification) {
+            $smsSender = new KcellSms();
+            $smsSender->log($text, $client->phone);
+        }
+
+        if ($client->email_notification) {
+            Mail::to($client->email)->send(new MailTaxiRequestConfirmed($text));
         }
     }
 }

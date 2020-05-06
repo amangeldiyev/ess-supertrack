@@ -44,7 +44,8 @@ class PassengerController extends Controller
             'phone' => 'string|max:15',
             'email' => 'string|email|max:255',
             'lang' => 'required|integer|between:0,2',
-            'notification_method' => 'required|integer|between:0,1',
+            'sms_notification' => 'boolean|nullable',
+            'email_notification' => 'boolean|nullable',
             'company_id' => 'nullable|exists:companies,id'
         ]);
 
@@ -94,11 +95,16 @@ class PassengerController extends Controller
             'phone' => 'string|max:15',
             'email' => 'string|email|max:255',
             'lang' => 'required|integer|between:0,2',
-            'notification_method' => 'required|integer|between:0,1',
+            'sms_notification' => 'boolean|nullable',
+            'email_notification' => 'boolean|nullable',
             'company_id' => 'required|exists:companies,id'
         ]);
 
-        $passenger->update($validatedData);
+        $passenger->update(array_merge(
+            $validatedData,
+            ['sms_notification' => $validatedData['sms_notification'] ?? 0],
+            ['email_notification' => $validatedData['email_notification'] ?? 0],
+        ));
 
         return redirect()->route('passengers.index');
     }

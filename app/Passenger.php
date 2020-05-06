@@ -38,22 +38,4 @@ class Passenger extends Model
                 break;
         }
     }
-
-    /**
-     * Get the passenger's language preference.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getNotificationMethodAttribute($value)
-    {
-        switch ($value) {
-            case 1:
-                return 'SMS';
-                break;
-            default:
-                return 'Email';
-                break;
-        }
-    }
 }

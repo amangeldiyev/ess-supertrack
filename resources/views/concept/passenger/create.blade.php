@@ -63,11 +63,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Notification method</label>
-                            <select class="form-control" name="notification_method">
-                                <option value="0" {{isset($passenger) && $passenger->notification_method == 'Email' ? 'selected' : ''}}>Email</option>
-                                <option value="1" {{isset($passenger) && $passenger->notification_method == 'SMS' ? 'selected' : ''}}>SMS</option>
-                            </select>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="sms_notification" value="1" {{isset($passenger) && $passenger->sms_notification == 0 ? "" : "checked"}} class="custom-control-input">
+                                <span class="custom-control-label">SMS notification</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="email_notification" value="1" {{isset($passenger) && $passenger->email_notification == 0 ? "" : "checked"}} class="custom-control-input">
+                                <span class="custom-control-label">Email notification</span>
+                            </label>
                         </div>
                         @if (auth()->user()->company_id === 0)
                             <div class="form-group">
