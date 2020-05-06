@@ -42,10 +42,6 @@ class TaxiRequestObserver
             event(new TaxiRequestAssigned($taxiRequest));
 
             $taxiRequest->notification_sent = 2;
-        } elseif ($taxiRequest->status == 1 && $taxiRequest->notification_sent < 1) {
-            event(new TaxiRequestConfirmed($taxiRequest));
-
-            $taxiRequest->notification_sent = 1;
         }
     }
 

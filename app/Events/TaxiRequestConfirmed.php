@@ -15,15 +15,17 @@ class TaxiRequestConfirmed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $taxiRequest;
+    public $taxiRequest, $sms_notification, $email_notification;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(TaxiRequest $taxiRequest)
+    public function __construct(TaxiRequest $taxiRequest, $sms_notification, $email_notification)
     {
         $this->taxiRequest = $taxiRequest;
+        $this->sms_notification = $sms_notification;
+        $this->email_notification = $email_notification;
     }
 }

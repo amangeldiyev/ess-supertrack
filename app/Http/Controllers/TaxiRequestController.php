@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Driver;
+use App\Events\TaxiRequestConfirmed;
 use App\Http\Requests\TaxiRequestStore;
 use App\TaxiRequest;
 use App\Vehicle;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class TaxiRequestController extends Controller
 {
@@ -126,6 +128,43 @@ class TaxiRequestController extends Controller
         $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
             
         return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+    }
+
+    /**
+     * Confirm taxi-request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\TaxiRequest  $taxiRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm(Request $request, TaxiRequest $taxiRequest)
+    {
+
+        Gate::authorize('access-model', $taxiRequest->company_id);
+
+        if ($request->isMethod('PUT')) {
+
+            $validatedData = $request->validate([
+                'sms_notification' => 'boolean|nullable',
+                'email_notification' => 'boolean|nullable',
+            ]);
+
+            event(new TaxiRequestConfirmed(
+                $taxiRequest,
+                Arr::exists($validatedData, 'sms_notification'),
+                Arr::exists($validatedData, 'email_notification')
+            ));
+
+            $taxiRequest->setStatus(1);
+            
+            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        }
+
+        $client = $taxiRequest->client;
+            
+        return view('concept.taxi-request._confirm', compact('client', 'taxiRequest'))->render();
     }
 
     /**
