@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Driver;
-use App\Events\TaxiRequestConfirmed;
+use App\Events\TaxiRequestStatusChanged;
 use App\Http\Requests\TaxiRequestStore;
 use App\TaxiRequest;
 use App\Vehicle;
@@ -149,11 +149,14 @@ class TaxiRequestController extends Controller
                 'email_notification' => 'boolean|nullable',
             ]);
 
-            event(new TaxiRequestConfirmed(
-                $taxiRequest,
-                Arr::exists($validatedData, 'sms_notification'),
-                Arr::exists($validatedData, 'email_notification')
-            ));
+            if(Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
+                event(new TaxiRequestStatusChanged(
+                    $taxiRequest,
+                    $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template),
+                    Arr::exists($validatedData, 'sms_notification'),
+                    Arr::exists($validatedData, 'email_notification')
+                ));
+            }
 
             $taxiRequest->setStatus(1);
             
@@ -163,8 +166,52 @@ class TaxiRequestController extends Controller
         }
 
         $client = $taxiRequest->client;
+
+        $route = route('taxi-requests.confirm', ['taxiRequest'=>$taxiRequest]);
             
-        return view('concept.taxi-request._confirm', compact('client', 'taxiRequest'))->render();
+        return view('concept.taxi-request._confirm', compact('client', 'taxiRequest', 'route'))->render();
+    }
+
+    /**
+     * Driver on location.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\TaxiRequest  $taxiRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function onLocation(Request $request, TaxiRequest $taxiRequest)
+    {
+
+        Gate::authorize('access-model', $taxiRequest->company_id);
+
+        if ($request->isMethod('PUT')) {
+
+            $validatedData = $request->validate([
+                'sms_notification' => 'boolean|nullable',
+                'email_notification' => 'boolean|nullable',
+            ]);
+
+            if(Arr::exists($validatedData, 'sms_confirmnotification') || Arr::exists($validatedData, 'email_notification')) {
+                event(new TaxiRequestStatusChanged(
+                    $taxiRequest,
+                    $taxiRequest->sms_text($taxiRequest->company->assign_sms_template),
+                    Arr::exists($validatedData, 'sms_notification'),
+                    Arr::exists($validatedData, 'email_notification')
+                ));
+            }
+
+            $taxiRequest->setStatus(4);
+            
+            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+            
+            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        }
+
+        $client = $taxiRequest->client;
+
+        $route = route('taxi-requests.onLocation', ['taxiRequest'=>$taxiRequest]);
+            
+        return view('concept.taxi-request._confirm', compact('client', 'taxiRequest', 'route'))->render();
     }
 
     /**

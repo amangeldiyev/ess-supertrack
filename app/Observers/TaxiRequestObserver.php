@@ -38,11 +38,7 @@ class TaxiRequestObserver
      */
     public function saving(TaxiRequest $taxiRequest)
     {
-        if ($taxiRequest->status == 2 && $taxiRequest->notification_sent < 2) {
-            event(new TaxiRequestAssigned($taxiRequest));
-
-            $taxiRequest->notification_sent = 2;
-        }
+        // 
     }
 
     /**

@@ -45,9 +45,8 @@
                                 <td>{{$request->remaining_time}}</td>
                                 <td class="text-center">
                                     <a href="#" onclick="toggleModal({{$request->id}})" type="button" class="btn btn-xs btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-                                    @if ($request->status !== 1)
-                                        <a href="#" onclick="confirmRequest({{$request->id}}, 1)" type="button" class="btn btn-xs btn-success" title="Confirm"><i class="fas fa-check"></i></a>
-                                    @endif
+                                    <a href="#" onclick="confirmRequest({{$request->id}})" type="button" class="btn btn-xs btn-success" title="Confirm"><i class="fas fa-check"></i></a>
+                                    <a href="#" onclick="onLocation({{$request->id}})" type="button" class="btn btn-xs btn-info" title="Cancel"><i class="fas fa-clock"></i></a>
                                     <a href="#" onclick="setStatus({{$request->id}}, 3)" type="button" class="btn btn-xs btn-brand" title="Cancel"><i class="fas fa-times"></i></a>
                                     <a href="#" onclick="event.preventDefault();document.getElementById('delete-form-{{$request->id}}').submit();" type="button" class="btn btn-xs btn-danger" title="Delete">
                                         <i class="far fa-trash-alt"></i>

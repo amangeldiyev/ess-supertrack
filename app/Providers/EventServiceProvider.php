@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\TaxiRequestAssigned;
-use App\Events\TaxiRequestConfirmed;
-use App\Listeners\TaxiRequestAssignedNotification;
-use App\Listeners\TaxiRequestConfirmNotification;
+use App\Events\TaxiRequestStatusChanged;
+use App\Listeners\TaxiRequestNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,12 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        TaxiRequestConfirmed::class => [
-            TaxiRequestConfirmNotification::class,
+        TaxiRequestStatusChanged::class => [
+            TaxiRequestNotification::class,
         ],
-        // TaxiRequestAssigned::class => [
-        //     TaxiRequestAssignedNotification::class,
-        // ],
     ];
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Mail\TaxiRequestConfirmed;
 use App\Services\KcellSms;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
 class TaxiRequestNotification
 {
@@ -26,7 +28,15 @@ class TaxiRequestNotification
      */
     public function handle($event)
     {
-        $smsSender = new KcellSms();
-        $smsSender->send('Your taxi request has been assigned(' . $event->taxiRequest->start_date . ')', $event->taxiRequest->client->phone);
+        $client = $event->taxiRequest->client;
+
+        if ($event->sms_notification && !empty($event->text)) {
+            $smsSender = new KcellSms();
+            $smsSender->log($event->text, $client->phone);
+        }
+
+        if ($event->email_notification && !empty($event->text)) {
+            Mail::to($client->email)->send(new TaxiRequestConfirmed($event->text));
+        }
     }
 }

@@ -17,8 +17,9 @@ class TaxiRequest extends Model
         1 => 'Confirmed',
         2 => 'Assigned',
         3 => 'Cancelled',
-        4 => 'Pick Up',
-        5 => 'Drop Off'
+        4 => 'On Location',
+        5 => 'Pick Up',
+        6 => 'Drop Off'
     ];
 
     public const TYPES = [

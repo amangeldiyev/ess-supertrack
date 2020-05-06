@@ -24,6 +24,7 @@ Auth::routes([
 Route::get('/passengers/search', 'PassengerController@search')->middleware('auth');
 Route::get('/taxi-requests/{taxiRequest}/status/{status}', 'TaxiRequestController@setStatus')->middleware('auth');
 Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/confirm', 'TaxiRequestController@confirm')->name('taxi-requests.confirm')->middleware('auth');
+Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/onLocation', 'TaxiRequestController@onLocation')->name('taxi-requests.onLocation')->middleware('auth');
 Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setDriver', 'TaxiRequestController@setDriver')->name('taxi-requests.setDriver')->middleware('auth');
 Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setVehicle', 'TaxiRequestController@setVehicle')->name('taxi-requests.setVehicle')->middleware('auth');
 

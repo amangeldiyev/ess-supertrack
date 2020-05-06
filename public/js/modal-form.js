@@ -260,6 +260,22 @@ function confirmRequest(id) {
     })
 }
 
+function onLocation(id) {
+    $('#form-modal .modal-title').text('Driver on location');
+    $('#form-modal .modal-body').html('<div class="mx-auto" style="width: 200px;"><span class="dashboard-spinner spinner-xxl"></span></div>');
+    $('#form-modal').modal('toggle');
+
+    $.ajax({
+        url: "/taxi-requests/"+ id + "/onLocation",
+    }).done(function(response) {
+        
+        $('#form-modal .modal-body').html(response)
+
+    }).fail(function(e) {
+        console.log(e)
+    })
+}
+
 document.onkeydown = function (e) {
 
     e = e || window.event;
