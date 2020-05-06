@@ -10,6 +10,11 @@
                     @csrf
 
                     <div class="form-row">
+                        @if (empty($text))
+                            <div class="alert alert-danger" role="alert">
+                                Template text not set!
+                            </div>
+                        @endif
                         <div class="form-group col-md-12">
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" name="sms_notification" value="1" {{$client->sms_notification == 0 ? "" : "checked"}} class="custom-control-input">
