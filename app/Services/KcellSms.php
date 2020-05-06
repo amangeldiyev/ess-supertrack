@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\SmsSender;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 use Log;
 
 class KcellSms implements SmsSender
@@ -19,10 +19,8 @@ class KcellSms implements SmsSender
     public function send($text, $phone)
     {
         try {
-            $client = new Client();
-            $client->request('POST', 'https://msg.kcell.kz/api/v3/messages', [
-                'auth' => [config('services.sms.login'), config('services.sms.password')],
-                'json' => [
+            $response = Http::withBasicAuth(config('services.sms.login'), config('services.sms.password'))
+                ->post('https://msg.kcell.kz/api/v3/messages', [
                     "client_message_id" => time(),
                     "recipient" => $this->normalizePhone($phone),
                     "sender" => config('services.sms.sender'),
@@ -32,8 +30,10 @@ class KcellSms implements SmsSender
                     "expire_time" => null,
                     "schedule_time" => null,
                     "callback_url" => null
-                ],
-            ]);
+                ]);
+
+            Log::info($response->json());
+
         } catch (\Exception $e) {
             Log::error('Error while seding sms');
             Log::info($e);

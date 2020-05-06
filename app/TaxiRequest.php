@@ -104,7 +104,7 @@ class TaxiRequest extends Model
 
     public function sms_text($text)
     {
-        return Str::of($text)->replace('[start_date]', $this->start_date)
+        return (string)Str::of($text)->replace('[start_date]', $this->start_date)
             ->replace('[driver]', $this->driver->name)
             ->replace('[vehicle]', $this->vehicle->name)
             ->replace('[type]', $this->vehicle->type);

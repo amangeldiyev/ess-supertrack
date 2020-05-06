@@ -32,6 +32,6 @@ class TaxiRequestConfirmNotification
         $phone = $event->taxiRequest->client->phone;
 
         $smsSender = new KcellSms();
-        $smsSender->log($text, $phone);
+        $smsSender->send($text, $phone);
     }
 }
