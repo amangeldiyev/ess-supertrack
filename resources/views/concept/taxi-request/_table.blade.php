@@ -43,7 +43,7 @@
                                 <td>{{$request->drop_off_time}}</td>
                                 <td>{{\App\TaxiRequest::TYPES[$request->type]}}</td>
                                 <td>{{$request->remaining_time}}</td>
-                                <td class="text-center">
+                                <td class="text-center" style="min-width: 190px">
                                     <a href="#" onclick="toggleModal({{$request->id}})" type="button" class="btn btn-xs btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
                                     <a href="#" onclick="confirmRequest({{$request->id}})" type="button" class="btn btn-xs btn-success" title="Confirm"><i class="fas fa-check"></i></a>
                                     <a href="#" onclick="onLocation({{$request->id}})" type="button" class="btn btn-xs btn-info" title="Cancel"><i class="fas fa-clock"></i></a>

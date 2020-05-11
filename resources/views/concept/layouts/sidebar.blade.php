@@ -16,9 +16,26 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ $currentRoute == 'taxi-requests' ? 'active' : '' }}" href="{{ route('taxi-requests.index') }}">
+                        <a class="nav-link {{ $currentRoute == 'taxi-requests' ? 'active' : '' }}" href="#" data-toggle="collapse" aria-expanded="{{ $currentRoute == 'taxi-requests' ? 'true' : 'false' }}" data-target="#submenu-1" aria-controls="submenu-1">
                             <i class="fa fa-fw fa-rocket"></i>Taxi Requests
                         </a>
+                        <div id="submenu-1" class="collapse submenu {{ $currentRoute == 'taxi-requests' ? 'show' : '' }}" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('taxi-requests.index') }}">All</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('taxi-requests.index', ['filter' => 'unassigned']) }}">
+                                        Unassigned <span class="text-danger float-right" id="unassigned-count">{{ \App\TaxiRequest::filterByCompany()->unassigned()->count() ?: '' }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('taxi-requests.index', ['filter' => 'runningOut']) }}">
+                                        Running Out <span class="text-danger float-right" id="running-out-count">{{ \App\TaxiRequest::filterByCompany()->runningOut()->count() ?: '' }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     @can('access-model', 0)
                     <li class="nav-item">
@@ -139,3 +156,18 @@
         </nav>
     </div>
 </div>
+
+<script>
+    setInterval(() => {
+        $.ajax({
+            url: "/taxi-requests/unassigned",
+        }).done(function(response) {
+            
+            $('#unassigned-count').text(response.unassigned)
+            $('#running-out-count').text(response.runningOut)
+
+        }).fail(function(e) {
+            console.log(e)
+        })
+    }, 10000);
+</script>

@@ -110,4 +110,25 @@ class TaxiRequest extends Model
             ->replace('[vehicle]', $this->vehicle ? $this->vehicle->name : '')
             ->replace('[type]', $this->vehicle ? $this->vehicle->type : '');
     }
+
+    public function scopeFilter($query, $value)
+    {
+        if (method_exists($this, 'scope'.ucfirst($value))) {
+            $query->$value();
+        }
+    }
+
+    public function scopeUnassigned($query)
+    {
+        $query->where('status', 1)
+            ->where('start_date', '>=', Carbon::now())
+            ->where('start_date', '<=', Carbon::now()->addMinutes(15));
+    }
+
+    public function scopeRunningOut($query)
+    {
+        $query->where('status', 2)
+            ->where('start_date', '>=', Carbon::now())
+            ->where('start_date', '<=', Carbon::now()->addMinutes(5));
+    }
 }

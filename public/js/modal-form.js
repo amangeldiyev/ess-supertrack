@@ -1,5 +1,5 @@
 function toggleModal(id) {
-            
+
     $('#form-modal .modal-title').text(id ? 'Edit Taxi Request' : 'New Taxi Request');
     $('#form-modal .modal-body').html('<div class="mx-auto" style="width: 200px;"><span class="dashboard-spinner spinner-xxl"></span></div>');
     $('#form-modal').modal('toggle');
@@ -145,10 +145,13 @@ function toggleModal(id) {
 function submitForm(e, id) {
     e.preventDefault()
 
+    let filter = window.location.search.split('filter=')[1]
+    let data = $(e.target).serialize() + '&filter=' + filter
+
     $.ajax({
         url: $(e.target).attr('action'),
         method: id ? "PUT" : "POST",
-        data: $(e.target).serialize(),
+        data: data,
     }).done(function(response) {
 
         $('#table-wrapper').html(response)
@@ -184,6 +187,7 @@ function setStatus(id, status) {
     $.ajax({
         url: "/taxi-requests/" + id + "/status/" + status,
         method: "GET",
+        data: { 'filter' : window.location.search.split('filter=')[1] }
     }).done(function(response) {
         $('#table-wrapper').html(response)
 

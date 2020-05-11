@@ -21,7 +21,7 @@ class TaxiRequestController extends Controller
      */
     public function index()
     {
-        $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+        $taxiRequests = TaxiRequest::filterByCompany()->filter(request('filter'))->latest()->with('company', 'driver', 'client', 'vehicle')->get();
 
         return view('concept.taxi-request.index', compact('taxiRequests'));
     }
@@ -53,9 +53,7 @@ class TaxiRequestController extends Controller
         $taxiRequest = TaxiRequest::create($validatedData);
 
         if ($request->expectsJson()) {
-            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+            return $this->renderTable();
         }
 
         return redirect()->route('taxi-requests.index', ['taxi_request' => $taxiRequest]);
@@ -105,9 +103,7 @@ class TaxiRequestController extends Controller
         $taxiRequest->update(array_merge($validatedData, ['driver_in_time' => $validatedData['driver_in_time'] ?? 0]));
 
         if ($request->expectsJson()) {
-            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+            return $this->renderTable();
         }
 
         return redirect()->route('taxi-requests.index');
@@ -126,9 +122,7 @@ class TaxiRequestController extends Controller
 
         $taxiRequest->setStatus($status);
 
-        $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-        return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+        return $this->renderTable();
     }
 
     /**
@@ -161,9 +155,7 @@ class TaxiRequestController extends Controller
 
             $taxiRequest->setStatus(1);
             
-            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+            return $this->renderTable();
         }
 
         $client = $taxiRequest->client;
@@ -207,13 +199,10 @@ class TaxiRequestController extends Controller
                 'on_location_time' => Carbon::now()
             ]);
             
-            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+            return $this->renderTable();
         }
 
         $client = $taxiRequest->client;
-
 
         $route = route('taxi-requests.onLocation', ['taxiRequest'=>$taxiRequest]);
 
@@ -238,9 +227,7 @@ class TaxiRequestController extends Controller
 
             $taxiRequest->update($validatedData);
             
-            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+            return $this->renderTable();
         }
 
         $drivers = Driver::filterByCompany($taxiRequest->company_id)->get();
@@ -266,9 +253,7 @@ class TaxiRequestController extends Controller
 
             $taxiRequest->update($validatedData);
             
-            $taxiRequests = TaxiRequest::filterByCompany()->latest()->with('company', 'driver', 'client', 'vehicle')->get();
-            
-            return view('concept.taxi-request._table', compact('taxiRequests'))->render();
+            return $this->renderTable();
         }
 
         $vehicles = Vehicle::filterByCompany($taxiRequest->company_id)->get();
@@ -289,5 +274,25 @@ class TaxiRequestController extends Controller
         $taxiRequest->delete();
 
         return redirect()->route('taxi-requests.index');
+    }
+
+    /**
+     * Return unassigned requests count.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unassigned()
+    {
+        return response()->json([
+            'unassigned' => TaxiRequest::filterByCompany()->unassigned()->count() ?: '',
+            'runningOut' => TaxiRequest::filterByCompany()->runningOut()->count() ?: ''
+        ]);
+    }
+
+    private function renderTable()
+    {
+        $taxiRequests = TaxiRequest::filterByCompany()->filter(request('filter'))->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+ 
+        return view('concept.taxi-request._table', compact('taxiRequests'))->render();
     }
 }
