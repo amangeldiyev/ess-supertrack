@@ -140,19 +140,17 @@ class TaxiRequestController extends Controller
      */
     public function confirm(Request $request, TaxiRequest $taxiRequest)
     {
-
         Gate::authorize('access-model', $taxiRequest->company_id);
 
         $text = $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template);
 
         if ($request->isMethod('PUT')) {
-
             $validatedData = $request->validate([
                 'sms_notification' => 'boolean|nullable',
                 'email_notification' => 'boolean|nullable',
             ]);
 
-            if(Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
+            if (Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
                 event(new TaxiRequestStatusChanged(
                     $taxiRequest,
                     $text,
@@ -185,19 +183,17 @@ class TaxiRequestController extends Controller
      */
     public function onLocation(Request $request, TaxiRequest $taxiRequest)
     {
-
         Gate::authorize('access-model', $taxiRequest->company_id);
 
         $text = $taxiRequest->sms_text($taxiRequest->company->assign_sms_template);
 
         if ($request->isMethod('PUT')) {
-
             $validatedData = $request->validate([
                 'sms_notification' => 'boolean|nullable',
                 'email_notification' => 'boolean|nullable',
             ]);
 
-            if(Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
+            if (Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
                 event(new TaxiRequestStatusChanged(
                     $taxiRequest,
                     $text,
@@ -233,11 +229,9 @@ class TaxiRequestController extends Controller
      */
     public function setDriver(Request $request, TaxiRequest $taxiRequest)
     {
-
         Gate::authorize('access-model', $taxiRequest->company_id);
 
         if ($request->isMethod('PUT')) {
-
             $validatedData = $request->validate([
                 'driver_id' => 'required|exists:drivers,id',
             ]);
@@ -263,11 +257,9 @@ class TaxiRequestController extends Controller
      */
     public function setVehicle(Request $request, TaxiRequest $taxiRequest)
     {
-
         Gate::authorize('access-model', $taxiRequest->company_id);
 
         if ($request->isMethod('PUT')) {
-
             $validatedData = $request->validate([
                 'vehicle_id' => 'required|exists:vehicles,id',
             ]);

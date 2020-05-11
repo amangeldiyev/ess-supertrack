@@ -5,6 +5,7 @@
         </div> --}}
         <div class="card">
             <div class="card-body">
+                <h3>Send notification</h3>
                 <form onsubmit="submitForm(event, {{$taxiRequest->id}})" action="{{ $route }}" method="POST">
 
                     @csrf
