@@ -21,7 +21,13 @@ class TaxiRequestController extends Controller
      */
     public function index()
     {
-        $taxiRequests = TaxiRequest::filterByCompany()->filter(request('filter'))->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+        $taxiRequests = TaxiRequest::filterByCompany()
+            ->filter(request('filter'))
+            ->where('start_date', '>', Carbon::now()->subDay())
+            ->where('start_date', '<', Carbon::now()->addDay())
+            ->latest()
+            ->with('company', 'driver', 'client', 'vehicle')
+            ->get();
 
         return view('concept.taxi-request.index', compact('taxiRequests'));
     }
@@ -291,7 +297,13 @@ class TaxiRequestController extends Controller
 
     private function renderTable()
     {
-        $taxiRequests = TaxiRequest::filterByCompany()->filter(request('filter'))->latest()->with('company', 'driver', 'client', 'vehicle')->get();
+        $taxiRequests = TaxiRequest::filterByCompany()
+            ->filter(request('filter'))
+            ->where('start_date', '>', Carbon::now()->subDay())
+            ->where('start_date', '<', Carbon::now()->addDay())
+            ->latest()
+            ->with('company', 'driver', 'client', 'vehicle')
+            ->get();
  
         return view('concept.taxi-request._table', compact('taxiRequests'))->render();
     }
