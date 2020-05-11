@@ -28,13 +28,13 @@ class Passenger extends Model
     {
         switch ($value) {
             case 1:
-                return 'Kazakh';
+                return 'kz';
                 break;
             case 2:
-                return 'Russian';
+                return 'ru';
                 break;
             default:
-                return 'English';
+                return 'eng';
                 break;
         }
     }

@@ -57,9 +57,9 @@
                         <div class="form-group">
                             <label>Language</label>
                             <select class="form-control" name="lang">
-                                <option value="0" {{isset($passenger) && $passenger->lang == 'English' ? 'selected' : ''}}>English</option>
-                                <option value="1" {{isset($passenger) && $passenger->lang == 'Kazakh' ? 'selected' : ''}}>Kazakh</option>
-                                <option value="2" {{isset($passenger) && $passenger->lang == 'Russian' ? 'selected' : ''}}>Russian</option>
+                                <option value="0" {{isset($passenger) && $passenger->lang == 'eng' ? 'selected' : ''}}>English</option>
+                                <option value="1" {{isset($passenger) && $passenger->lang == 'kz' ? 'selected' : ''}}>Kazakh</option>
+                                <option value="2" {{isset($passenger) && $passenger->lang == 'ru' ? 'selected' : ''}}>Russian</option>
                             </select>
                         </div>
                         <div class="form-group">

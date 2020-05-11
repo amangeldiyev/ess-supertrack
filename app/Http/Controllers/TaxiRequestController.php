@@ -142,7 +142,9 @@ class TaxiRequestController extends Controller
     {
         Gate::authorize('access-model', $taxiRequest->company_id);
 
-        $text = $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template);
+        $client = $taxiRequest->client;
+
+        $text = $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template[$client->lang]);
 
         if ($request->isMethod('PUT')) {
             $validatedData = $request->validate([
@@ -164,9 +166,6 @@ class TaxiRequestController extends Controller
             return $this->renderTable();
         }
 
-        $client = $taxiRequest->client;
-
-
         $route = route('taxi-requests.confirm', ['taxiRequest'=>$taxiRequest]);
             
         return view('concept.taxi-request._notify', compact('client', 'text', 'taxiRequest', 'route'))->render();
@@ -183,7 +182,9 @@ class TaxiRequestController extends Controller
     {
         Gate::authorize('access-model', $taxiRequest->company_id);
 
-        $text = $taxiRequest->sms_text($taxiRequest->company->assign_sms_template);
+        $client = $taxiRequest->client;
+
+        $text = $taxiRequest->sms_text($taxiRequest->company->on_location_sms_template[$client->lang]);
 
         if ($request->isMethod('PUT')) {
             $validatedData = $request->validate([
@@ -207,8 +208,6 @@ class TaxiRequestController extends Controller
             
             return $this->renderTable();
         }
-
-        $client = $taxiRequest->client;
 
         $route = route('taxi-requests.onLocation', ['taxiRequest'=>$taxiRequest]);
 

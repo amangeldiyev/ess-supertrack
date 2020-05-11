@@ -16,6 +16,8 @@ class AddSmsTemplateToCompaniesTable extends Migration
         Schema::table('companies', function (Blueprint $table) {
             $table->text('confirm_sms_template')->nullable()->after('name');
             $table->text('assign_sms_template')->nullable()->after('name');
+            $table->text('cancel_sms_template')->nullable()->after('name');
+            $table->text('on_location_sms_template')->nullable()->after('name');
         });
     }
 
@@ -29,6 +31,8 @@ class AddSmsTemplateToCompaniesTable extends Migration
         Schema::table('companies', function (Blueprint $table) {
             $table->dropColumn('confirm_sms_template');
             $table->dropColumn('assign_sms_template');
+            $table->dropColumn('cancel_sms_template');
+            $table->dropColumn('on_location_sms_template');
         });
     }
 }

@@ -24,7 +24,7 @@
     <!-- end pageheader -->
     <!-- ============================================================== -->
     <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-4">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="section-block" id="basicform">
                 <h3 class="section-title">Company Form</h3>
             </div>
@@ -38,17 +38,69 @@
                         
                         @csrf
                         
-                        <div class="form-group">
-                            <label>Company Name</label>
-                            <input name="name" type="text" value="{{isset($company) ? $company->name : ''}}" class="form-control">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Company Name</label>
+                                <input name="name" type="text" value="{{isset($company) ? $company->name : ''}}" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Request Confirm Message Template</label>
-                            <textarea name="confirm_sms_template" cols="20" rows="3" class="form-control">{{isset($company) ? $company->confirm_sms_template : ''}}</textarea>
+                        <hr>
+                        <h3>Message Templates</h3>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Request Confirm</label>
+                                <textarea name="confirm_sms_template[eng]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->confirm_sms_template) ? $company->confirm_sms_template['eng'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Request Confirm(RU)</label>
+                                <textarea name="confirm_sms_template[ru]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->confirm_sms_template) ? $company->confirm_sms_template['ru'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Request Confirm(KZ)</label>
+                                <textarea name="confirm_sms_template[kz]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->confirm_sms_template) ? $company->confirm_sms_template['kz'] : ''}}</textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>On Location Message Template</label>
-                            <textarea name="assign_sms_template" cols="20" rows="3" class="form-control">{{isset($company) ? $company->assign_sms_template : ''}}</textarea>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Assigned</label>
+                                <textarea name="assign_sms_template[eng]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->assign_sms_template) ? $company->assign_sms_template['eng'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Assigned(RU)</label>
+                                <textarea name="assign_sms_template[ru]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->assign_sms_template) ? $company->assign_sms_template['ru'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Assigned(KZ)</label>
+                                <textarea name="assign_sms_template[kz]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->assign_sms_template) ? $company->assign_sms_template['kz'] : ''}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Cancelled</label>
+                                <textarea name="cancel_sms_template[eng]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->cancel_sms_template) ? $company->cancel_sms_template['eng'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Cancelled(RU)</label>
+                                <textarea name="cancel_sms_template[ru]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->cancel_sms_template) ? $company->cancel_sms_template['ru'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Cancelled(KZ)</label>
+                                <textarea name="cancel_sms_template[kz]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->cancel_sms_template) ? $company->cancel_sms_template['kz'] : ''}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>On Location</label>
+                                <textarea name="on_location_sms_template[eng]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->on_location_sms_template) ? $company->on_location_sms_template['eng'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>On Location(RU)</label>
+                                <textarea name="on_location_sms_template[ru]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->on_location_sms_template) ? $company->on_location_sms_template['ru'] : ''}}</textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>On Location(KZ)</label>
+                                <textarea name="on_location_sms_template[kz]" cols="20" rows="3" class="form-control">{{isset($company) && !empty($company->on_location_sms_template) ? $company->on_location_sms_template['kz'] : ''}}</textarea>
+                            </div>
                         </div>
                             
                         <button type="submit" class="btn btn-primary">Save</button>
