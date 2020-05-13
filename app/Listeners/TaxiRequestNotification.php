@@ -36,7 +36,7 @@ class TaxiRequestNotification
         }
 
         if ($event->email_notification && !empty($event->text)) {
-            Mail::to($client->email)->send(new TaxiRequestConfirmed($event->text));
+            Mail::to($client->email)->queue(new TaxiRequestConfirmed($event->text));
         }
     }
 }
