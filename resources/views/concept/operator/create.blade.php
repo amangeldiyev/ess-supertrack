@@ -43,6 +43,10 @@
                             <input name="name" type="text" required value="{{isset($user) ? $user->name : ''}}" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label>Username</label>
+                            <input name="username" type="text" required value="{{isset($user) ? $user->username : ''}}" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <label>Email</label>
                             <input name="email" type="email" required value="{{isset($user) ? $user->email : ''}}" class="form-control">
                         </div>
