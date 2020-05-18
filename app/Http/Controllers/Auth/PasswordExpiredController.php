@@ -49,6 +49,11 @@ class PasswordExpiredController extends Controller
             'hash' => $request->user()->password
         ]);
 
+        // Delete if older passwords
+        if ($count = DB::table('old_passwords')->where('user_id', $request->user()->id)->offset(8)->get()->count()) {
+            DB::table('old_passwords')->where('user_id', $request->user()->id)->take($count)->delete();
+        }
+
         $request->user()->update([
             'password' => bcrypt($request->password),
             'password_changed_at' => Carbon::now()
