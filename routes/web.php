@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/onLocation', 'TaxiRequestController@onLocation')->name('taxi-requests.onLocation');
     Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setDriver', 'TaxiRequestController@setDriver')->name('taxi-requests.setDriver');
     Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setVehicle', 'TaxiRequestController@setVehicle')->name('taxi-requests.setVehicle');
-    Route::get('/taxi-requests/unassigned', 'TaxiRequestController@unassigned');
+    Route::get('/taxi-requests/system-notify', 'TaxiRequestController@systemNotify');
     
     Route::resource('taxi-requests', 'TaxiRequestController');
     Route::resource('users', 'OperatorController')->middleware('admin');

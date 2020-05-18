@@ -37,9 +37,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link"
-                                        href="{{ route('taxi-requests.index', ['filter' => 'runningOut']) }}">
+                                        href="{{ route('taxi-requests.index', ['filter' => 'overdue']) }}">
                                         Overdue <span class="text-danger float-right"
-                                            id="running-out-count">{{ \App\TaxiRequest::filterByCompany()->runningOut()->count() ?: '' }}</span>
+                                            id="overdue-count">{{ \App\TaxiRequest::filterByCompany()->overdue()->count() ?: '' }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -173,11 +173,11 @@
 <script>
     setInterval(() => {
         $.ajax({
-            url: "/taxi-requests/unassigned",
+            url: "/taxi-requests/system-notify",
         }).done(function(response) {
             
             $('#unassigned-count').text(response.unassigned)
-            $('#running-out-count').text(response.runningOut)
+            $('#overdue-count').text(response.overdue)
 
         }).fail(function(e) {
             console.log(e)

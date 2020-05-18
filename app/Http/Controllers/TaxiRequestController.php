@@ -293,11 +293,11 @@ class TaxiRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function unassigned()
+    public function systemNotify()
     {
         return response()->json([
             'unassigned' => TaxiRequest::filterByCompany()->unassigned()->count() ?: '',
-            'runningOut' => TaxiRequest::filterByCompany()->runningOut()->count() ?: ''
+            'overdue' => TaxiRequest::filterByCompany()->overdue()->count() ?: ''
         ]);
     }
 

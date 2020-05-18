@@ -125,7 +125,7 @@ class TaxiRequest extends Model
             ->where('start_date', '<=', Carbon::now()->addMinutes(15));
     }
 
-    public function scopeRunningOut($query)
+    public function scopeOverdue($query)
     {
         $query->where('status', 2)
             ->where('start_date', '>=', Carbon::now())
