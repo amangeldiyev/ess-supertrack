@@ -21,10 +21,17 @@ class TaxiRequestController extends Controller
      */
     public function index()
     {
+        $from = request('from');
+        $to = request('to');
+
         $taxiRequests = TaxiRequest::filterByCompany()
             ->filter(request('filter'))
-            ->where('start_date', '>', Carbon::now()->subDay())
-            ->where('start_date', '<', Carbon::now()->addDay())
+            ->when($from, function ($query, $from) {
+                return $query->where('start_date', '>', $from);
+            })
+            ->when($to, function ($query, $to) {
+                return $query->where('start_date', '<', $to);
+            })
             ->latest()
             ->with('company', 'driver', 'client', 'vehicle')
             ->get();

@@ -22,7 +22,7 @@
                         <div id="submenu-1" class="collapse submenu {{ $currentRoute == 'taxi-requests' ? 'show' : '' }}" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('taxi-requests.index') }}">All</a>
+                                    <a class="nav-link" href="{{ route('taxi-requests.index', [ 'from' => \Carbon\Carbon::now()->subDay()->format('d-m-Y H:i'), 'to' => \Carbon\Carbon::now()->addDay()->format('d-m-Y H:i') ]) }}">Upcoming</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('taxi-requests.index', ['filter' => 'unassigned']) }}">
@@ -31,7 +31,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('taxi-requests.index', ['filter' => 'runningOut']) }}">
-                                        Running Out <span class="text-danger float-right" id="running-out-count">{{ \App\TaxiRequest::filterByCompany()->runningOut()->count() ?: '' }}</span>
+                                        Overdue <span class="text-danger float-right" id="running-out-count">{{ \App\TaxiRequest::filterByCompany()->runningOut()->count() ?: '' }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('taxi-requests.index') }}">
+                                        All
                                     </a>
                                 </li>
                             </ul>
