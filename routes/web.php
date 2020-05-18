@@ -21,17 +21,19 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('/passengers/search', 'PassengerController@search')->middleware('auth');
-Route::get('/taxi-requests/{taxiRequest}/status/{status}', 'TaxiRequestController@setStatus')->middleware('auth');
-Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/confirm', 'TaxiRequestController@confirm')->name('taxi-requests.confirm')->middleware('auth');
-Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/onLocation', 'TaxiRequestController@onLocation')->name('taxi-requests.onLocation')->middleware('auth');
-Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setDriver', 'TaxiRequestController@setDriver')->name('taxi-requests.setDriver')->middleware('auth');
-Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setVehicle', 'TaxiRequestController@setVehicle')->name('taxi-requests.setVehicle')->middleware('auth');
-Route::get('/taxi-requests/unassigned', 'TaxiRequestController@unassigned')->middleware('auth');
-
-Route::resource('taxi-requests', 'TaxiRequestController')->middleware('auth');
-Route::resource('users', 'OperatorController')->middleware('auth', 'admin');
-Route::resource('companies', 'CompanyController')->middleware('auth', 'admin');
-Route::resource('passengers', 'PassengerController')->middleware('auth');
-Route::resource('drivers', 'DriverController')->middleware('auth');
-Route::resource('vehicles', 'VehicleController')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/passengers/search', 'PassengerController@search');
+    Route::get('/taxi-requests/{taxiRequest}/status/{status}', 'TaxiRequestController@setStatus');
+    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/confirm', 'TaxiRequestController@confirm')->name('taxi-requests.confirm');
+    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/onLocation', 'TaxiRequestController@onLocation')->name('taxi-requests.onLocation');
+    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setDriver', 'TaxiRequestController@setDriver')->name('taxi-requests.setDriver');
+    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setVehicle', 'TaxiRequestController@setVehicle')->name('taxi-requests.setVehicle');
+    Route::get('/taxi-requests/unassigned', 'TaxiRequestController@unassigned');
+    
+    Route::resource('taxi-requests', 'TaxiRequestController');
+    Route::resource('users', 'OperatorController')->middleware('admin');
+    Route::resource('companies', 'CompanyController')->middleware('admin');
+    Route::resource('passengers', 'PassengerController');
+    Route::resource('drivers', 'DriverController');
+    Route::resource('vehicles', 'VehicleController');
+});
