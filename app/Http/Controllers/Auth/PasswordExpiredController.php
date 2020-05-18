@@ -21,6 +21,7 @@ class PasswordExpiredController extends Controller
             'current_password' => 'required',
             'password' => [
                 'required',
+                'different:current_password',
                 'string',
                 'confirmed',
                 'min:8',
@@ -31,13 +32,15 @@ class PasswordExpiredController extends Controller
             ],
         ]);
 
+        $user = $request->user();
+
         // Check current password
-        if (!Hash::check($request->current_password, $request->user()->password)) {
+        if (!Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Current password is not correct']);
         }
 
         // Deny usage of old password
-        foreach (DB::table('old_passwords')->where('user_id', $request->user()->id)->get() as $password) {
+        foreach (DB::table('old_passwords')->where('user_id', $user->id)->get() as $password) {
             if (Hash::check($request->password, $password->hash)) {
                 return redirect()->back()->withErrors(['password' => 'You can\'t use old password']);
             }
@@ -45,16 +48,17 @@ class PasswordExpiredController extends Controller
 
         // Save old password
         DB::table('old_passwords')->insert([
-            'user_id' => $request->user()->id,
-            'hash' => $request->user()->password
+            'user_id' => $user->id,
+            'hash' => $user->password,
+            'created_at' => Carbon::now()
         ]);
 
         // Delete if older passwords
-        if ($count = DB::table('old_passwords')->where('user_id', $request->user()->id)->offset(8)->get()->count()) {
-            DB::table('old_passwords')->where('user_id', $request->user()->id)->take($count)->delete();
+        if ($count = DB::table('old_passwords')->where('user_id', $user->id)->offset(8)->get()->count()) {
+            DB::table('old_passwords')->where('user_id', $user->id)->take($count)->delete();
         }
 
-        $request->user()->update([
+        $user->update([
             'password' => bcrypt($request->password),
             'password_changed_at' => Carbon::now()
         ]);
