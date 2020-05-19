@@ -146,7 +146,9 @@ function submitForm(e, id) {
     e.preventDefault()
 
     let filter = window.location.search.split('filter=')[1]
-    let data = $(e.target).serialize() + '&filter=' + filter
+    let from = window.location.search.split('from=')[1] ?? null
+    let to = window.location.search.split('to=')[1] ?? null
+    let data = $(e.target).serialize() + '&filter=' + filter + '&from=' + from + '&to=' + to
 
     $.ajax({
         url: $(e.target).attr('action'),
@@ -187,7 +189,11 @@ function setStatus(id, status) {
     $.ajax({
         url: "/taxi-requests/" + id + "/status/" + status,
         method: "GET",
-        data: { 'filter' : window.location.search.split('filter=')[1] }
+        data: {
+            'filter' : window.location.search.split('filter=')[1],
+            'from' : window.location.search.split('from=')[1],
+            'to' : window.location.search.split('to=')[1],
+        }
     }).done(function(response) {
         $('#table-wrapper').html(response)
 
