@@ -146,8 +146,8 @@ function submitForm(e, id) {
     e.preventDefault()
 
     let filter = window.location.search.split('filter=')[1]
-    let from = window.location.search.split('from=')[1] ?? null
-    let to = window.location.search.split('to=')[1] ?? null
+    let from = window.location.search.split('from=')[1] ?? ''
+    let to = window.location.search.split('to=')[1] ?? ''
     let data = $(e.target).serialize() + '&filter=' + filter + '&from=' + from + '&to=' + to
 
     $.ajax({

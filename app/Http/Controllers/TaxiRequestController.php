@@ -305,7 +305,7 @@ class TaxiRequestController extends Controller
     {
         $from = request('from');
         $to = request('to');
-        
+
         $taxiRequests = TaxiRequest::filterByCompany()
             ->filter(request('filter'))
             ->when($from, function ($query, $from) {
