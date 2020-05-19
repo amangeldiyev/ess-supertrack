@@ -181,7 +181,15 @@ function submitForm(e, id) {
 
         $('#form-modal').modal('toggle')
     }).fail(function(e) {
-        console.log(e)
+        
+        let errors = e.responseJSON.errors
+
+        if (e.status == 422) {
+            for (const error in errors) {
+                $(`input[name='${error}']`).addClass('is-invalid');
+                $(`#error_${error}`).text(errors[error]);
+            }
+        }
     })
 }
 

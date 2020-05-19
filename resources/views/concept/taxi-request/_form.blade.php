@@ -20,7 +20,10 @@
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label>Passenger name</label>
-                            <input id="passenger" name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off">
+                            <input id="passenger" name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off" required>
+                            <div class="invalid-feedback" id="error_passenger">
+                                Field is required.
+                            </div>
                             <datalist id="passengers">
                                 @foreach ($passengers = \App\Passenger::filterByCompany()->get() as $passenger)
                                 <option value="{{$passenger->name}}">{{$passenger->badge_number}} - {{$passenger->phone}} - {{$passenger->email}}</option>
@@ -30,14 +33,23 @@
                         <div class="form-group col-md-3">
                             <label>Phone</label>
                             <input name="phone" value="{{isset($taxiRequest) ? $taxiRequest->phone : ''}}" type="text" class="form-control">
+                            <div class="invalid-feedback" id="error_phone">
+                                Field is required.
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Pick Up Location</label>
-                            <input name="pick_up_location" value="{{isset($taxiRequest) ? $taxiRequest->pick_up_location : ''}}" type="text" class="form-control">
+                            <input name="pick_up_location" value="{{isset($taxiRequest) ? $taxiRequest->pick_up_location : ''}}" type="text" class="form-control" required>
+                            <div class="invalid-feedback" id="error_pick_up_location">
+                                Field is required.
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Drop Off Location</label>
-                            <input name="drop_off_location" value="{{isset($taxiRequest) ? $taxiRequest->drop_off_location : ''}}" type="text" class="form-control">
+                            <input name="drop_off_location" value="{{isset($taxiRequest) ? $taxiRequest->drop_off_location : ''}}" type="text" class="form-control" required>
+                            <div class="invalid-feedback" id="error_drop_off_location">
+                                Field is required.
+                            </div>
                         </div>
                     </div>
 
@@ -50,10 +62,13 @@
                             <div class="form-group">
                                 <label>Date</label>
                                 <div class="input-group date" id="datetimepicker1" data-default="{{isset($taxiRequest) ? $taxiRequest->date : ''}}" data-target-input="nearest">
-                                    <input name="date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" autocomplete="off"/>
+                                    <input name="date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" autocomplete="off" required/>
                                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
+                                </div>
+                                <div class="invalid-feedback" id="error_date">
+                                    Field is required.
                                 </div>
                             </div>
                         </div>
@@ -70,19 +85,25 @@
                         <div class="form-group col-md-4">
                             <label>Start Date</label>
                             <div class="input-group date" id="datetimepicker2" data-default="{{isset($taxiRequest) ? $taxiRequest->start_date : ''}}" data-target-input="nearest">
-                                <input name="start_date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" autocomplete="off"/>
+                                <input name="start_date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" autocomplete="off" required/>
                                 <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
+                            </div>
+                            <div class="invalid-feedback" id="error_start_date">
+                                Field is required.
                             </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label>End Date</label>
                             <div class="input-group date" id="datetimepicker3" data-default="{{isset($taxiRequest) ? $taxiRequest->end_date : ''}}" data-target-input="nearest">
-                                <input name="end_date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" autocomplete="off"/>
+                                <input name="end_date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" autocomplete="off" required/>
                                 <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
+                            </div>
+                            <div class="invalid-feedback" id="error_end_date">
+                                Field is required.
                             </div>
                         </div>
                         <div class="form-group col-md-4">
@@ -145,7 +166,10 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Places QTY</label>
-                            <input name="qty" type="number" class="form-control" value="{{isset($taxiRequest) ? $taxiRequest->qty : ''}}">
+                            <input name="qty" type="number" class="form-control" value="{{isset($taxiRequest) ? $taxiRequest->qty : ''}}" required>
+                            <div class="invalid-feedback" id="error_qty">
+                                Field is required.
+                            </div>
                         </div>
                     </div>
             
@@ -187,7 +211,9 @@
                                 <option value="{{$passenger->id}}" {{isset($taxiRequest) && $taxiRequest->ordered_by == $passenger->id ? "selected" : ""}}>{{$passenger->name}}</option>
                                 @endforeach
                             </select>
-                            <br>
+                            <div class="invalid-feedback" id="error_ordered_by">
+                                Field is required.
+                            </div>
                         </div>
                     </div>
             
