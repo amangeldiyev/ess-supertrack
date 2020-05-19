@@ -170,8 +170,25 @@
     </div>
 </div>
 
+<div class="toast">
+    <div class="toast-header">
+      Toast Header
+    </div>
+    <div class="toast-body">
+      Some text inside the toast body
+    </div>
+</div>
+
 <script>
     setInterval(() => {
+
+        if(!window.navigator.onLine) {
+            $('#main-alert').show()
+            return
+        } else{
+            $('#main-alert').hide()
+        }
+
         $.ajax({
             url: "/taxi-requests/system-notify",
         }).done(function(response) {
@@ -180,6 +197,8 @@
             $('#overdue-count').text(response.overdue)
 
         }).fail(function(e) {
+            $('#main-alert span').text('Service unavailable!')
+            $('#main-alert').show()
             console.log(e)
         })
     }, 10000);
