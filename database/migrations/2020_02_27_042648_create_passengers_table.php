@@ -16,7 +16,7 @@ class CreatePassengersTable extends Migration
         Schema::create('passengers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('badge_number');
+            $table->string('badge_number')->unique();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->unsignedInteger('company_id');
