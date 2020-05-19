@@ -199,8 +199,8 @@ function setStatus(id, status) {
         method: "GET",
         data: {
             'filter' : window.location.search.split('filter=')[1],
-            'from' : window.location.search.split('from=')[1],
-            'to' : window.location.search.split('to=')[1],
+            'from' : window.location.search.split('from=')[1] ?? '',
+            'to' : window.location.search.split('to=')[1] ?? '',
         }
     }).done(function(response) {
         $('#table-wrapper').html(response)
