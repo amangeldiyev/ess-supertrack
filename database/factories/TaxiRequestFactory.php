@@ -10,6 +10,8 @@ use App\Vehicle;
 use Faker\Generator as Faker;
 
 $factory->define(TaxiRequest::class, function (Faker $faker) {
+    $company = Company::inRandomOrder()->first();
+
     return [
         'number' => $faker->randomDigit(4),
         'date' => $faker->date(),
@@ -20,7 +22,7 @@ $factory->define(TaxiRequest::class, function (Faker $faker) {
         'passenger_type' => $faker->randomElement([0, 1]),
         'qty' => $faker->randomDigit,
         'driver_in_time' => $faker->randomElement([0, 1]),
-        'company_id' => $company_id = factory(Company::class)->create()->id,
+        'company_id' => $company->id,
         'passenger' => $faker->name,
         'phone' => $faker->phoneNumber,
         'pick_up_location' => $faker->sentence(3),
@@ -28,10 +30,10 @@ $factory->define(TaxiRequest::class, function (Faker $faker) {
         'on_location_time' => $faker->time(),
         'pick_up_time' => $faker->time(),
         'drop_off_time' => $faker->time(),
-        'driver_id' => factory(Driver::class)->create(['company_id' => $company_id])->id,
-        'vehicle_id' => $vehicle_id = factory(Vehicle::class)->create(['company_id' => $company_id])->id,
+        'driver_id' => factory(Driver::class)->create(['company_id' => $company->id])->id,
+        'vehicle_id' => $vehicle_id = factory(Vehicle::class)->create(['company_id' => $company->id])->id,
         'vehicle_type' => Vehicle::find($vehicle_id)->type,
         'comment' => $faker->sentence(5),
-        'ordered_by' => factory(Passenger::class)->create(['company_id' => $company_id])->id,
+        'ordered_by' => factory(Passenger::class)->create(['company_id' => $company->id]),
     ];
 });
