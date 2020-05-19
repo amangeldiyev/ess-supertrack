@@ -56,6 +56,7 @@ class OperatorController extends Controller
 
         User::create([
             'name' => $validatedData['name'],
+            'username' => $validatedData['username'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'company_id' => $validatedData['company_id']
