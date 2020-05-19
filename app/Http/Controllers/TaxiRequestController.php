@@ -305,7 +305,6 @@ class TaxiRequestController extends Controller
     {
         $from = request('from');
         $to = request('to');
-        \Log::info($from);
         
         $taxiRequests = TaxiRequest::filterByCompany()
             ->filter(request('filter'))
