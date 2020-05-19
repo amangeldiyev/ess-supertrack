@@ -194,14 +194,16 @@ function submitForm(e, id) {
 }
 
 function setStatus(id, status) {
+
+    let filter = window.location.search.split('filter=')[1]
+    let from = window.location.search.split('from=')[1] ?? ''
+    let to = window.location.search.split('to=')[1] ?? ''
+    let data = '&filter=' + filter + '&from=' + from + '&to=' + to
+
     $.ajax({
         url: "/taxi-requests/" + id + "/status/" + status,
         method: "GET",
-        data: {
-            'filter' : window.location.search.split('filter=')[1],
-            'from' : window.location.search.split('from=')[1] ?? '',
-            'to' : window.location.search.split('to=')[1] ?? '',
-        }
+        data: data
     }).done(function(response) {
         $('#table-wrapper').html(response)
 
