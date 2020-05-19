@@ -285,7 +285,7 @@ class TaxiRequestController extends Controller
 
         $taxiRequest->delete();
 
-        return redirect()->route('taxi-requests.index');
+        return back();
     }
 
     /**
