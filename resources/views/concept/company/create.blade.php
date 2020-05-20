@@ -46,7 +46,7 @@
                         </div>
                         <hr>
                         <h3>Message Templates</h3>
-                        <p>Use <span class="text-secondary">[start_date]</span>, <span class="text-secondary">[driver]</span>, <span class="text-secondary">[vehicle]</span>, <span class="text-secondary">[type]</span> as placeholder.</p>
+                        <p>Use <span class="text-secondary">[id]</span>, <span class="text-secondary">[start_date]</span>, <span class="text-secondary">[driver]</span>, <span class="text-secondary">[vehicle]</span>, <span class="text-secondary">[type]</span> as placeholder.</p>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Request Confirm</label>
