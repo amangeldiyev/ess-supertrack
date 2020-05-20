@@ -126,7 +126,7 @@ class PassengerController extends Controller
 
     public function search(Request $request)
     {
-        $q = strtolower($request->search);
+        $q = strtolower($request->q);
         
         $passengers = Passenger::filterByCompany()->whereRaw('LOWER(name) like ?', ["%{$q}%"])
             ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
@@ -134,15 +134,6 @@ class PassengerController extends Controller
             ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"])
             ->get();
 
-        if ($request->expectsJson()) {
-            $data = '';
-
-            foreach ($passengers as $passenger) {
-                $data .= `<option value="$passenger->name">$passenger->badge_number - $passenger->phone - $passenger->email</option>`;
-            }
-            return response()->json([
-                'passengers' => $data
-            ]);
-        }
+        return response()->json($passengers);
     }
 }

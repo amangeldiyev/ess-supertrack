@@ -1,5 +1,6 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('/vendor/datepicker/tempusdominus-bootstrap-4.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/vendor/bootstrap-select/css/bootstrap-select.css') }}" />
 @endpush
 
 <div class="row">
@@ -19,16 +20,48 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-3">
+                            <label>Ordered By</label>
+                            <select id="ajax-select" name="ordered_by" class="selectpicker with-ajax form-control" data-live-search="true">
+                                @foreach (\App\Passenger::filterByCompany()->get() as $passenger)
+                                    <option value="{{$passenger->id}}" data-subtext="{{$passenger->phone}}">{{$passenger->name}}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback" id="error_ordered_by">
+                                Field is required.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Trip Type</label>
+                            <select name="type" id="inputState" class="form-control">
+                                <option value="0" {{isset($taxiRequest) && $taxiRequest->type == 0 ? "selected" : ""}}>Business</option>
+                            </select>
+                        </div>
+                        @if (auth()->user()->company_id === 0)
+                            <div class="form-group col-md-3">
+                                <label>Company</label>
+                                <select name="company_id" class="form-control">
+                                    @foreach (\App\Company::all() as $company)
+                                    <option value="{{$company->id}}" {{isset($taxiRequest) && $taxiRequest->company_id == $company->id ? "selected" : ""}}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        <div class="form-group col-md-3">
+                            <label>Trip Status</label>
+                            <select name="status" class="form-control">
+                                @foreach (\App\TaxiRequest::STATUSES as $key => $status)
+                                    <option value="{{$key}}" {{isset($taxiRequest) && $taxiRequest->status == $key ? "selected" : ""}}>{{$status}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
                             <label>Passenger name</label>
-                            <input id="passenger" name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" list="passengers" autocomplete="off" required>
+                            <input id="passenger" name="passenger" value="{{isset($taxiRequest) ? $taxiRequest->passenger : ''}}" class="form-control" autocomplete="off" required>
                             <div class="invalid-feedback" id="error_passenger">
                                 Field is required.
                             </div>
-                            <datalist id="passengers">
-                                @foreach ($passengers = \App\Passenger::filterByCompany()->get() as $passenger)
-                                <option value="{{$passenger->name}}">{{$passenger->badge_number}} - {{$passenger->phone}} - {{$passenger->email}}</option>
-                                @endforeach
-                            </datalist>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Phone</label>
@@ -54,10 +87,41 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>#</label>
                             <input name="number" value="{{isset($taxiRequest) ? $taxiRequest->number : time()}}" type="text" class="form-control" readonly>
                         </div>
+                        <div class="form-group col-md-3">
+                            <label>Places QTY</label>
+                            <input name="qty" type="number" class="form-control" value="{{isset($taxiRequest) ? $taxiRequest->qty : ''}}" required>
+                            <div class="invalid-feedback" id="error_qty">
+                                Field is required.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <label class="custom-control custom-radio">
+                                            <input type="radio" name="passenger_type" value="0" {{isset($taxiRequest) && $taxiRequest->passenger_type == 1 ? "" : "checked"}} class="custom-control-input"><span class="custom-control-label">Client</span>
+                                        </label>
+                                        <label class="custom-control custom-radio">
+                                            <input type="radio" name="passenger_type" value="1" {{isset($taxiRequest) && $taxiRequest->passenger_type == 1 ? "checked" : ""}} class="custom-control-input"><span class="custom-control-label">Visitor</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="form-check">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="driver_in_time" value="1" {{isset($taxiRequest) && $taxiRequest->driver_in_time == 0 ? "" : "checked"}} class="custom-control-input">
+                                    <span class="custom-control-label">Driver should be in time</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-4">
                             <div class="form-group">
                                 <label>Date</label>
@@ -72,16 +136,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Trip Status</label>
-                            <select name="status" class="form-control">
-                                @foreach (\App\TaxiRequest::STATUSES as $key => $status)
-                                    <option value="{{$key}}" {{isset($taxiRequest) && $taxiRequest->status == $key ? "selected" : ""}}>{{$status}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Start Date</label>
                             <div class="input-group date" id="datetimepicker2" data-default="{{isset($taxiRequest) ? $taxiRequest->start_date : ''}}" data-target-input="nearest">
@@ -105,12 +159,6 @@
                             <div class="invalid-feedback" id="error_end_date">
                                 Field is required.
                             </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Trip Type</label>
-                            <select name="type" id="inputState" class="form-control">
-                                <option value="0" {{isset($taxiRequest) && $taxiRequest->type == 0 ? "selected" : ""}}>Business</option>
-                            </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>On Location</label>
@@ -140,52 +188,10 @@
                             </div>
                         </div>
                     </div>
-            
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <div class="form-check">
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="passenger_type" value="0" {{isset($taxiRequest) && $taxiRequest->passenger_type == 1 ? "" : "checked"}} class="custom-control-input"><span class="custom-control-label">Client</span>
-                                        </label>
-                                        <label class="custom-control custom-radio">
-                                            <input type="radio" name="passenger_type" value="1" {{isset($taxiRequest) && $taxiRequest->passenger_type == 1 ? "checked" : ""}} class="custom-control-input"><span class="custom-control-label">Visitor</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <div class="form-check">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="driver_in_time" value="1" {{isset($taxiRequest) && $taxiRequest->driver_in_time == 0 ? "" : "checked"}} class="custom-control-input">
-                                    <span class="custom-control-label">Driver should be in time</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Places QTY</label>
-                            <input name="qty" type="number" class="form-control" value="{{isset($taxiRequest) ? $taxiRequest->qty : ''}}" required>
-                            <div class="invalid-feedback" id="error_qty">
-                                Field is required.
-                            </div>
-                        </div>
-                    </div>
-            
+
                     <hr />
             
                     <div class="form-row">
-                        @if (auth()->user()->company_id === 0)
-                            <div class="form-group col-md-3">
-                                <label>Company</label>
-                                <select name="company_id" class="form-control">
-                                    @foreach (\App\Company::all() as $company)
-                                    <option value="{{$company->id}}" {{isset($taxiRequest) && $taxiRequest->company_id == $company->id ? "selected" : ""}}>{{$company->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endif
                         <div class="form-group col-md-3">
                             <label>Drivers</label>
                             <select name="driver_id" class="form-control">
@@ -204,17 +210,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Ordered By</label>
-                            <select name="ordered_by" class="form-control">
-                                @foreach ($passengers as $passenger)
-                                <option value="{{$passenger->id}}" {{isset($taxiRequest) && $taxiRequest->ordered_by == $passenger->id ? "selected" : ""}}>{{$passenger->name}}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback" id="error_ordered_by">
-                                Field is required.
-                            </div>
-                        </div>
                     </div>
             
                     <div class="form-row">
@@ -229,9 +224,12 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('/js/search.js') }}"></script>
 
 @push('scripts')
     <script src="{{ asset('/vendor/datepicker/moment.js') }}"></script>
     <script src="{{ asset('/vendor/datepicker/tempusdominus-bootstrap-4.js') }}"></script>
-    {{-- <script src="{{ asset('/vendor/datepicker/datepicker.js') }}"></script> --}}
+    <script src="{{ asset('/vendor/bootstrap-select/js/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('/vendor/bootstrap-select/js/ajax-bootstrap-select.min.js') }}"></script>
+    
 @endpush

@@ -135,7 +135,7 @@ function toggleModal(id) {
     
         }
 
-        document.getElementById("passenger").focus();
+        document.getElementById("ajax-select").focus();
 
     }).fail(function(e) {
         console.log(e)

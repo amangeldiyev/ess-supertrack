@@ -12,6 +12,7 @@
     <link href="{{ asset('/vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
+    <script src="{{ asset('/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
 
     @stack('styles')
 </head>
@@ -57,7 +58,7 @@
     <!-- end main wrapper -->
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
-    <script src="{{ asset('/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('/js/popper.min.js') }}"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="{{ asset('/vendor/slimscroll/jquery.slimscroll.js') }}"></script>
     {{-- <script src="{{ asset('/vendor/multi-select/js/jquery.multi-select.js') }}"></script> --}}
