@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label class="custom-control custom-checkbox">
-                                <input type="checkbox" name="sms_notification" value="1" {{isset($passenger) && $passenger->sms_notification == 0 ? "" : "checked"}} class="custom-control-input">
+                                <input type="checkbox" name="sms_notification" value="1" {{isset($passenger) && $passenger->sms_notification == 1 ? "checked" : ""}} class="custom-control-input">
                                 <span class="custom-control-label">SMS notification</span>
                             </label>
                         </div>
