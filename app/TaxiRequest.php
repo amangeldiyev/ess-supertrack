@@ -119,7 +119,8 @@ class TaxiRequest extends Model
         return (string)Str::of($text)->replace('[start_date]', $this->start_date)
             ->replace('[driver]', $this->driver ? $this->driver->name : '')
             ->replace('[vehicle]', $this->vehicle ? $this->vehicle->name : '')
-            ->replace('[type]', $this->vehicle ? $this->vehicle->type : '');
+            ->replace('[type]', $this->vehicle ? $this->vehicle->type : '')
+            ->replace('[id]', $this->number);
     }
 
     public function scopeFilter($query, $value)
