@@ -40,19 +40,31 @@
                         
                         <div class="form-group">
                             <label>Passenger Name</label>
-                            <input name="name" type="text" value="{{isset($passenger) ? $passenger->name : ''}}" class="form-control">
+                            <input name="name" type="text" value="{{isset($passenger) ? $passenger->name : ''}}" class="form-control @error('name') is-invalid @enderror" required>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Badge Number</label>
-                            <input name="badge_number" type="text" value="{{isset($passenger) ? $passenger->badge_number : ''}}" class="form-control" required>
+                            <input name="badge_number" type="text" value="{{isset($passenger) ? $passenger->badge_number : ''}}" class="form-control @error('badge_number') is-invalid @enderror" required>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('badge_number') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input name="phone" type="text" value="{{isset($passenger) ? $passenger->phone : ''}}" class="form-control">
+                            <input name="phone" type="text" value="{{isset($passenger) ? $passenger->phone : ''}}" class="form-control @error('phone') is-invalid @enderror">
+                            <div class="invalid-feedback">
+                                {{ $errors->first('phone') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="email" type="email" value="{{isset($passenger) ? $passenger->email : ''}}" class="form-control">
+                            <input name="email" type="email" value="{{isset($passenger) ? $passenger->email : ''}}" class="form-control @error('email') is-invalid @enderror">
+                            <div class="invalid-feedback">
+                                {{ $errors->first('email') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Language</label>

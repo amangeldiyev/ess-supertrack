@@ -40,19 +40,31 @@
                         
                         <div class="form-group">
                             <label>Name</label>
-                            <input name="name" type="text" required value="{{isset($user) ? $user->name : ''}}" class="form-control">
+                            <input name="name" type="text" required value="{{isset($user) ? $user->name : ''}}" class="form-control @error('name') is-invalid @enderror">
+                             <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Username</label>
-                            <input name="username" type="text" required value="{{isset($user) ? $user->username : ''}}" class="form-control">
+                            <input name="username" type="text" required value="{{isset($user) ? $user->username : ''}}" class="form-control @error('username') is-invalid @enderror">
+                             <div class="invalid-feedback">
+                                {{ $errors->first('username') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="email" type="email" required value="{{isset($user) ? $user->email : ''}}" class="form-control">
+                            <input name="email" type="email" required value="{{isset($user) ? $user->email : ''}}" class="form-control @error('email') is-invalid @enderror">
+                             <div class="invalid-feedback">
+                                {{ $errors->first('email') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input name="password" type="password" autocomplete="off" class="form-control" {{isset($user) ? '' : 'required'}}>
+                            <input name="password" type="password" autocomplete="off" class="form-control @error('password') is-invalid @enderror" {{isset($user) ? '' : 'required'}}>
+                             <div class="invalid-feedback">
+                                {{ $errors->first('password') }}
+                            </div>
                         </div>
 
                         <div class="form-group">

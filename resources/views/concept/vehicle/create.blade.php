@@ -40,11 +40,17 @@
                         
                         <div class="form-group">
                             <label>Vehicle Name</label>
-                            <input name="name" type="text" value="{{isset($vehicle) ? $vehicle->name : ''}}" class="form-control">
+                            <input name="name" type="text" value="{{isset($vehicle) ? $vehicle->name : ''}}" class="form-control @error('name') is-invalid @enderror" required>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Vehicle Type</label>
-                            <input value="{{isset($vehicle) ? $vehicle->type : ''}}" name="type" class="form-control" list="vehicle-types" autocomplete="off">
+                            <input value="{{isset($vehicle) ? $vehicle->type : ''}}" name="type" class="form-control @error('type') is-invalid @enderror" list="vehicle-types" autocomplete="off" requried>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('type') }}
+                            </div>
                             <datalist id="vehicle-types">
                                 @foreach (\App\Vehicle::all()->pluck('type') as $type)
                                 <option value="{{$type}}"></option>

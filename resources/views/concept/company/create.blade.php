@@ -41,7 +41,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Company Name</label>
-                                <input name="name" type="text" value="{{isset($company) ? $company->name : ''}}" class="form-control">
+                                <input name="name" type="text" value="{{isset($company) ? $company->name : ''}}" class="form-control @error('name') is-invalid @enderror" required>
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('name') }}
+                                </div>
                             </div>
                         </div>
                         <hr>

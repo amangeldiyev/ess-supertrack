@@ -40,7 +40,10 @@
                         
                         <div class="form-group">
                             <label>Driver Name</label>
-                            <input name="name" type="text" value="{{isset($driver) ? $driver->name : ''}}" class="form-control">
+                            <input name="name" type="text" value="{{isset($driver) ? $driver->name : ''}}" class="form-control @error('name') is-invalid @enderror" required>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
                         </div>
                         @if (auth()->user()->company_id === 0)
                             <div class="form-group">

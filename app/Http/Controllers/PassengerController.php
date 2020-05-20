@@ -41,8 +41,8 @@ class PassengerController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'badge_number' => 'required|unique:passengers|numeric|max:99999999',
-            'phone' => 'string|max:15',
-            'email' => 'string|email|max:255',
+            'phone' => 'string|max:15|nullable',
+            'email' => 'string|email|max:255|nullable',
             'lang' => 'required|integer|between:0,2',
             'sms_notification' => 'boolean|nullable',
             'email_notification' => 'boolean|nullable',
@@ -92,8 +92,8 @@ class PassengerController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'badge_number' => 'required|unique:passengers,badge_number,'.$passenger->id.'|numeric|max:99999999',
-            'phone' => 'string|max:15',
-            'email' => 'string|email|max:255',
+            'phone' => 'string|max:15|nullable',
+            'email' => 'string|email|max:255|nullable',
             'lang' => 'required|integer|between:0,2',
             'sms_notification' => 'boolean|nullable',
             'email_notification' => 'boolean|nullable',
