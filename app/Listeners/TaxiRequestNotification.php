@@ -32,7 +32,7 @@ class TaxiRequestNotification
 
         if ($event->sms_notification && !empty($event->text)) {
             $smsSender = new KcellSms();
-            $smsSender->log($event->text, $client->phone);
+            $smsSender->send($event->text, $client->phone);
         }
 
         if ($event->email_notification && !empty($event->text)) {
