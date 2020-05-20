@@ -54,6 +54,17 @@ class TaxiRequest extends Model
 
     protected $appends = ['remaining_time'];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::saving(function ($model) {
+            if ($model->status === 1 && $model->vehicle && $model->driver) {
+                $model->status = 2;
+            }
+        });
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
