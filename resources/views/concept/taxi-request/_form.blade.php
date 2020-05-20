@@ -22,7 +22,7 @@
                         <div class="form-group col-md-3">
                             <label>Ordered By</label>
                             <select id="ajax-select" name="ordered_by" class="selectpicker with-ajax form-control" data-live-search="true">
-                                @foreach (\App\Passenger::filterByCompany()->get() as $passenger)
+                                @foreach (\App\Passenger::filterByCompany()->limit(5)->get() as $passenger)
                                     <option value="{{$passenger->id}}" data-subtext="{{$passenger->phone}}">{{$passenger->name}}</option>
                                 @endforeach
                             </select>
