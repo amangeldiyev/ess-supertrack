@@ -30,7 +30,7 @@ class PassengersImport implements ToCollection, WithHeadingRow
         
             foreach ($rows as $key =>$row) {
 
-                if (!$row['badge_number']) {
+                if (!$row['badge']) {
                     break;
                 }
 
