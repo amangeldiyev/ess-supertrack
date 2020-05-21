@@ -24,6 +24,8 @@ class PassengersImport implements ToCollection, WithHeadingRow
     {
         try {
 
+            DB::table('passengers')->update(['deleted' => 1]);
+
             $data = [];
         
             foreach ($rows as $key =>$row) {
@@ -38,7 +40,8 @@ class PassengersImport implements ToCollection, WithHeadingRow
                     'phone' => $row['phone'],
                     'email' => $row['email'],
                     'company_id' => $this->company_id,
-                    'email_notification' => 1
+                    'email_notification' => 1,
+                    'deleted' => 0
                 ];
                 
                 if ($key % 1000 == 1) {
@@ -48,7 +51,7 @@ class PassengersImport implements ToCollection, WithHeadingRow
                     DB::table('passengers')->upsert(
                         $data,
                         'badge_number',
-                        ['name', 'phone', 'email']
+                        ['name', 'phone', 'email', 'deleted']
                     );
         
                     DB::commit();
@@ -62,7 +65,7 @@ class PassengersImport implements ToCollection, WithHeadingRow
             DB::table('passengers')->upsert(
                 $data,
                 'badge_number',
-                ['name', 'phone', 'email']
+                ['name', 'phone', 'email', 'deleted']
             );
 
             DB::commit();
