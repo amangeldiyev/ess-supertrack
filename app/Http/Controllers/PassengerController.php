@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PassengersExport;
 use App\Imports\PassengersImport;
 use App\Passenger;
 use Gate;
@@ -133,6 +134,11 @@ class PassengerController extends Controller
         }
 
         return view('concept.passenger.import');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new PassengersExport, 'passengers.xlsx');
     }
 
     public function search(Request $request)

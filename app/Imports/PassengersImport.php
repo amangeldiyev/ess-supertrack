@@ -19,38 +19,36 @@ class PassengersImport implements ToCollection, WithHeadingRow
     {
         try {
 
-            for ($i=0; $i < 10; $i++) { 
-                $data = [];
-            
-                foreach ($rows as $key =>$row) {
-                    $data[] = ['badge_number' => $row['badge'], 'name' => $row['name'], 'phone' => $row['phone'], 'email' => $row['email'], 'company_id' => 1, 'email_notification' => 1];
-                    
-                    if ($key % 1000 == 1) {
+            $data = [];
         
-                        DB::beginTransaction();
-            
-                        DB::table('passengers')->upsert(
-                            $data,
-                            'badge_number',
-                            ['name', 'phone', 'email']
-                        );
-            
-                        DB::commit();
+            foreach ($rows as $key =>$row) {
+                $data[] = ['badge_number' => $row['badge'], 'name' => $row['name'], 'phone' => $row['phone'], 'email' => $row['email'], 'company_id' => 1, 'email_notification' => 1];
+                
+                if ($key % 1000 == 1) {
+    
+                    DB::beginTransaction();
         
-                        $data = [];
-                    }
+                    DB::table('passengers')->upsert(
+                        $data,
+                        'badge_number',
+                        ['name', 'phone', 'email']
+                    );
+        
+                    DB::commit();
+    
+                    $data = [];
                 }
-
-                DB::beginTransaction();
-    
-                DB::table('passengers')->upsert(
-                    $data,
-                    'badge_number',
-                    ['name', 'phone', 'email']
-                );
-    
-                DB::commit();
             }
+
+            DB::beginTransaction();
+
+            DB::table('passengers')->upsert(
+                $data,
+                'badge_number',
+                ['name', 'phone', 'email']
+            );
+
+            DB::commit();
 
         } catch (\Throwable $th) {
             info($th);
