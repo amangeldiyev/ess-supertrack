@@ -35,10 +35,10 @@ class PassengersImport implements ToCollection, WithHeadingRow
                 }
 
                 $data[] = [
-                    'badge_number' => $row['badge'],
-                    'name' => $row['name'],
-                    'phone' => $row['phone'],
-                    'email' => $row['email'],
+                    'badge_number' => trim(pg_escape_string($row['badge'])),
+                    'name' => trim(pg_escape_string($row['name'])),
+                    'phone' => trim(pg_escape_string($row['phone'])),
+                    'email' => trim(pg_escape_string($row['email'])),
                     'company_id' => $this->company_id,
                     'email_notification' => 1,
                     'deleted' => 0

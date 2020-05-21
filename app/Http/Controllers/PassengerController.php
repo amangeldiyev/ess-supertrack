@@ -141,11 +141,6 @@ class PassengerController extends Controller
         return view('concept.passenger.import');
     }
 
-    public function export() 
-    {
-        return Excel::download(new PassengersExport, 'passengers.xlsx');
-    }
-
     public function search(Request $request)
     {
         $q = strtolower($request->q);
