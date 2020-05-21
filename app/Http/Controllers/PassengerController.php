@@ -149,6 +149,7 @@ class PassengerController extends Controller
             ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
             ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
             ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"])
+            ->limit(10)
             ->get();
 
         return response()->json($passengers);
