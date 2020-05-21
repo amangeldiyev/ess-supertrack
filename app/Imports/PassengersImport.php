@@ -10,11 +10,9 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class PassengersImport implements ToCollection, WithHeadingRow
 {
-    protected $company_id;
-
-    public function __contruct($company_id)
+    public function __construct(int $company_id)
     {
-        $this->$company_id = $company_id;
+        $this->company_id = $company_id;
     }
 
     /**
