@@ -18,7 +18,7 @@ class PassengerController extends Controller
      */
     public function index()
     {
-        $passengers = Passenger::filterByCompany()->with('company')->paginate(10)->get();
+        $passengers = Passenger::filterByCompany()->with('company')->paginate(10);
 
         return view('concept.passenger.index', compact('passengers'));
     }
