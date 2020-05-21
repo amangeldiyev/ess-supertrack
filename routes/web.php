@@ -18,8 +18,8 @@ Auth::routes([
 ]);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('password/expired', 'Auth\PasswordExpiredController@expired')->middleware('auth')->name('password.expired');
-    Route::post('password/expired', 'Auth\PasswordExpiredController@setPassword')->middleware('auth')->name('password.expired');
+    Route::get('password/expired', 'Auth\PasswordExpiredController@expired')->name('password.expired');
+    Route::post('password/expired', 'Auth\PasswordExpiredController@setPassword')->name('password.expired');
     Route::get('/passengers/search', 'PassengerController@search');
     Route::get('/taxi-requests/{taxiRequest}/status/{status}', 'TaxiRequestController@setStatus');
     Route::get('/taxi-requests/system-notify', 'TaxiRequestController@systemNotify');
@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['password.expired'])->group(function () {
         Route::get('/', 'HomeController@index');
         Route::get('/home', 'HomeController@index')->name('home');
+
+        Route::match(['get', 'post'], '/passengers/import', 'PassengerController@import')->name('passengers.import');
         
         Route::resource('taxi-requests', 'TaxiRequestController');
         Route::resource('users', 'OperatorController')->middleware('admin');

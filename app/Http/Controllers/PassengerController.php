@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PassengersImport;
 use App\Passenger;
 use Gate;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PassengerController extends Controller
 {
@@ -15,7 +17,7 @@ class PassengerController extends Controller
      */
     public function index()
     {
-        $passengers = Passenger::filterByCompany()->with('company')->get();
+        $passengers = Passenger::filterByCompany()->with('company')->limit(10000)->get();
 
         return view('concept.passenger.index', compact('passengers'));
     }
@@ -122,6 +124,15 @@ class PassengerController extends Controller
         $passenger->delete();
 
         return redirect()->route('passengers.index');
+    }
+
+    public function import(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            Excel::import(new PassengersImport, $request->file('import'));
+        }
+
+        return view('concept.passenger.import');
     }
 
     public function search(Request $request)
