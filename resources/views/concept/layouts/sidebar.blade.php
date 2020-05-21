@@ -192,5 +192,5 @@
             $('#main-alert').show()
             console.log(e)
         })
-    }, 10000);
+    }, 30000);
 </script>
