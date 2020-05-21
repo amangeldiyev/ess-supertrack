@@ -130,7 +130,12 @@ class PassengerController extends Controller
     public function import(Request $request)
     {
         if ($request->isMethod('POST')) {
-            Excel::import(new PassengersImport, $request->file('import'));
+
+            $company_id = $request->company_id ?? auth()->user()->company_id;
+
+            Gate::authorize('access-model', $company_id);
+
+            Excel::import(new PassengersImport($company_id), $request->file('import'));
         }
 
         return view('concept.passenger.import');

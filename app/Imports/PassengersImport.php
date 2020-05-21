@@ -10,6 +10,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class PassengersImport implements ToCollection, WithHeadingRow
 {
+    protected $company_id;
+
+    public function __contruct($company_id)
+    {
+        $this->$company_id = $company_id;
+    }
+
     /**
     * @param Collection $row
     *
@@ -22,7 +29,15 @@ class PassengersImport implements ToCollection, WithHeadingRow
             $data = [];
         
             foreach ($rows as $key =>$row) {
-                $data[] = ['badge_number' => $row['badge'], 'name' => $row['name'], 'phone' => $row['phone'], 'email' => $row['email'], 'company_id' => 1, 'email_notification' => 1];
+                
+                $data[] = [
+                    'badge_number' => $row['badge'],
+                    'name' => $row['name'],
+                    'phone' => $row['phone'],
+                    'email' => $row['email'],
+                    'company_id' => $this->company_id,
+                    'email_notification' => 1
+                ];
                 
                 if ($key % 1000 == 1) {
     
