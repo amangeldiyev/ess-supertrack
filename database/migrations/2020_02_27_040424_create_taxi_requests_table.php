@@ -37,6 +37,7 @@ class CreateTaxiRequestsTable extends Migration
             $table->string('vehicle_type')->nullable();
             $table->text('comment')->nullable();
             $table->unsignedInteger('ordered_by');
+            $table->tinyInteger('notification_sent')->default(0);
             $table->timestamps();
         });
     }

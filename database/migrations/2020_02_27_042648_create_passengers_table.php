@@ -19,7 +19,11 @@ class CreatePassengersTable extends Migration
             $table->string('badge_number')->unique();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->tinyInteger('sms_notification')->default(0);
+            $table->tinyInteger('email_notification')->default(1);
+            $table->tinyInteger('lang')->default(0);
             $table->unsignedInteger('company_id');
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }
