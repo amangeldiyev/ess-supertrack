@@ -29,7 +29,11 @@ class PassengersImport implements ToCollection, WithHeadingRow
             $data = [];
         
             foreach ($rows as $key =>$row) {
-                
+
+                if (!$row['badge_number']) {
+                    break;
+                }
+
                 $data[] = [
                     'badge_number' => $row['badge'],
                     'name' => $row['name'],
