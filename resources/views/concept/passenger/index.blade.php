@@ -43,6 +43,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
+                        <div id="example_filter" style="float: right" class="dataTables_filter">
+                            <form>
+                                <label>
+                                    <input type="search" name="q" value="{{request('q')}}" class="form-control form-control-sm" placeholder="Search" aria-controls="example">
+                                </label>
+                            </form>
+                        </div>
                         <table id="example" class="table table-striped table-bordered first" style="width:100%">
                             <thead>
                                 <tr>
@@ -84,7 +91,7 @@
                         <div style="float: right">Showing {{($passengers->currentpage()-1)*$passengers->perpage()+1}} to {{$passengers->currentpage()*$passengers->perpage()}}
                             of  {{$passengers->total()}} entries
                         </div>
-                        {{ $passengers->links() }}
+                        {{ $passengers->appends(request()->input())->links() }}
                     </div>
                 </div>
             </div>

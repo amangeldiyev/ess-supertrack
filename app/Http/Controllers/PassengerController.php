@@ -18,7 +18,14 @@ class PassengerController extends Controller
      */
     public function index()
     {
-        $passengers = Passenger::filterByCompany()->with('company')->paginate(10);
+        $q = request('q');
+
+        $passengers = Passenger::filterByCompany()->when($q, function ($query, $q) {
+            return $query->whereRaw('LOWER(name) like ?', ["%{$q}%"])
+                ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
+                ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
+                ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"]);
+        })->with('company')->paginate(10);
 
         return view('concept.passenger.index', compact('passengers'));
     }
