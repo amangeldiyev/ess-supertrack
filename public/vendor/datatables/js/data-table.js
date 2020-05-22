@@ -23,4 +23,26 @@ jQuery(document).ready(function($) {
                 .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
+
+    if ($("table.first").length) {
+
+        $(document).ready(function() {
+            var table = $('table.second').DataTable({
+                lengthChange: false,
+                bPaginate: false,
+                ordering: false,
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'A4'
+                    },
+                    'copy', 'excel', 'print', 'colvis'
+                ]
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+        });
+    }
 });

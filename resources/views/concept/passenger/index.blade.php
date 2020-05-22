@@ -43,7 +43,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered second" style="width:100%">
+                        <table id="example" class="table table-striped table-bordered first" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -80,6 +80,11 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <br>
+                        <div style="float: right">Showing {{($passengers->currentpage()-1)*$passengers->perpage()+1}} to {{$passengers->currentpage()*$passengers->perpage()}}
+                            of  {{$passengers->total()}} entries
+                        </div>
+                        {{ $passengers->links() }}
                     </div>
                 </div>
             </div>
