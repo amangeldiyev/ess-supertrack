@@ -23,13 +23,11 @@ class PassengersImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         try {
-
             DB::table('passengers')->update(['deleted' => 1]);
 
             $data = [];
         
             foreach ($rows as $key =>$row) {
-
                 if (!$row['badge']) {
                     break;
                 }
@@ -45,34 +43,23 @@ class PassengersImport implements ToCollection, WithHeadingRow
                 ];
                 
                 if ($key % 1000 == 1) {
-    
-                    DB::beginTransaction();
-        
                     DB::table('passengers')->upsert(
                         $data,
                         'badge_number',
                         ['name', 'phone', 'email', 'deleted']
                     );
-        
-                    DB::commit();
     
                     $data = [];
                 }
             }
-
-            DB::beginTransaction();
 
             DB::table('passengers')->upsert(
                 $data,
                 'badge_number',
                 ['name', 'phone', 'email', 'deleted']
             );
-
-            DB::commit();
-
         } catch (\Throwable $th) {
             info($th);
-            DB::rollback();
         }
     }
 
