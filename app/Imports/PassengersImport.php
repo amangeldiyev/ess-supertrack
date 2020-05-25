@@ -42,7 +42,7 @@ class PassengersImport implements ToCollection, WithHeadingRow
                     'deleted' => 0
                 ];
                 
-                if ($key % 1000 == 1) {
+                if ($key && $key % 1000 == 0) {
                     DB::table('passengers')->upsert(
                         $data,
                         'badge_number',
