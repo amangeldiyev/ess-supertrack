@@ -18,6 +18,14 @@ class Passenger extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function scopeSearch($query, $q)
+    {
+        $query->whereRaw('LOWER(name) like ?', ["%{$q}%"])
+            ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
+            ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
+            ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"]);
+    }
+
     /**
      * Get the passenger's language preference.
      *

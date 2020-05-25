@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\PassengersExport;
 use App\Imports\PassengersImport;
 use App\Passenger;
 use Gate;
@@ -21,10 +20,7 @@ class PassengerController extends Controller
         $q = request('q');
 
         $passengers = Passenger::filterByCompany()->when($q, function ($query, $q) {
-            return $query->whereRaw('LOWER(name) like ?', ["%{$q}%"])
-                ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
-                ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
-                ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"]);
+            return $query->search($q);
         })->with('company')->paginate(10);
 
         return view('concept.passenger.index', compact('passengers'));
@@ -137,7 +133,6 @@ class PassengerController extends Controller
     public function import(Request $request)
     {
         if ($request->isMethod('POST')) {
-
             $company_id = $request->company_id ?? auth()->user()->company_id;
 
             Gate::authorize('access-model', $company_id);
@@ -150,12 +145,8 @@ class PassengerController extends Controller
 
     public function search(Request $request)
     {
-        $q = strtolower($request->q);
-        
-        $passengers = Passenger::filterByCompany()->whereRaw('LOWER(name) like ?', ["%{$q}%"])
-            ->orWhereRaw('LOWER(phone) like ?', ["%$q%"])
-            ->orWhereRaw('LOWER(email) like ?', ["%$q%"])
-            ->orWhereRaw('LOWER(badge_number) like ?', ["%$q%"])
+        $passengers = Passenger::filterByCompany()
+            ->search(strtolower($request->q))
             ->limit(10)
             ->get();
 
