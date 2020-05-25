@@ -19,6 +19,10 @@
                     <a href="{{ route('passengers.create') }}" class="btn btn-xs btn-outline-success">
                         <i class="fas fa-plus"></i>
                     </a>
+                    <a href="{{ route('passengers.import') }}" class="btn btn-xs btn-outline-primary">
+                        <i class="fas fa-file-excel"></i>
+                        Import
+                    </a>
                 </h2>
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
