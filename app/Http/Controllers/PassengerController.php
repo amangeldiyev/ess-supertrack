@@ -146,6 +146,7 @@ class PassengerController extends Controller
     public function search(Request $request)
     {
         $passengers = Passenger::filterByCompany()
+            ->where('deleted', 0)
             ->search(strtolower($request->q))
             ->limit(10)
             ->get();
