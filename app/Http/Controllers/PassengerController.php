@@ -17,7 +17,7 @@ class PassengerController extends Controller
      */
     public function index()
     {
-        $q = request('q');
+        $q = strtolower(request('q'));
 
         $passengers = Passenger::filterByCompany()->when($q, function ($query, $q) {
             return $query->search($q);
