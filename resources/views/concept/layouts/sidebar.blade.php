@@ -74,7 +74,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $currentRoute == 'vehicles' ? 'active' : '' }}" href="{{ route('vehicles.index') }}">
-                            <i class="fas fa-truck"></i>Vehicles
+                            <i class="fas fa-car"></i>Vehicles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ $currentRoute == 'shuttles' ? 'active' : '' }}" href="{{ route('shuttles.index') }}">
+                            <i class="fas fa-bus"></i>Shuttles
                         </a>
                     </li>
                     <li class="nav-divider">
