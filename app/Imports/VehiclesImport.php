@@ -19,7 +19,7 @@ class VehiclesImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        if (isset($row['name'])) {
+        if (isset($row['type']) && isset($row['type'])) {
             return new Vehicle([
                 'name' => $row['name'],
                 'type' => $row['type'],
