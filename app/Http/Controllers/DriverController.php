@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Driver;
+use App\Imports\DriversImport;
 use Gate;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DriverController extends Controller
 {
@@ -91,6 +93,25 @@ class DriverController extends Controller
         $driver->update($validatedData);
 
         return redirect()->route('drivers.index');
+    }
+
+    /**
+     * Import drivers.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $company_id = $request->company_id ?? auth()->user()->company_id;
+
+            Gate::authorize('access-model', $company_id);
+
+            Excel::import(new DriversImport($company_id), $request->file('import'));
+        }
+
+        return view('concept.driver.import');
     }
 
     /**

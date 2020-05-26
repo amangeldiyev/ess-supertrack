@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\VehiclesImport;
 use App\Vehicle;
 use Gate;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VehicleController extends Controller
 {
@@ -93,6 +95,25 @@ class VehicleController extends Controller
         $vehicle->update($validatedData);
 
         return redirect()->route('vehicles.index');
+    }
+
+    /**
+     * Import vehicles.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $company_id = $request->company_id ?? auth()->user()->company_id;
+
+            Gate::authorize('access-model', $company_id);
+
+            Excel::import(new VehiclesImport($company_id), $request->file('import'));
+        }
+
+        return view('concept.vehicle.import');
     }
 
     /**

@@ -130,6 +130,12 @@ class PassengerController extends Controller
         return redirect()->route('passengers.index');
     }
 
+    /**
+     * Import or update passenger list.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function import(Request $request)
     {
         if ($request->isMethod('POST')) {
