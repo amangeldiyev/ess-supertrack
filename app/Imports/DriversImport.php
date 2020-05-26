@@ -22,6 +22,7 @@ class DriversImport implements ToModel, WithHeadingRow
         if (isset($row['name'])) {
             return new Driver([
                 'name' => $row['name'],
+                'company_id' => $this->company_id,
                 'created_at' => Carbon::now()
             ]);
         } 

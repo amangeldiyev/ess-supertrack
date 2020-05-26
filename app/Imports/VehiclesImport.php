@@ -23,6 +23,7 @@ class VehiclesImport implements ToModel, WithHeadingRow
             return new Vehicle([
                 'name' => $row['name'],
                 'type' => $row['type'],
+                'company_id' => $this->company_id,
                 'created_at' => Carbon::now()
             ]);
         } 
