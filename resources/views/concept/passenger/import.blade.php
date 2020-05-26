@@ -13,7 +13,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('passengers.index') }}" class="breadcrumb-link">Passengers</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Create</li>
+                            <li class="breadcrumb-item active" aria-current="page">Import</li>
                         </ol>
                     </nav>
                 </div>

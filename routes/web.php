@@ -40,5 +40,6 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('passengers', 'PassengerController');
         Route::resource('drivers', 'DriverController');
         Route::resource('vehicles', 'VehicleController');
+        Route::resource('shuttles', 'ShuttleController');
     });
 });
