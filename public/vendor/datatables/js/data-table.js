@@ -27,10 +27,12 @@ jQuery(document).ready(function($) {
     if ($("table.first").length) {
 
         $(document).ready(function() {
-            var table = $('table.second').DataTable({
+            var table = $('table.first').DataTable({
                 lengthChange: false,
                 bPaginate: false,
                 ordering: false,
+                bFilter: false,
+                bInfo: false,
                 buttons: [
                     {
                         extend: 'pdfHtml5',

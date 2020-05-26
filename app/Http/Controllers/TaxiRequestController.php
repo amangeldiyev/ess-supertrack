@@ -23,9 +23,10 @@ class TaxiRequestController extends Controller
     {
         $from = request('from');
         $to = request('to');
+        $filter = request('filter');
 
         $taxiRequests = TaxiRequest::filterByCompany()
-            ->filter(request('filter'))
+            ->filter($filter)
             ->when($from, function ($query, $from) {
                 return $query->where('start_date', '>', $from);
             })
@@ -33,8 +34,13 @@ class TaxiRequestController extends Controller
                 return $query->where('start_date', '<', $to);
             })
             ->latest()
-            ->with('company', 'driver', 'client', 'vehicle')
-            ->get();
+            ->with('company', 'driver', 'client', 'vehicle');
+        
+        if ($filter || $from) {
+            $taxiRequests = $taxiRequests->get();
+        } else {
+            $taxiRequests = $taxiRequests->paginate(10);
+        }
 
         return view('concept.taxi-request.index', compact('taxiRequests'));
     }
@@ -305,9 +311,14 @@ class TaxiRequestController extends Controller
     {
         $from = request('from');
         $to = request('to');
+        $filter = request('filter');
+
+        if (!$filter && $from) {
+            return;
+        }
 
         $taxiRequests = TaxiRequest::filterByCompany()
-            ->filter(request('filter'))
+            ->filter($filter)
             ->when($from, function ($query, $from) {
                 return $query->where('start_date', '>', $from);
             })

@@ -155,28 +155,30 @@ function submitForm(e, id) {
         method: id ? "PUT" : "POST",
         data: data,
     }).done(function(response) {
-
-        $('#table-wrapper').html(response)
-
-        if ($("table.second").length) {
-
-            $(document).ready(function() {
-                var table = $('table.second').DataTable({
-                    lengthChange: false,
-                    ordering: false,
-                    buttons: [
-                        {
-                            extend: 'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize: 'A4'
-                        },
-                        'copy', 'excel', 'print', 'colvis'
-                    ]
-                });
+        if(filter || from) {
+            console.log('no refreshing')
+            $('#table-wrapper').html(response)
     
-                table.buttons().container()
-                    .appendTo('#example_wrapper .col-md-6:eq(0)');
-            });
+            if ($("table.second").length) {
+    
+                $(document).ready(function() {
+                    var table = $('table.second').DataTable({
+                        lengthChange: false,
+                        ordering: false,
+                        buttons: [
+                            {
+                                extend: 'pdfHtml5',
+                                orientation: 'landscape',
+                                pageSize: 'A4'
+                            },
+                            'copy', 'excel', 'print', 'colvis'
+                        ]
+                    });
+        
+                    table.buttons().container()
+                        .appendTo('#example_wrapper .col-md-6:eq(0)');
+                });
+            }
         }
 
         $('#form-modal').modal('toggle')
@@ -205,27 +207,29 @@ function setStatus(id, status) {
         method: "GET",
         data: data
     }).done(function(response) {
-        $('#table-wrapper').html(response)
-
-        if ($("table.second").length) {
-
-            $(document).ready(function() {
-                var table = $('table.second').DataTable({
-                    lengthChange: false,
-                    ordering: false,
-                    buttons: [
-                        {
-                            extend: 'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize: 'A4'
-                        },
-                        'copy', 'excel', 'print', 'colvis'
-                    ]
-                });
+        if(filter || from) {
+            $('#table-wrapper').html(response)
     
-                table.buttons().container()
-                    .appendTo('#example_wrapper .col-md-6:eq(0)');
-            });
+            if ($("table.second").length) {
+    
+                $(document).ready(function() {
+                    var table = $('table.second').DataTable({
+                        lengthChange: false,
+                        ordering: false,
+                        buttons: [
+                            {
+                                extend: 'pdfHtml5',
+                                orientation: 'landscape',
+                                pageSize: 'A4'
+                            },
+                            'copy', 'excel', 'print', 'colvis'
+                        ]
+                    });
+        
+                    table.buttons().container()
+                        .appendTo('#example_wrapper .col-md-6:eq(0)');
+                });
+            }
         }
     }).fail(function(e) {
         console.log(e)

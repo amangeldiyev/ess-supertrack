@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="example" class="table table-sm table-striped table-bordered second" style="width:100%">
+                <table id="example" class="table table-sm table-striped table-bordered {{$taxiRequests instanceof \Illuminate\Pagination\LengthAwarePaginator ? 'first' : 'second'}}" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -60,6 +60,13 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if ($taxiRequests instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                    <br>
+                    <div style="float: right">Showing {{($taxiRequests->currentpage()-1)*$taxiRequests->perpage()+1}} to {{$taxiRequests->currentpage()*$taxiRequests->perpage()}}
+                        of  {{$taxiRequests->total()}} entries
+                    </div>
+                    {{ $taxiRequests->appends(request()->input())->links() }}
+                @endif
             </div>
         </div>
     </div>
