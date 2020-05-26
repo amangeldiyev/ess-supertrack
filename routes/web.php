@@ -33,8 +33,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/home', 'HomeController@index')->name('home');
 
         Route::match(['get', 'post'], '/passengers/import', 'PassengerController@import')->name('passengers.import');
-        Route::match(['get', 'post'], '/drivers/import', 'DriverController@import')->name('drivers.import');
-        Route::match(['get', 'post'], '/vehicles/import', 'VehicleController@import')->name('vehicles.import');
+        // Route::match(['get', 'post'], '/drivers/import', 'DriverController@import')->name('drivers.import');
+        // Route::match(['get', 'post'], '/vehicles/import', 'VehicleController@import')->name('vehicles.import');
         
         Route::resource('taxi-requests', 'TaxiRequestController');
         Route::resource('users', 'OperatorController')->middleware('admin');
