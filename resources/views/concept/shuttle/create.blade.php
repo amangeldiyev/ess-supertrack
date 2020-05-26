@@ -151,8 +151,6 @@
         );
 
         $('.extra-points').data('count', count);
-
-        console.log(count)
     }
 
     function removePoint(key) {
@@ -165,7 +163,6 @@
         );
 
         $('.extra-points').data('count', key-1);
-        console.log(key-1)
     }
 </script>
     
