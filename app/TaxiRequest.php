@@ -59,7 +59,7 @@ class TaxiRequest extends Model
         parent::boot();
 
         self::saving(function ($model) {
-            if ($model->status === 1 && $model->vehicle && $model->driver) {
+            if ($model->status == 1 && $model->vehicle && $model->driver) {
                 $model->status = 2;
             }
         });
