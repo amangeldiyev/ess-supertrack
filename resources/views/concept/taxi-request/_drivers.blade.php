@@ -12,8 +12,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label>Driver</label>
-                            <select name="driver_id" class="form-control">
-                                <option value="">Select Driver</option>
+                            <select class="form-control selectpicker" name="driver_id" data-live-search="true" data-size="10">
                                 @foreach ($drivers as $driver)
                                 <option value="{{$driver->id}}">{{$driver->name}}</option>
                                 @endforeach
@@ -27,3 +26,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.selectpicker').selectpicker();
+</script>

@@ -12,10 +12,9 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label>Vehicle</label>
-                            <select name="vehicle_id" class="form-control">
-                                <option value="">Select Vehicle</option>
+                            <select name="vehicle_id" class="form-control selectpicker" data-live-search="true" data-size="10">
                                 @foreach ($vehicles as $vehicle)
-                                <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
+                                <option value="{{$vehicle->id}}" data-tokens="{{$vehicle->type}}" data-subtext="{{$vehicle->type}}">{{$vehicle->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -27,3 +26,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.selectpicker').selectpicker();
+</script>
