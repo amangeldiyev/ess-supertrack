@@ -22,6 +22,9 @@
                         <div class="form-group col-md-3">
                             <label>Ordered By</label>
                             <select id="ajax-select" name="ordered_by" class="selectpicker with-ajax form-control" data-live-search="true">
+                                @isset($taxiRequest)
+                                <option value="{{$taxiRequest->client->id}}" data-subtext="{{$taxiRequest->client->phone}}">{{$taxiRequest->client->name}}</option>
+                                @endisset
                                 @foreach (\App\Passenger::filterByCompany()->limit(5)->get() as $passenger)
                                     <option value="{{$passenger->id}}" data-subtext="{{$passenger->phone}}">{{$passenger->name}}</option>
                                 @endforeach
@@ -194,8 +197,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label>Drivers</label>
-                            <select name="driver_id" class="form-control">
-                                <option value="">Select Driver</option>
+                            <select class="form-control selectpicker" name="driver_id" data-live-search="true" data-size="5">
+                                <option value="">None</option>
                                 @foreach (\App\Driver::filterByCompany()->get() as $driver)
                                 <option value="{{$driver->id}}" {{isset($taxiRequest) && $taxiRequest->driver_id == $driver->id ? "selected" : ""}}>{{$driver->name}}</option>
                                 @endforeach
@@ -203,10 +206,10 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label>Vehicle Number</label>
-                            <select name="vehicle_id" class="form-control">
-                                <option value="">Select Vehicle</option>
+                            <select name="vehicle_id" class="form-control selectpicker" data-live-search="true" data-size="5">
+                                <option value="">None</option>
                                 @foreach (\App\Vehicle::filterByCompany()->get() as $vehicle)
-                                <option value="{{$vehicle->id}}" {{isset($taxiRequest) && $taxiRequest->vehicle_id == $vehicle->id ? "selected" : ""}}>{{$vehicle->name}}</option>
+                                <option value="{{$vehicle->id}}" data-tokens="{{$vehicle->type}}" data-subtext="{{$vehicle->type}}" {{isset($taxiRequest) && $taxiRequest->vehicle_id == $vehicle->id ? "selected" : ""}}>{{$vehicle->name}}</option>
                                 @endforeach
                             </select>
                         </div>

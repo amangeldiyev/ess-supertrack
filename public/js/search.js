@@ -39,6 +39,8 @@ $(document).ready(function () {
         }
     };
 
+    $('.selectpicker').selectpicker();
+
     $("#ajax-select")
         .selectpicker()
         .filter(".with-ajax")
