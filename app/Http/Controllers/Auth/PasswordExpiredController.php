@@ -54,8 +54,8 @@ class PasswordExpiredController extends Controller
         ]);
 
         // Delete if older passwords
-        if ($count = DB::table('old_passwords')->where('user_id', $user->id)->offset(8)->get()->count()) {
-            DB::table('old_passwords')->where('user_id', $user->id)->take($count)->delete();
+        if ($count = DB::table('old_passwords')->where('user_id', $user->id)->get()->count() > 8) {
+            DB::table('old_passwords')->where('user_id', $user->id)->take($count - 8)->delete();
         }
 
         $user->update([
