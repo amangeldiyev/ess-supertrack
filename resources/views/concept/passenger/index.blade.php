@@ -92,7 +92,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <div style="float: right">Showing {{($passengers->currentpage()-1)*$passengers->perpage()+1}} to {{$passengers->currentpage()*$passengers->perpage()}}
+                        <div style="float: right">Showing {{$passengers->toArray()['from']}} to {{$passengers->toArray()['to']}}
                             of  {{$passengers->total()}} entries
                         </div>
                         {{ $passengers->appends(request()->input())->links() }}

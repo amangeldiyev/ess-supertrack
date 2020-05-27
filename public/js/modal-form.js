@@ -156,7 +156,6 @@ function submitForm(e, id) {
         data: data,
     }).done(function(response) {
         if(filter || from) {
-            console.log('no refreshing')
             $('#table-wrapper').html(response)
     
             if ($("table.second").length) {

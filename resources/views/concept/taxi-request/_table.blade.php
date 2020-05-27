@@ -62,7 +62,7 @@
                 </table>
                 @if ($taxiRequests instanceof \Illuminate\Pagination\LengthAwarePaginator)
                     <br>
-                    <div style="float: right">Showing {{($taxiRequests->currentpage()-1)*$taxiRequests->perpage()+1}} to {{$taxiRequests->currentpage()*$taxiRequests->perpage()}}
+                    <div style="float: right">Showing {{$taxiRequests->toArray()['from']}} to {{$taxiRequests->toArray()['to']}}
                         of  {{$taxiRequests->total()}} entries
                     </div>
                     {{ $taxiRequests->appends(request()->input())->links() }}
