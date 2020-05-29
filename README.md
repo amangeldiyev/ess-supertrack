@@ -73,8 +73,14 @@ $ cp .env.example .env
 ```
 $ php artisan key:generate
 ```
-### 6. in .env set database connection (credentials on step 3 of installation), smtp and sms gateway configurations.
+### 6. in .env set application parameters, database connection (credentials on step 3 of installation), smtp and sms gateway configurations.
 ```
+APP_NAME=Laravel
+APP_ENV=prod # set to prod when in production
+APP_KEY= # key whould be generated on step 5
+APP_DEBUG=false # set to false in production
+APP_URL=http://localhost
+
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
