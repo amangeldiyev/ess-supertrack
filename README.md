@@ -77,7 +77,7 @@ $ php artisan key:generate
 ```
 APP_NAME=Laravel
 APP_ENV=prod # set to prod when in production
-APP_KEY= # key whould be generated on step 5
+APP_KEY= # key should be generated on step 5
 APP_DEBUG=false # set to false in production
 APP_URL=http://localhost
 
