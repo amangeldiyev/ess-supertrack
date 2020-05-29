@@ -96,7 +96,7 @@ SMS_LOGIN=
 SMS_PASSWORD=
 
 ```
-### 7. run database migrattions
+### 7. run database migrations
 ```
 $ php artisan migrate
 ```
