@@ -33,6 +33,7 @@ $ cd ~
 $ curl -sS https://getcomposer.org/installer -o composer-setup.php
 $ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 ```
+### 6. Install supervisor
 
 Set up:
 ### 1. clone repository
@@ -52,7 +53,7 @@ $ cp .env.example .env
 ```
 $ php artisan key:generate
 ```
-### 6. in the .env file, add database information to allow connection to the database (credentials on step 3 of installation)
+### 6. in .env set database connection (credentials on step 3 of installation), smtp and sms gateway configurations.
 ```
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
@@ -60,6 +61,20 @@ DB_PORT=5432
 DB_DATABASE=my-db
 DB_USERNAME=newuser
 DB_PASSWORD=somepassword
+
+MAIL_DRIVER=smtp
+MAIL_HOST=
+MAIL_PORT=25
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=
+MAIL_FROM_NAME="${APP_NAME}"
+
+SMS_SENDER=
+SMS_LOGIN=
+SMS_PASSWORD=
+
 ```
 ### 7. run database migrattions
 ```
