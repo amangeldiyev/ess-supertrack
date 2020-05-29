@@ -1,6 +1,4 @@
-## Instructions
-
-Installation:
+## Installation:
 ### 1. install web server
 ```
 $ sudo apt update
@@ -34,8 +32,30 @@ $ curl -sS https://getcomposer.org/installer -o composer-setup.php
 $ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 ```
 ### 6. Install supervisor
+```
+$ sudo apt-get install supervisor
+```
+Create file /etc/supervisor/conf.d/laravel-worker.conf
+```
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/artisan queue:work database --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=ess
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/var/www/html/storage/logs/worker.log
+stopwaitsecs=3600
+```
+Run worker process
+```
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start laravel-worker:*
+```
 
-Set up:
+## Set up:
 ### 1. clone repository
 ```
 $ cd /var/www/html
