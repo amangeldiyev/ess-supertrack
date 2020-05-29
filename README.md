@@ -5,8 +5,8 @@ Installation:
 ```
 $ sudo apt update
 $ sudo apt install nginx
-$ systemctl start nginx
-$ systemctl enable nginx
+$ sudo systemctl start nginx
+$ sudo systemctl enable nginx
 ```
 ### 2. install php
 ```
@@ -23,7 +23,7 @@ $ psql
 # \q
 $ exit
 ```
-### 4. install github
+### 4. install git
 ```
 $ sudo apt install git
 ```
@@ -52,7 +52,7 @@ $ cp .env.example .env
 ```
 $ php artisan key:generate
 ```
-### 6. in the .env file, add database information to allow Laravel to connect to the database (credentials on step 3 of installation)
+### 6. in the .env file, add database information to allow connection to the database (credentials on step 3 of installation)
 ```
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
@@ -104,4 +104,9 @@ server {
         deny all;
     }
 }
+```
+
+Restart web server
+```
+sudo systemctl restart nginx
 ```
