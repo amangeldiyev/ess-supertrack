@@ -29,7 +29,7 @@ class UserTest extends TestCase
 
         $response = $this->get(route('users.index'));
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertViewHas('users', $users);
     }
 

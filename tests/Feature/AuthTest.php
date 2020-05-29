@@ -19,7 +19,7 @@ class AuthTest extends TestCase
     {
         $response = $this->get('/login');
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $user = factory(User::class)->create(['username' => 'user']);
 
