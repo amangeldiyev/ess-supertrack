@@ -35,25 +35,6 @@ $ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 ```
 $ sudo apt-get install supervisor
 ```
-Create file /etc/supervisor/conf.d/laravel-worker.conf
-```
-[program:laravel-worker]
-process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/html/artisan queue:work database --sleep=3 --tries=3
-autostart=true
-autorestart=true
-user=ess
-numprocs=8
-redirect_stderr=true
-stdout_logfile=/var/www/html/storage/logs/worker.log
-stopwaitsecs=3600
-```
-Run worker process
-```
-sudo supervisorctl reread
-sudo supervisorctl update
-sudo supervisorctl start laravel-worker:*
-```
 
 ## Set up:
 ### 1. clone repository
@@ -150,4 +131,24 @@ server {
 Restart web server
 ```
 sudo systemctl restart nginx
+```
+### 9. run queue worker
+Create file /etc/supervisor/conf.d/laravel-worker.conf
+```
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/artisan queue:work database --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=ess
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/var/www/html/storage/logs/worker.log
+stopwaitsecs=3600
+```
+Run worker process
+```
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start laravel-worker:*
 ```
