@@ -42,7 +42,7 @@ $ sudo apt-get install supervisor
 $ cd /var/www/html
 $ git clone https://github.com/esskaz/ess-supertrack.git .
 ```
-### 2. download dependecies
+### 2. download dependencies
 ```
 $ composer install
 ```
