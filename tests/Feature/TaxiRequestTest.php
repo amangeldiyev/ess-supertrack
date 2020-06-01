@@ -46,5 +46,9 @@ class TaxiRequestTest extends TestCase
         $response = $this->get(route('taxi-requests.create'));
 
         $response->assertOk();
+
+        $taxiRequest = factory(TaxiRequest::class)->make();
+
+        $response = $this->postJson(route('taxi-requests.store'), $taxiRequest->toArray());
     }
 }
