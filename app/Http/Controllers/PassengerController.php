@@ -103,7 +103,7 @@ class PassengerController extends Controller
             'lang' => 'required|integer|between:0,2',
             'sms_notification' => 'boolean|nullable',
             'email_notification' => 'boolean|nullable',
-            'company_id' => 'required|exists:companies,id'
+            'company_id' => 'nullable|exists:companies,id'
         ]);
 
         $passenger->update(array_merge(

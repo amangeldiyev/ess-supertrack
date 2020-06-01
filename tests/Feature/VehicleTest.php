@@ -1,0 +1,117 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\User;
+use App\Vehicle;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class VehicleTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /**
+     * Vehicle list showed on table.
+     *
+     * @return void
+     */
+    public function testShowVehicleList()
+    {
+        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+
+        factory(Vehicle::class)->create();
+
+        $vehicles = Vehicle::with('company')->get();
+
+        $response = $this->get(route('vehicles.index'));
+
+        $response->assertOk()
+            ->assertViewHas('vehicles', $vehicles);
+    }
+
+    /**
+     * Can create new vehicle
+     *
+     * @return void
+     */
+    public function testCreateVehicle()
+    {
+        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('vehicles.create'));
+
+        $response->assertOk();
+
+        $vehicle = factory(Vehicle::class)->make();
+
+        $response = $this->post(route('vehicles.store'), [
+            'name' => $vehicle->name,
+            'type' => $vehicle->type
+        ]);
+
+        $this->assertDatabaseHas('vehicles', [
+            'name' => $vehicle->name,
+            'company_id' => $user->company_id
+        ]);
+
+        $response->assertRedirect(route('vehicles.index'));
+    }
+
+    /**
+     * Can edit vehicle data
+     *
+     * @return void
+     */
+    public function testEditVehicle()
+    {
+        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
+
+        $this->actingAs($user);
+
+        $vehicle = factory(Vehicle::class)->create(['company_id' => $user->company_id]);
+
+        $response = $this->get(route('vehicles.edit', ['vehicle' => $vehicle->id]));
+
+        $response->assertOk();
+
+        $updatedVehicle = factory(Vehicle::class)->make();
+
+        $response = $this->patch(route('vehicles.update', ['vehicle' => $vehicle]), [
+            'name' => $updatedVehicle->name,
+            'type' => $updatedVehicle->type
+        ]);
+
+        $this->assertDatabaseHas('vehicles', [
+            'name' => $updatedVehicle->name,
+            'type' => $updatedVehicle->type
+        ])->assertDatabaseMissing('vehicles', [
+            'name' => $vehicle->name,
+            'type' => $vehicle->type
+        ]);
+
+        $response->assertRedirect(route('vehicles.index'));
+    }
+
+    /**
+     * Can delete vehicle
+     *
+     * @return void
+     */
+    public function testDeleteVehicle()
+    {
+        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+
+        $vehicle = factory(Vehicle::class)->create();
+
+        $response = $this->delete(route('vehicles.destroy', ['vehicle' => $vehicle]));
+
+        $this->assertDatabaseMissing('vehicles', $vehicle->toArray());
+
+        $response->assertRedirect(route('vehicles.index'));
+    }
+}

@@ -78,7 +78,7 @@ class UserTest extends TestCase
 
         $updatedUser = factory(User::class)->make();
 
-        $response = $this->post(route('users.store'), [
+        $response = $this->patch(route('users.update', ['user' => $user]), [
             'name' => $updatedUser->name,
             'username' => $updatedUser->username,
             'email' => $updatedUser->email,

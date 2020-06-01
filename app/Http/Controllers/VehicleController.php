@@ -89,7 +89,7 @@ class VehicleController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'type' => 'required|max:255',
-            'company_id' => 'required|exists:companies,id'
+            'company_id' => 'nullable|exists:companies,id'
         ]);
     
         $vehicle->update($validatedData);

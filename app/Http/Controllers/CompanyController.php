@@ -39,10 +39,10 @@ class CompanyController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:companies|max:255',
-            'confirm_sms_template' => 'nullable|string',
-            'assign_sms_template' => 'nullable|string',
-            'cancel_sms_template' => 'nullable|string',
-            'on_location_sms_template' => 'nullable|string',
+            'confirm_sms_template' => 'nullable|array',
+            'assign_sms_template' => 'nullable|array',
+            'cancel_sms_template' => 'nullable|array',
+            'on_location_sms_template' => 'nullable|array',
         ]);
 
         Company::create($validatedData);
