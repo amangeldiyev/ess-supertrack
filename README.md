@@ -40,7 +40,7 @@ $ sudo apt-get install supervisor
 ### 1. clone repository
 ```
 $ cd /var/www/html
-$ git clone https://github.com/esskaz/ess-supertrack.git .
+$ git clone https://github.com/esskaz/supertrack.git .
 ```
 ### 2. download dependencies
 ```
