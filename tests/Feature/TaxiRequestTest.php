@@ -3,15 +3,11 @@
 namespace Tests\Feature;
 
 use App\Events\TaxiRequestStatusChanged;
-use App\Mail\TaxiRequestConfirmed;
 use App\TaxiRequest;
 use App\User;
-use Arr;
 use Carbon\Carbon;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Mail;
 use Tests\TestCase;
 
 class TaxiRequestTest extends TestCase
@@ -62,7 +58,6 @@ class TaxiRequestTest extends TestCase
             'passenger_type' => $taxiRequest->passenger_type,
             'qty' => $taxiRequest->qty,
             'driver_in_time' => $taxiRequest->driver_in_time,
-            'company_id' => $taxiRequest->company_id,
             'passenger' => $taxiRequest->passenger,
             'phone' => $taxiRequest->phone,
             'pick_up_location' => $taxiRequest->pick_up_location,
@@ -78,6 +73,8 @@ class TaxiRequestTest extends TestCase
         ];
 
         $response = $this->postJson(route('taxi-requests.store'), $data);
+
+        $data['company_id'] = $user->company_id;
 
         $this->assertDatabaseHas('taxi_requests', $data);
 
@@ -140,7 +137,7 @@ class TaxiRequestTest extends TestCase
      * 
      * @return void
      */
-    public function testConfirmTaxiRequest()
+    public function testUpdateStatus()
     {
         $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
 
