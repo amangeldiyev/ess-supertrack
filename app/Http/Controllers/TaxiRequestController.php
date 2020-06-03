@@ -86,7 +86,7 @@ class TaxiRequestController extends Controller
      */
     public function show(TaxiRequest $taxiRequest)
     {
-        return view('concept.taxi-request.show', compact('taxiRequest'));
+        abort(404);
     }
 
     /**
