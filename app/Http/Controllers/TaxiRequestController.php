@@ -129,37 +129,37 @@ class TaxiRequestController extends Controller
     }
 
     /**
-     * Set status to taxi-request.
+     * Update taxi-request status.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\TaxiRequest  $taxiRequest
      * @return \Illuminate\Http\Response
      */
-    public function setStatus(Request $request, TaxiRequest $taxiRequest, $status)
-    {
-        Gate::authorize('access-model', $taxiRequest->company_id);
-
-        $taxiRequest->setStatus($status);
-
-        return $this->renderTable();
-    }
-
-    /**
-     * Confirm taxi-request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TaxiRequest  $taxiRequest
-     * @return \Illuminate\Http\Response
-     */
-    public function confirm(Request $request, TaxiRequest $taxiRequest)
+    public function updateStatus(Request $request, TaxiRequest $taxiRequest)
     {
         Gate::authorize('access-model', $taxiRequest->company_id);
 
         $client = $taxiRequest->client;
 
-        $text = $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template[$client->lang]);
+        $text = '';
+
+        switch ($status = $request->status) {
+            case 1:
+                $text = $taxiRequest->sms_text($taxiRequest->company->confirm_sms_template[$client->lang]);
+                break;
+            case 2:
+                $text = $taxiRequest->sms_text($taxiRequest->company->assign_sms_template[$client->lang]);
+                break;
+            case 3:
+                $text = $taxiRequest->sms_text($taxiRequest->company->cancel_sms_template[$client->lang]);
+                break;
+            case 4:
+                $text = $taxiRequest->sms_text($taxiRequest->company->on_location_sms_template[$client->lang]);
+                break;
+        }
 
         if ($request->isMethod('PUT')) {
+
             $validatedData = $request->validate([
                 'sms_notification' => 'boolean|nullable',
                 'email_notification' => 'boolean|nullable',
@@ -174,57 +174,20 @@ class TaxiRequestController extends Controller
                 ));
             }
 
-            $taxiRequest->setStatus(1);
-            
-            return $this->renderTable();
-        }
+            $data = [
+                'status' => $status
+            ];
 
-        $route = route('taxi-requests.confirm', ['taxiRequest'=>$taxiRequest]);
-            
-        return view('concept.taxi-request._notify', compact('client', 'text', 'taxiRequest', 'route'))->render();
-    }
-
-    /**
-     * Driver on location.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TaxiRequest  $taxiRequest
-     * @return \Illuminate\Http\Response
-     */
-    public function onLocation(Request $request, TaxiRequest $taxiRequest)
-    {
-        Gate::authorize('access-model', $taxiRequest->company_id);
-
-        $client = $taxiRequest->client;
-
-        $text = $taxiRequest->sms_text($taxiRequest->company->on_location_sms_template[$client->lang]);
-
-        if ($request->isMethod('PUT')) {
-            $validatedData = $request->validate([
-                'sms_notification' => 'boolean|nullable',
-                'email_notification' => 'boolean|nullable',
-            ]);
-
-            if (Arr::exists($validatedData, 'sms_notification') || Arr::exists($validatedData, 'email_notification')) {
-                event(new TaxiRequestStatusChanged(
-                    $taxiRequest,
-                    $text,
-                    Arr::exists($validatedData, 'sms_notification'),
-                    Arr::exists($validatedData, 'email_notification')
-                ));
+            if ($status == 4) {
+                $data['on_location_time'] = Carbon::now();
             }
 
-            $taxiRequest->update([
-                'status' => 4,
-                'on_location_time' => Carbon::now()
-            ]);
+            $taxiRequest->update($data);
             
             return $this->renderTable();
         }
-
-        $route = route('taxi-requests.onLocation', ['taxiRequest'=>$taxiRequest]);
-
-        return view('concept.taxi-request._notify', compact('client', 'text', 'taxiRequest', 'route'))->render();
+            
+        return view('concept.taxi-request._notify', compact('client', 'text', 'taxiRequest', 'status'))->render();
     }
 
     /**

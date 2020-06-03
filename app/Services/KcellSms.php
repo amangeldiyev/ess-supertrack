@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App;
 use App\Interfaces\SmsSender;
 use Illuminate\Support\Facades\Http;
 use Log;
@@ -18,6 +19,10 @@ class KcellSms implements SmsSender
      */
     public function send($text, $phone)
     {
+        if (App::runningUnitTests()) {
+            return $this->log($text, $phone);
+        }
+
         try {
             $response = Http::withBasicAuth(config('services.sms.login'), config('services.sms.password'))
                 ->post('https://msg.kcell.kz/api/v3/messages', [
@@ -33,7 +38,6 @@ class KcellSms implements SmsSender
                 ]);
 
             Log::info($response->json());
-
         } catch (\Exception $e) {
             Log::error('Error while seding sms');
             Log::info($e);

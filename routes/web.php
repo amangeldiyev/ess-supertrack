@@ -21,10 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('password/expired', 'Auth\PasswordExpiredController@expired')->name('password.expired');
     Route::post('password/expired', 'Auth\PasswordExpiredController@setPassword')->name('password.expired');
     Route::get('/passengers/search', 'PassengerController@search')->name('passengers.search');
-    Route::get('/taxi-requests/{taxiRequest}/status/{status}', 'TaxiRequestController@setStatus');
     Route::get('/taxi-requests/system-notify', 'TaxiRequestController@systemNotify');
-    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/confirm', 'TaxiRequestController@confirm')->name('taxi-requests.confirm');
-    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/onLocation', 'TaxiRequestController@onLocation')->name('taxi-requests.onLocation');
+    Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/updateStatus', 'TaxiRequestController@updateStatus')->name('taxi-requests.update-status');
     Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setDriver', 'TaxiRequestController@setDriver')->name('taxi-requests.setDriver');
     Route::match(['get', 'put'], '/taxi-requests/{taxiRequest}/setVehicle', 'TaxiRequestController@setVehicle')->name('taxi-requests.setVehicle');
 

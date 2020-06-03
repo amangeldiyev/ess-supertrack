@@ -1,12 +1,9 @@
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        {{-- <div class="section-block" id="basicform">
-            <h3 class="section-title">Taxi Request Form</h3>
-        </div> --}}
         <div class="card">
             <div class="card-body">
                 <h3>Send notification</h3>
-                <form onsubmit="submitForm(event, {{$taxiRequest->id}})" action="{{ $route }}" method="POST">
+                <form onsubmit="submitForm(event, {{$taxiRequest->id}}, {{$status}})" action="{{ route('taxi-requests.update-status', ['taxiRequest' => $taxiRequest]) }}" method="POST">
 
                     @csrf
 

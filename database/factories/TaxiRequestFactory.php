@@ -13,14 +13,14 @@ $factory->define(TaxiRequest::class, function (Faker $faker) {
     $company = Company::inRandomOrder()->first();
 
     return [
-        'number' => $faker->randomDigit(4),
+        'number' => $faker->randomDigitNot(0),
         'date' => $faker->date(),
         'start_date' => $faker->dateTime(),
         'end_date' => $faker->dateTime(),
         'status' => $faker->randomElement([0, 1, 2, 3, 4]),
         'type' => $faker->randomElement([0, 1]),
         'passenger_type' => $faker->randomElement([0, 1]),
-        'qty' => $faker->randomDigit,
+        'qty' => $faker->randomDigitNot(0),
         'driver_in_time' => $faker->randomElement([0, 1]),
         'company_id' => $company->id,
         'passenger' => $faker->name,

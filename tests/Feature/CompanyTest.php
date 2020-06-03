@@ -112,7 +112,7 @@ class CompanyTest extends TestCase
 
         $response = $this->delete(route('companies.destroy', ['company' => $company]));
 
-        $this->assertDatabaseMissing('companies', $company->toArray());
+        $this->assertDatabaseMissing('companies', ['name' => $company->name]);
 
         $response->assertRedirect(route('companies.index'));
     }

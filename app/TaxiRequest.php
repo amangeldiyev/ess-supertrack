@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App;
 use App\Traits\FilterByCompanyScope;
 use App\Traits\ObservantTrait;
 use Carbon\Carbon;
