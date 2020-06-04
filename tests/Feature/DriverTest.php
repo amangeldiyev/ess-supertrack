@@ -3,10 +3,7 @@
 namespace Tests\Feature;
 
 use App\Driver;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DriverTest extends TestCase

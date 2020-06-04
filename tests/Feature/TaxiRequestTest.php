@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Driver;
 use App\Events\TaxiRequestStatusChanged;
 use App\TaxiRequest;
-use App\User;
 use App\Vehicle;
 use Carbon\Carbon;
 use Event;
