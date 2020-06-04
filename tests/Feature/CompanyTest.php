@@ -46,16 +46,12 @@ class CompanyTest extends TestCase
 
         $response = $this->post(route('companies.store'), [
             'name' => $company->name,
-            'confirm_sms_template' => [
-                'eng' => 'Taxi Request confirmed',
-                'ru' => 'Taxi Request confirmed',
-                'kz' => 'Taxi Request confirmed',
-            ],
+            'confirm_sms_template' => $company->confirm_sms_template,
         ]);
 
         $this->assertDatabaseHas('companies', [
             'name' => $company->name,
-            'confirm_sms_template' => '{"eng":"Taxi Request confirmed","ru":"Taxi Request confirmed","kz":"Taxi Request confirmed"}'
+            'confirm_sms_template' => json_encode($company->confirm_sms_template)
         ]);
 
         $response->assertRedirect(route('companies.index'));
@@ -80,16 +76,12 @@ class CompanyTest extends TestCase
 
         $response = $this->patch(route('companies.update', ['company' => $company]), [
             'name' => $updatedCompany->name,
-            'confirm_sms_template' => [
-                'eng' => 'Taxi Request confirmed',
-                'ru' => 'Taxi Request confirmed',
-                'kz' => 'Taxi Request confirmed',
-            ]
+            'confirm_sms_template' => $updatedCompany->confirm_sms_template
         ]);
 
         $this->assertDatabaseHas('companies', [
             'name' => $updatedCompany->name,
-            'confirm_sms_template' => '{"eng":"Taxi Request confirmed","ru":"Taxi Request confirmed","kz":"Taxi Request confirmed"}'
+            'confirm_sms_template' => json_encode($company->confirm_sms_template)
         ])->assertDatabaseMissing('companies', [
             'name' => $company->name,
             'confirm_sms_template' => null
