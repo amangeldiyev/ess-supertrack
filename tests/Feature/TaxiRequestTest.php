@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Driver;
 use App\Events\TaxiRequestStatusChanged;
 use App\TaxiRequest;
 use App\User;
+use App\Vehicle;
 use Carbon\Carbon;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,7 +23,7 @@ class TaxiRequestTest extends TestCase
      */
     public function testShowTaxiRequestList()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         factory(TaxiRequest::class)->create();
 
@@ -38,9 +40,7 @@ class TaxiRequestTest extends TestCase
      */
     public function testCreateTaxiRequest()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $response = $this->get(route('taxi-requests.create'));
 
@@ -89,9 +89,7 @@ class TaxiRequestTest extends TestCase
      */
     public function testEditTaxiRequest()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $this->loginUser();
 
         $taxiRequest = factory(TaxiRequest::class)->create();
 
@@ -134,14 +132,12 @@ class TaxiRequestTest extends TestCase
 
     /**
      * Can update taxi-request status
-     * 
+     *
      * @return void
      */
     public function testUpdateStatus()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $this->loginUser();
 
         $taxiRequest = factory(TaxiRequest::class)->create(['status' => 0]);
 
@@ -164,5 +160,109 @@ class TaxiRequestTest extends TestCase
         ]);
 
         $response->assertOk();
+    }
+
+    /**
+    * Can Assign Driver
+    *
+    * @return void
+    */
+    public function testAssignDriver()
+    {
+        $this->loginUser();
+
+        $taxiRequest = factory(TaxiRequest::class)->create(['status' => 0]);
+
+        $response = $this->getJson(route('taxi-requests.assign-driver', ['taxiRequest' => $taxiRequest]));
+
+        $response->assertOk();
+
+        $driver = factory(Driver::class)->create();
+
+        $response = $this->putJson(route('taxi-requests.assign-driver', ['taxiRequest' => $taxiRequest]), [
+            'driver_id' => $driver->id,
+        ]);
+
+        $this->assertDatabaseHas('taxi_requests', [
+            'id' => $taxiRequest->id,
+            'driver_id' => $driver->id
+        ]);
+
+        $response->assertOk();
+    }
+
+    /**
+    * Can Assign Vehicle
+    *
+    * @return void
+    */
+    public function testAssignVehicle()
+    {
+        $this->loginUser();
+
+        $taxiRequest = factory(TaxiRequest::class)->create(['status' => 0]);
+
+        $response = $this->getJson(route('taxi-requests.assign-vehicle', ['taxiRequest' => $taxiRequest]));
+
+        $response->assertOk();
+
+        $vehicle = factory(Vehicle::class)->create();
+
+        $response = $this->putJson(route('taxi-requests.assign-vehicle', ['taxiRequest' => $taxiRequest]), [
+            'vehicle_id' => $vehicle->id,
+        ]);
+
+        $this->assertDatabaseHas('taxi_requests', [
+            'id' => $taxiRequest->id,
+            'vehicle_id' => $vehicle->id
+        ]);
+
+        $response->assertOk();
+    }
+
+    /**
+    * Can delete taxi-request
+    *
+    * @return void
+    */
+    public function testDeleteTaxiRequest()
+    {
+        $this->loginUser();
+
+        $taxiRequest = factory(TaxiRequest::class)->create(['status' => 0]);
+
+        $response = $this->from(route('taxi-requests.index'))->delete(route('taxi-requests.destroy', ['taxi_request' => $taxiRequest]));
+
+        $this->assertDatabaseMissing('taxi_requests', ['id' => $taxiRequest->id]);
+
+        $response->assertRedirect(route('taxi-requests.index'));
+    }
+
+    /**
+    * Notification on sidebar
+    *
+    * @return void
+    */
+    public function testNotify()
+    {
+        $this->loginUser();
+
+        factory(TaxiRequest::class, 5)->create([
+            'start_date' => Carbon::now()->addMinutes(15),
+            'status' => 1,
+            'driver_id' => null
+        ]);
+
+        factory(TaxiRequest::class, 4)->create([
+            'start_date' => Carbon::now()->addMinutes(5),
+            'status' => 2,
+        ]);
+
+        $this->getJson(route('taxi-requests.system-notify'))
+            ->assertOk()
+            ->assertJson([
+                'unassigned' => 5,
+                'overdue' => 4
+            ]);
     }
 }

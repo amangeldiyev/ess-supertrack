@@ -11,6 +11,11 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    /**
+     * Login as admin
+     *
+     * @return void
+     */
     protected function loginAsAdmin()
     {
         $admin = factory(User::class)->create([
@@ -20,5 +25,21 @@ abstract class TestCase extends BaseTestCase
         ]);
 
         $this->actingAs($admin);
+    }
+
+    /**
+    * Login as operator user
+    *
+    * @return \App\User
+    */
+    public function loginUser()
+    {
+        $user = factory(User::class)->create([
+            'password_changed_at' => Carbon::now()
+        ]);
+
+        $this->actingAs($user);
+
+        return $user;
     }
 }

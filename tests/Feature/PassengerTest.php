@@ -20,7 +20,7 @@ class PassengerTest extends TestCase
      */
     public function testShowPassengerList()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         factory(Passenger::class)->create();
 
@@ -37,9 +37,7 @@ class PassengerTest extends TestCase
      */
     public function testCreatePassenger()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $response = $this->get(route('passengers.create'));
 
@@ -78,9 +76,7 @@ class PassengerTest extends TestCase
      */
     public function testEditPassenger()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $passenger = factory(Passenger::class)->create(['company_id' => $user->company_id]);
 
@@ -128,7 +124,7 @@ class PassengerTest extends TestCase
      */
     public function testDeletePassenger()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         $passenger = factory(Passenger::class)->create();
 
@@ -141,12 +137,12 @@ class PassengerTest extends TestCase
 
     /**
      * Search passengers
-     * 
+     *
      * @return void
      */
     public function testPassengerSearch()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         $passenger = factory(Passenger::class)->create(['name' => 'John Doe']);
 

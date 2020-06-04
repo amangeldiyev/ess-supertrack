@@ -5,7 +5,7 @@
         </div> --}}
         <div class="card">
             <div class="card-body">
-                <form onsubmit="submitForm(event, {{$taxiRequest->id}})" action="{{route('taxi-requests.setVehicle', ['taxiRequest'=>$taxiRequest]) }}" method="POST">
+                <form onsubmit="submitForm(event, {{$taxiRequest->id}})" action="{{route('taxi-requests.assign-vehicle', ['taxiRequest'=>$taxiRequest]) }}" method="POST">
 
                     @csrf
 

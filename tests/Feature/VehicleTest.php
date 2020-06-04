@@ -20,7 +20,7 @@ class VehicleTest extends TestCase
      */
     public function testShowVehicleList()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         factory(Vehicle::class)->create();
 
@@ -39,9 +39,7 @@ class VehicleTest extends TestCase
      */
     public function testCreateVehicle()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $response = $this->get(route('vehicles.create'));
 
@@ -69,9 +67,7 @@ class VehicleTest extends TestCase
      */
     public function testEditVehicle()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $vehicle = factory(Vehicle::class)->create(['company_id' => $user->company_id]);
 
@@ -104,7 +100,7 @@ class VehicleTest extends TestCase
      */
     public function testDeleteVehicle()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         $vehicle = factory(Vehicle::class)->create();
 

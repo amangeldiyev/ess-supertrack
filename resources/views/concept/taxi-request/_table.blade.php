@@ -31,9 +31,9 @@
                             <tr class="{{$request->status ? '' : 'table-danger'}}">
                                 <td>{{$request->id}}</td>
                                 <td>{{$request->vehicle ? $request->vehicle->type : ''}}</td>
-                                <td class="text-center">{!! $request->vehicle ? $request->vehicle->name : '<a href="#" onclick="setVehicle('.$request->id.')" type="button" class="btn btn-xs btn-info"><i class="fas fa-truck"></i></a>' !!}</td>
+                                <td class="text-center">{!! $request->vehicle ? $request->vehicle->name : '<a href="#" onclick="assignVehicle('.$request->id.')" type="button" class="btn btn-xs btn-info"><i class="fas fa-truck"></i></a>' !!}</td>
                                 <td>{{\App\TaxiRequest::STATUSES[$request->status]}}</td>
-                                <td class="text-center">{!! $request->driver ? $request->driver->name : '<a href="#" onclick="setDriver('.$request->id.')" type="button" class="btn btn-xs btn-info"><i class="fas fa-address-card"></i></a>' !!}</td>
+                                <td class="text-center">{!! $request->driver ? $request->driver->name : '<a href="#" onclick="assignDriver('.$request->id.')" type="button" class="btn btn-xs btn-info"><i class="fas fa-address-card"></i></a>' !!}</td>
                                 <td>{{\Carbon\Carbon::parse($request->start_date)->format('H:i')}}</td>
                                 <td>{{$request->on_location_time}}</td>
                                 <td>{{$request->client->name}}</td>

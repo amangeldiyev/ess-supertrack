@@ -198,13 +198,13 @@ function submitForm(e, id, status = false) {
     })
 }
 
-function setDriver(id) {
+function assignDriver(id) {
     $('#form-modal .modal-title').text('Set Driver');
     $('#form-modal .modal-body').html('<div class="mx-auto" style="width: 200px;"><span class="dashboard-spinner spinner-xxl"></span></div>');
     $('#form-modal').modal('toggle');
 
     $.ajax({
-        url: "/taxi-requests/"+ id + "/setDriver",
+        url: "/taxi-requests/"+ id + "/assign-driver",
     }).done(function(response) {
         
         $('#form-modal .modal-body').html(response)
@@ -214,13 +214,13 @@ function setDriver(id) {
     })
 }
 
-function setVehicle(id) {
+function assignVehicle(id) {
     $('#form-modal .modal-title').text('Set Vehicle');
     $('#form-modal .modal-body').html('<div class="mx-auto" style="width: 200px;"><span class="dashboard-spinner spinner-xxl"></span></div>');
     $('#form-modal').modal('toggle');
 
     $.ajax({
-        url: "/taxi-requests/"+ id + "/setVehicle",
+        url: "/taxi-requests/"+ id + "/assign-vehicle",
     }).done(function(response) {
         
         $('#form-modal .modal-body').html(response)

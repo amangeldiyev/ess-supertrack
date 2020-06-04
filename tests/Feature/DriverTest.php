@@ -20,7 +20,7 @@ class DriverTest extends TestCase
      */
     public function testShowDriverList()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         factory(Driver::class)->create();
 
@@ -39,9 +39,7 @@ class DriverTest extends TestCase
      */
     public function testCreateDriver()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $response = $this->get(route('drivers.create'));
 
@@ -68,9 +66,7 @@ class DriverTest extends TestCase
      */
     public function testEditDriver()
     {
-        $user = factory(User::class)->create(['password_changed_at' => Carbon::now()]);
-
-        $this->actingAs($user);
+        $user = $this->loginUser();
 
         $driver = factory(Driver::class)->create(['company_id' => $user->company_id]);
 
@@ -100,7 +96,7 @@ class DriverTest extends TestCase
      */
     public function testDeleteDriver()
     {
-        $this->actingAs(factory(User::class)->create(['password_changed_at' => Carbon::now()]));
+        $this->loginUser();
 
         $driver = factory(Driver::class)->create();
 

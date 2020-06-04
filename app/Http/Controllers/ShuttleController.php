@@ -41,10 +41,12 @@ class ShuttleController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'route' => 'required|array',
-            'map' => 'required|image',
+            'map' => 'nullable|image',
         ]);
 
-        $validatedData['map'] = $request->file('map')->store('maps', 'public');
+        if (isset($validatedData['map'])) {
+            $validatedData['map'] = Storage::disk('public')->put('maps', $request->file('map'));
+        }
 
         Shuttle::create($validatedData);
 
@@ -90,7 +92,7 @@ class ShuttleController extends Controller
 
         if (isset($validatedData['map'])) {
             Storage::disk('public')->delete($shuttle->map);
-            $validatedData['map'] = $request->file('map')->store('maps', 'public');
+            $validatedData['map'] = Storage::disk('public')->put('maps', $request->file('map'));
         }
 
         $shuttle->update($validatedData);

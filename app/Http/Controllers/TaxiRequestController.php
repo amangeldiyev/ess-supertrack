@@ -159,7 +159,6 @@ class TaxiRequestController extends Controller
         }
 
         if ($request->isMethod('PUT')) {
-
             $validatedData = $request->validate([
                 'sms_notification' => 'boolean|nullable',
                 'email_notification' => 'boolean|nullable',
@@ -191,13 +190,13 @@ class TaxiRequestController extends Controller
     }
 
     /**
-     * Set driver to taxi-request.
+     * Assign driver to taxi-request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\TaxiRequest  $taxiRequest
      * @return \Illuminate\Http\Response
      */
-    public function setDriver(Request $request, TaxiRequest $taxiRequest)
+    public function assignDriver(Request $request, TaxiRequest $taxiRequest)
     {
         Gate::authorize('access-model', $taxiRequest->company_id);
 
@@ -217,13 +216,13 @@ class TaxiRequestController extends Controller
     }
 
     /**
-     * Set vehicle to taxi-request.
+     * Assign vehicle to taxi-request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\TaxiRequest  $taxiRequest
      * @return \Illuminate\Http\Response
      */
-    public function setVehicle(Request $request, TaxiRequest $taxiRequest)
+    public function assignVehicle(Request $request, TaxiRequest $taxiRequest)
     {
         Gate::authorize('access-model', $taxiRequest->company_id);
 

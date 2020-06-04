@@ -17,7 +17,7 @@ class CreateShuttlesTable extends Migration
             $table->id();
             $table->string('name');
             $table->json('route');
-            $table->string('map');
+            $table->string('map')->nullable();
             $table->timestamps();
         });
     }
