@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Contracts\SmsProvider;
 use App\Mail\TaxiRequestConfirmed;
-use App\Services\KcellSms;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -14,8 +13,9 @@ class TaxiRequestNotification
     protected $smsProvider;
 
     /**
-     * Create the event listener.
+     * Create the event listener
      *
+     * @param SmsProvider $smsProvider
      * @return void
      */
     public function __construct(SmsProvider $smsProvider)
