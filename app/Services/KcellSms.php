@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App;
-use App\Interfaces\SmsSender;
+use App\Contracts\SmsProvider;
 use Illuminate\Support\Facades\Http;
 use Log;
 
-class KcellSms implements SmsSender
+class KcellSms implements SmsProvider
 {
 
     /**

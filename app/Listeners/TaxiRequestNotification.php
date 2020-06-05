@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Contracts\SmsProvider;
 use App\Mail\TaxiRequestConfirmed;
 use App\Services\KcellSms;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,14 +11,16 @@ use Illuminate\Support\Facades\Mail;
 
 class TaxiRequestNotification
 {
+    protected $smsProvider;
+
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(SmsProvider $smsProvider)
     {
-        //
+        $this->smsProvider = $smsProvider;
     }
 
     /**
@@ -31,8 +34,7 @@ class TaxiRequestNotification
         $client = $event->taxiRequest->client;
 
         if ($event->sms_notification && !empty($event->text)) {
-            $smsSender = new KcellSms();
-            $smsSender->send($event->text, $client->phone);
+            $this->smsProvider->send($event->text, $client->phone);
         }
 
         if ($event->email_notification && !empty($event->text)) {

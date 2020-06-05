@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Contracts;
 
-interface SmsSender
+interface SmsProvider
 {
     public function send($message, $phone);
 
